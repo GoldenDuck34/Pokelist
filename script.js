@@ -4770,7 +4770,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   installBtn.textContent = 'Install App';
   installBtn.style.position = 'fixed';
   installBtn.style.bottom = '20px';
-  installBtn.style.right = '20px';
+  installBtn.style.left = '20px';
   installBtn.style.padding = '10px 20px';
   installBtn.style.fontSize = '16px';
   installBtn.style.zIndex = '1000';
@@ -4789,3 +4789,4 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   });
 });
+
