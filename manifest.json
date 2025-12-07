@@ -3,8 +3,8 @@
   "short_name": "Pokélist",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f8f8fc",
-  "theme_color": "#4a90e2",
+  "background_color": "#181a20",
+  "theme_color": "#222a36",
   "icons": [
     {
       "src": "./favicon-19.png",
