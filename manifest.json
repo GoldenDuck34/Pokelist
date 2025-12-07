@@ -1,6 +1,6 @@
 {
-  "name": "Pokélist PWA",
-  "short_name": "PWA",
+  "name": "Pokélist",
+  "short_name": "Pokélist",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8f8fc",
