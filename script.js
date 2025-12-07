@@ -4758,13 +4758,34 @@ if ('serviceWorker' in navigator) {
   });
 }
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', e => {
+
+// Listen for the install prompt event
+window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('install-btn').style.display = 'block';
-});
 
-document.getElementById('install-btn').addEventListener('click', () => {
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => deferredPrompt = null);
+  // Create the install button dynamically
+  const installBtn = document.createElement('button');
+  installBtn.id = 'install-btn';
+  installBtn.textContent = 'Install App';
+  installBtn.style.position = 'fixed';
+  installBtn.style.bottom = '20px';
+  installBtn.style.right = '20px';
+  installBtn.style.padding = '10px 20px';
+  installBtn.style.fontSize = '16px';
+  installBtn.style.zIndex = '1000';
+  
+  document.body.appendChild(installBtn);
+
+  // Show the button when the app can be installed
+  installBtn.style.display = 'block';
+
+  // Handle button click
+  installBtn.addEventListener('click', () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      installBtn.style.display = 'none'; // Hide after install
+    });
+  });
 });
