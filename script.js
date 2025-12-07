@@ -1418,6 +1418,922 @@ const observer = new IntersectionObserver(
   }
 );
 
+
+async function rightClickImage(e, wrapper) {
+  e.preventDefault();
+  const img = wrapper.querySelector("img[data-pokemon]");
+  if (!img) return;
+
+  let version = ["gold", "silver"].includes(img.dataset.version)
+    ? "gen2"
+    : img.dataset.version;
+  if (version === "gen1" || version === "yellow") return;
+
+  // Find baseName for this img
+  let baseName = img.dataset.pokemon;
+  let formName = img.dataset.form || null;
+  if (img.dataset.mega === "true") {
+    if (version === "letsgo") version = "ultra-sun-ultra-moon";
+    // Use Mega form name
+    if (baseName === "charizard") {
+      baseName = img
+        .closest("li")
+        .querySelector(".item-extension img")
+        .alt.toLowerCase()
+        .includes("x")
+        ? "charizard-mega-x"
+        : "charizard-mega-y";
+    } else if (baseName === "mewtwo") {
+      baseName = img
+        .closest("li")
+        .querySelector(".item-extension img")
+        .alt.toLowerCase()
+        .includes("x")
+        ? "mewtwo-mega-x"
+        : "mewtwo-mega-y";
+    } else {
+      baseName = `${baseName}-mega`;
+    }
+    if (version === "plza") {
+      parts = baseName.split("-");
+      baseName = "Mega-" + parts[0] + (parts[2] ? parts[2].toUpperCase() : "");
+    }
+  }
+  // Flabebe, Floette, Florges color forms handling
+  if (
+    baseName.startsWith("flabebe") ||
+    baseName.startsWith("floette") ||
+    baseName.startsWith("florges")
+  ) {
+    const isShiny = getShiny(img, version);
+    let colorKey = null;
+    let spriteUrl = "";
+    if (baseName.startsWith("flabebe")) {
+      colorKey = Object.keys(flabebeColorMap).find(
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+      );
+      if (version === "gen9") {
+        const key =
+          Object.keys(flabebeColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      } else if (version === "plza") {
+        const key =
+          Object.keys(flabebeColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (plzaImages[key]) {
+          spriteUrl = plzaImages[key];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      }
+      if (colorKey) {
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+          generationMap[version]
+        }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+          flabebeColorMap[colorKey]
+        }.png`;
+      }
+    } else if (baseName.startsWith("floette")) {
+      colorKey = Object.keys(floetteColorMap).find(
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+      );
+      if (version === "gen9") {
+        const svKey =
+          Object.keys(floetteColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (svImages[svKey]) {
+          spriteUrl = svImages[svKey];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      } else if (version === "plza") {
+        const plzaKey =
+          Object.keys(floetteColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (plzaImages[plzaKey]) {
+          spriteUrl = plzaImages[plzaKey];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      }
+      if (colorKey) {
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+          generationMap[version]
+        }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+          floetteColorMap[colorKey]
+        }.png`;
+      }
+    } else if (baseName.startsWith("florges")) {
+      colorKey = Object.keys(florgesColorMap).find(
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+      );
+      if (version === "gen9") {
+        const svKey =
+          Object.keys(florgesColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (svImages[svKey]) {
+          spriteUrl = svImages[svKey];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      } else if (version === "plza") {
+        const plzaKey =
+          Object.keys(florgesColorMap)
+            .find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            )
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (!isShiny ? "_s" : "");
+        if (plzaImages[plzaKey]) {
+          spriteUrl = plzaImages[plzaKey];
+          img.src = spriteUrl;
+          setShiny(img, version, !isShiny);
+          const li = wrapper.closest("li");
+          const checkboxes = Array.from(
+            li.querySelectorAll("input[type=checkbox]")
+          );
+          const visibleIndex = li.dataset.visibleIndex
+            ? parseInt(li.dataset.visibleIndex)
+            : 0;
+          loadCheckboxState(
+            img.dataset.pokemon,
+            version,
+            !isShiny,
+            checkboxes,
+            visibleIndex
+          );
+          return;
+        }
+      }
+      if (colorKey) {
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+          generationMap[version]
+        }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+          florgesColorMap[colorKey]
+        }.png`;
+      }
+    }
+    if (spriteUrl) img.src = spriteUrl;
+    setShiny(img, version, !isShiny);
+
+    // Reload checkbox state for current visible version & shiny
+    const li = wrapper.closest("li");
+    const checkboxes = Array.from(li.querySelectorAll("input[type=checkbox]"));
+    const visibleIndex = li.dataset.visibleIndex
+      ? parseInt(li.dataset.visibleIndex)
+      : 0;
+    loadCheckboxState(
+      img.dataset.pokemon,
+      version,
+      !isShiny,
+      checkboxes,
+      visibleIndex
+    );
+    return;
+  }
+
+  // If this is a form-rotating Pokémon (except unown)
+  if (
+    (formRotators.includes(baseName) &&
+      formName &&
+      formName !== "normal" &&
+      formName !== "") ||
+    (formName && formName === "gigantamax")
+  ) {
+    // Toggle shiny state for current form
+    const isShiny = getShiny(img, version);
+    const newVariant = isShiny ? "front_default" : "front_shiny";
+    let spriteUrl = "";
+
+    // Get form name if present
+    let form = formName;
+    // Special handling for some Pokémon
+    if (baseName.startsWith("giratina")) {
+      form = formName || "altered";
+      if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl =
+          bdspImages[
+            `Giratina-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else if (version === "pla") {
+        spriteUrl =
+          plaImages[
+            `Giratina-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else {
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        if (form === "altered") {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+            !isShiny ? "/shiny" : ""
+          }/487.png`;
+        } else {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+            !isShiny ? "/shiny" : ""
+          }/487-origin.png`;
+        }
+      }
+    } else if (baseName === "rotom" && version !== "gen4") {
+      form = formName || "normal";
+      if (version === "gen8") {
+        spriteUrl =
+          swordShieldImages[
+            `Rotom-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else if (version === "brilliantdiamond-shiningpearl") {
+        if (newVariant === "front_shiny") {
+          spriteUrl = bdspImages[`Rotom_s`];
+        } else {
+          spriteUrl =
+            bdspImages[
+              `Rotom-${form}`
+                .split("-")
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+            ];
+        }
+      } else if (version === "gen9") {
+        const key =
+          `Rotom-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+        }
+      } else {
+        let generation = generationMap[version];
+        let formSuffix = form !== "normal" ? `-${form}` : "";
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${
+          generationMap2[version]
+        }${!isShiny ? "/shiny" : ""}/479${formSuffix}.png`;
+      }
+    } else if (baseName.startsWith("burmy")) {
+      form = formName || "plant";
+      if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl =
+          bdspImages[
+            `Burmy-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else if (version === "pla") {
+        spriteUrl =
+          plaImages[
+            `Burmy-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else {
+        if (form === "plant") {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            !isShiny ? "shiny/" : ""
+          }412.png`;
+        } else {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+            !isShiny ? "shiny/" : ""
+          }412-${form}.png`;
+        }
+      }
+    } else if (baseName === "shaymin-land") {
+      form = formName || "land";
+      spriteUrl = await fetchPokemonSprite(
+        `shaymin-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "darmanitan-standard") {
+      form = formName || "standard";
+      spriteUrl = await fetchPokemonSprite(
+        `darmanitan-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "darmanitan-galar-standard") {
+      form = formName || "standard";
+      spriteUrl =
+        swordShieldImages[
+          `Darmanitan-Galar-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+        ];
+    } else if (baseName === "deerling") {
+      form = formName || "spring";
+      if (version === "gen9") {
+        const key =
+          `Deerling-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+        }
+      } else {
+        const generation = generationMap[version];
+        const ver = generationMap2[version];
+        const formSuffix = form === "spring" ? "" : `-${form}`;
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
+          !isShiny ? "/shiny" : ""
+        }/585${formSuffix}.png`;
+      }
+    } else if (baseName === "sawsbuck") {
+      form = formName || "spring";
+      if (version === "gen9") {
+        const key =
+          `Sawsbuck-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+        }
+      } else {
+        const generation = generationMap[version];
+        const ver = generationMap2[version];
+        const formSuffix = form === "spring" ? "" : `-${form}`;
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
+          !isShiny ? "/shiny" : ""
+        }/586${formSuffix}.png`;
+      }
+    } else if (baseName === "meloetta-aria") {
+      form = formName || "aria";
+      spriteUrl = await fetchPokemonSprite(
+        `meloetta-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "tornadus-incarnate") {
+      form = formName || "incarnate";
+      spriteUrl = await fetchPokemonSprite(
+        `tornadus-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "thundurus-incarnate") {
+      form = formName || "incarnate";
+      spriteUrl = await fetchPokemonSprite(
+        `thundurus-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "landorus-incarnate") {
+      form = formName || "incarnate";
+      spriteUrl = await fetchPokemonSprite(
+        `landorus-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "enamorus-incarnate") {
+      form = formName || "incarnate";
+      spriteUrl = await fetchPokemonSprite(
+        `enamorus-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "keldeo-ordinary") {
+      form = formName || "ordinary";
+      spriteUrl = await fetchPokemonSprite(
+        `keldeo-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "shellos") {
+      form = formName || "west";
+      const generation = generationMap[version];
+      const ver = generationMap2[version];
+      const formSuffix = form === "west" ? "" : "-east";
+      const key =
+        `Shellos-${form}`
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+      if (version === "gen8") {
+        spriteUrl = swordShieldImages[key];
+      } else if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl = bdspImages[key];
+      } else if (version === "pla") {
+        spriteUrl = plaImages[key];
+      } else if (version === "gen9") {
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+        }
+      } else
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
+          !isShiny ? "shiny/" : ""
+        }/422${formSuffix}.png`;
+    } else if (baseName === "gastrodon") {
+      form = formName || "west";
+      const generation = generationMap[version];
+      const ver = generationMap2[version];
+      const formSuffix = form === "west" ? "" : "-east";
+      const key =
+        `Gastrodon-${form}`
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+      if (version === "gen8") {
+        spriteUrl = swordShieldImages[key];
+      } else if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl = bdspImages[key];
+      } else if (version === "pla") {
+        spriteUrl = plaImages[key];
+      } else if (version === "gen9") {
+        if (svImages[key]) {
+          spriteUrl = svImages[key];
+        }
+      } else
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}/${
+          !isShiny ? "shiny/" : ""
+        }423${formSuffix}.png`;
+    } else if (baseName === "cherrim") {
+      form = formName || "overcast";
+      if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl =
+          bdspImages[
+            `Cherrim-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else if (version === "pla") {
+        spriteUrl =
+          plaImages[
+            `Cherrim-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else {
+        const generation = generationMap[version];
+        const ver = generationMap2[version];
+        const formSuffix = form === "overcast" ? "" : "-sunshine";
+        if (version !== "gen8")
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
+            !isShiny ? "/shiny" : ""
+          }/421${formSuffix}.png`;
+        else {
+          spriteUrl =
+            swordShieldImages[
+              `cherrim-${form}`
+                .split("-")
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+            ];
+        }
+      }
+    } else if (baseName.startsWith("meowstic")) {
+      form = formName || "male";
+      spriteUrl = await fetchPokemonSprite(
+        `meowstic-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName.startsWith("mimikyu")) {
+      form = formName || "disguised";
+      spriteUrl = await fetchPokemonSprite(
+        `mimikyu-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName.startsWith("ogerpon")) {
+      form = formName || "teal";
+      spriteUrl = await fetchPokemonSprite(
+        `ogerpon-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName.startsWith("cramorant")) {
+      form = formName || "normal";
+      spriteUrl =
+        swordShieldImages[
+          `Cramorant-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+        ];
+    } else if (baseName === "aegislash-shield") {
+      form = formName || "shield";
+      spriteUrl = await fetchPokemonSprite(
+        `aegislash-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName === "furfrou") {
+      form = formName || "natural";
+      if (version === "plza") {
+        const key =
+          `Furfrou-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
+        if (plzaImages[key]) {
+          spriteUrl = plzaImages[key];
+        }
+      } else {
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/676-${form}.png`;
+      }
+    } else if (baseName.startsWith("vivillon")) {
+      form = formName || "modern";
+      if (version === "gen9") {
+        spriteUrl =
+          svImages[
+            `Vivillon-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      } else if (version === "plza") {
+        if (newVariant === "front_shiny") {
+          spriteUrl = plzaImages[`Vivillon_s`];
+        } else {
+          spriteUrl =
+            plzaImages[
+              `Vivillon-${form}`
+                .split("-")
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+            ];
+        }
+      } else {
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/666-${form}.png`;
+      }
+    } else if (baseName === "xerneas") {
+      form = formName || "active";
+      if (version === "plza") {
+        spriteUrl =
+          plzaImages[`Xerneas${newVariant === "front_shiny" ? "_s" : ""}`];
+      } else {
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        if (form === "neutral") {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/716-neutral.png`;
+        } else {
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/716-active.png`;
+        }
+      }
+    } else if (baseName.startsWith("wishiwashi")) {
+      form = formName || "solo";
+      spriteUrl = await fetchPokemonSprite(
+        `wishiwashi-${form}`,
+        version,
+        newVariant
+      );
+    } else if (baseName.startsWith("indeedee")) {
+      form = formName || "male";
+      spriteUrl = await fetchPokemonSprite(
+        `indeedee-${form}`,
+        version,
+        newVariant
+      );
+    } else if (
+      baseName.startsWith("zacian") ||
+      baseName.startsWith("zamazenta")
+    ) {
+      form = formName || "hero";
+      spriteUrl =
+        swordShieldImages[
+          `${
+            baseName.charAt(0).toUpperCase() + baseName.split("-")[0].slice(1)
+          }${form === "crowned" ? "-Crowned" : ""}${
+            newVariant === "front_shiny" ? "_s" : ""
+          }`
+        ];
+    } else if (baseName.startsWith("eiscue")) {
+      form = formName || "ice";
+      spriteUrl =
+        swordShieldImages[
+          `Eiscue-${form}${newVariant === "front_shiny" ? "_s" : ""}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-")
+        ];
+    } else if (baseName.startsWith("minior") && version === "gen9") {
+      // Only normal shiny
+      spriteUrl = svImages[`Minior_s`];
+    } else if (baseName.startsWith("pecharunt")) {
+      form = formName || "normal";
+      spriteUrl = await fetchPokemonSprite(
+        `pecharunt${newVariant !== "front_shiny" ? `-${form}` : ""}`,
+        version,
+        newVariant
+      );
+    } else if (baseName.startsWith("zygarde")) {
+      form = formName || "50";
+      if (version === "plza" && form === "mega")
+        spriteUrl =
+          plzaImages[`Mega-zygarde${newVariant === "front_shiny" ? "_s" : ""}`];
+      else
+        spriteUrl = await fetchPokemonSprite(
+          `zygarde-${form}`,
+          version,
+          newVariant
+        );
+    } else {
+      // General case for other form-rotating Pokémon
+      form = formName || "normal";
+      spriteUrl = await fetchPokemonSprite(
+        `${baseName.replace("-normal", "")}-${form}`,
+        version,
+        newVariant
+      );
+    }
+
+    await updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
+      if (spriteUrl) pkmImg.src = spriteUrl;
+      setShiny(pkmImg, version, !isShiny);
+
+      // Reload checkbox state for current visible version & shiny
+      const li = pkmImg.closest("li");
+      const checkboxes = Array.from(
+        li.querySelectorAll("input[type=checkbox]")
+      );
+      const visibleIndex = li.dataset.visibleIndex
+        ? parseInt(li.dataset.visibleIndex)
+        : 0;
+      loadCheckboxState(
+        pkmImg.dataset.pokemon,
+        version,
+        !isShiny,
+        checkboxes,
+        visibleIndex
+      );
+    });
+    return;
+  } else if (baseName.startsWith("unown")) {
+    // In any gen except brilliantdiamond-shiningpearl, show shiny "a" form, if that gen, then show correct shiny form
+    const isShiny = !getShiny(img, version);
+    const form = img.dataset.form || "a";
+    let spriteUrl = "";
+    if (version === "brilliantdiamond-shiningpearl") {
+      spriteUrl =
+        bdspImages[
+          `Unown-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (isShiny ? "_s" : "")
+        ];
+    } else if (version === "pla") {
+      spriteUrl =
+        plaImages[
+          `Unown-${form}`
+            .split("-")
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join("-") + (isShiny ? "_s" : "")
+        ];
+    } else {
+      spriteUrl = await fetchPokemonSprite(
+        `unown-a`,
+        version,
+        isShiny ? "front_shiny" : "front_default"
+      );
+    }
+    await updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
+      if (spriteUrl) pkmImg.src = spriteUrl;
+      setShiny(pkmImg, version, isShiny);
+      // Reload checkbox state for current visible version & shiny
+      const li = pkmImg.closest("li");
+      const checkboxes = Array.from(
+        li.querySelectorAll("input[type=checkbox]")
+      );
+      const visibleIndex = li.dataset.visibleIndex
+        ? parseInt(li.dataset.visibleIndex)
+        : 0;
+      loadCheckboxState(
+        pkmImg.dataset.pokemon,
+        version,
+        isShiny,
+        checkboxes,
+        visibleIndex
+      );
+    });
+    return;
+  }
+
+  if (["gold", "silver"].includes(img.dataset.version)) {
+    const baseName = img.dataset.pokemon;
+    const isShiny = getShiny(img, "gen2");
+    // Toggle shiny state
+    const newShiny = !isShiny;
+    for (const v of ["gold", "silver"]) {
+      const imgs = document.querySelectorAll(
+        `img[data-pokemon="${baseName}"][data-version="${v}"]`
+      );
+      for (const i of imgs) {
+        const spriteUrl = await fetchPokemonSprite(
+          baseName,
+          v,
+          newShiny ? "front_shiny" : "front_default"
+        );
+        if (spriteUrl) i.src = spriteUrl;
+        setShiny(i, v, newShiny);
+        // Make sure the visible image matches the toggled shiny state
+        i.dataset.version = v;
+      }
+    }
+    // Optionally update checkboxes if needed
+    const li = img.closest("li");
+    const checkboxes = Array.from(li.querySelectorAll("input[type=checkbox]"));
+    const visibleIndex = li.dataset.visibleIndex
+      ? parseInt(li.dataset.visibleIndex)
+      : 0;
+    loadCheckboxState(
+      img.dataset.pokemon,
+      img.dataset.version,
+      newShiny,
+      checkboxes,
+      visibleIndex
+    );
+    return;
+  }
+
+  // --- Normal Pokémon ---
+  const isShiny = getShiny(img, version);
+  const newVariant = isShiny ? "front_default" : "front_shiny";
+
+  let spriteUrl;
+  let key;
+  if (img.dataset.mega === "true") key = baseName + (!isShiny ? "_s" : "");
+  else
+    key = (
+      baseName
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join("-") + (!getShiny(img, version) ? "_s" : "")
+    ).replace("-Gigantamax", "_g");
+  if (version === "gen8") {
+    if (swordShieldImages[key]) {
+      spriteUrl = swordShieldImages[key];
+    }
+  } else if (version === "brilliantdiamond-shiningpearl") {
+    if (bdspImages[key]) {
+      spriteUrl = bdspImages[key];
+    }
+  } else if (version === "pla") {
+    if (plaImages[key]) {
+      spriteUrl = plaImages[key];
+    }
+  } else if (version === "gen9") {
+    if (svImages[key]) {
+      spriteUrl = svImages[key];
+    }
+  } else if (version === "plza") {
+    if (plzaImages[key]) {
+      spriteUrl = plzaImages[key];
+    }
+  } else if (version === "letsgo") {
+    if (baseName.endsWith("-alola")) {
+      // Use pokeapi with ultra sun/moon
+      spriteUrl = await fetchPokemonSprite(
+        baseName,
+        "ultra-sun-ultra-moon",
+        newVariant
+      );
+    } else if (letsGoImages[key]) {
+      spriteUrl = letsGoImages[key];
+    }
+  } else spriteUrl = await fetchPokemonSprite(baseName, version, newVariant);
+
+  await updateAllOfPokemon(img.dataset.pokemon, async (pkmImg) => {
+    if (spriteUrl) pkmImg.src = spriteUrl;
+    setShiny(pkmImg, version, !isShiny);
+
+    // Reload checkbox state for current visible version & shiny
+    const li = pkmImg.closest("li");
+    const checkboxes = Array.from(li.querySelectorAll("input[type=checkbox]"));
+    const visibleIndex = li.dataset.visibleIndex
+      ? parseInt(li.dataset.visibleIndex)
+      : 0;
+    loadCheckboxState(
+      pkmImg.dataset.pokemon,
+      pkmImg.dataset.version,
+      getShiny(pkmImg, pkmImg.dataset.version),
+      checkboxes,
+      visibleIndex
+    );
+  });
+}
 // Right-click to toggle shiny variant
 document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
   const star = wrapper.querySelector(".favorite-star");
@@ -1432,946 +2348,49 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     const isFav = star.classList.toggle("favorited");
     localStorage.setItem(key, isFav.toString());
   });
+  let pressTimer;
+  let longPressed = false;
 
-  wrapper.addEventListener("contextmenu", async (e) => {
-    e.preventDefault();
-    const img = wrapper.querySelector("img[data-pokemon]");
-    if (!img) return;
+  wrapper.addEventListener("touchstart", (e) => {
+    longPressed = false;
 
-    let version = ["gold", "silver"].includes(img.dataset.version)
-      ? "gen2"
-      : img.dataset.version;
-    if (version === "gen1" || version === "yellow") return;
-
-    // Find baseName for this img
-    let baseName = img.dataset.pokemon;
-    let formName = img.dataset.form || null;
-    if (img.dataset.mega === "true") {
-      if (version === "letsgo") version = "ultra-sun-ultra-moon";
-      // Use Mega form name
-      if (baseName === "charizard") {
-        baseName = img
-          .closest("li")
-          .querySelector(".item-extension img")
-          .alt.toLowerCase()
-          .includes("x")
-          ? "charizard-mega-x"
-          : "charizard-mega-y";
-      } else if (baseName === "mewtwo") {
-        baseName = img
-          .closest("li")
-          .querySelector(".item-extension img")
-          .alt.toLowerCase()
-          .includes("x")
-          ? "mewtwo-mega-x"
-          : "mewtwo-mega-y";
-      } else {
-        baseName = `${baseName}-mega`;
-      }
-      if (version === "plza") {
-        parts = baseName.split("-");
-        baseName =
-          "Mega-" + parts[0] + (parts[2] ? parts[2].toUpperCase() : "");
-      }
-    }
-    // Flabebe, Floette, Florges color forms handling
-    if (
-      baseName.startsWith("flabebe") ||
-      baseName.startsWith("floette") ||
-      baseName.startsWith("florges")
-    ) {
-      const isShiny = getShiny(img, version);
-      let colorKey = null;
-      let spriteUrl = "";
-      if (baseName.startsWith("flabebe")) {
-        colorKey = Object.keys(flabebeColorMap).find(
-          (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-        );
-        if (version === "gen9") {
-          const key =
-            Object.keys(flabebeColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        } else if (version === "plza") {
-          const key =
-            Object.keys(flabebeColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (plzaImages[key]) {
-            spriteUrl = plzaImages[key];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        }
-        if (colorKey) {
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
-            flabebeColorMap[colorKey]
-          }.png`;
-        }
-      } else if (baseName.startsWith("floette")) {
-        colorKey = Object.keys(floetteColorMap).find(
-          (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-        );
-        if (version === "gen9") {
-          const svKey =
-            Object.keys(floetteColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (svImages[svKey]) {
-            spriteUrl = svImages[svKey];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        } else if (version === "plza") {
-          const plzaKey =
-            Object.keys(floetteColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (plzaImages[plzaKey]) {
-            spriteUrl = plzaImages[plzaKey];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        }
-        if (colorKey) {
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
-            floetteColorMap[colorKey]
-          }.png`;
-        }
-      } else if (baseName.startsWith("florges")) {
-        colorKey = Object.keys(florgesColorMap).find(
-          (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-        );
-        if (version === "gen9") {
-          const svKey =
-            Object.keys(florgesColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (svImages[svKey]) {
-            spriteUrl = svImages[svKey];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        } else if (version === "plza") {
-          const plzaKey =
-            Object.keys(florgesColorMap)
-              .find(
-                (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
-              )
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (!isShiny ? "_s" : "");
-          if (plzaImages[plzaKey]) {
-            spriteUrl = plzaImages[plzaKey];
-            img.src = spriteUrl;
-            setShiny(img, version, !isShiny);
-            const li = wrapper.closest("li");
-            const checkboxes = Array.from(
-              li.querySelectorAll("input[type=checkbox]")
-            );
-            const visibleIndex = li.dataset.visibleIndex
-              ? parseInt(li.dataset.visibleIndex)
-              : 0;
-            loadCheckboxState(
-              img.dataset.pokemon,
-              version,
-              !isShiny,
-              checkboxes,
-              visibleIndex
-            );
-            return;
-          }
-        }
-        if (colorKey) {
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
-            florgesColorMap[colorKey]
-          }.png`;
-        }
-      }
-      if (spriteUrl) img.src = spriteUrl;
-      setShiny(img, version, !isShiny);
-
-      // Reload checkbox state for current visible version & shiny
-      const li = wrapper.closest("li");
-      const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
-      );
-      const visibleIndex = li.dataset.visibleIndex
-        ? parseInt(li.dataset.visibleIndex)
-        : 0;
-      loadCheckboxState(
-        img.dataset.pokemon,
-        version,
-        !isShiny,
-        checkboxes,
-        visibleIndex
-      );
-      return;
-    }
-
-    // If this is a form-rotating Pokémon (except unown)
-    if (
-      (formRotators.includes(baseName) &&
-        formName &&
-        formName !== "normal" &&
-        formName !== "") ||
-      (formName && formName === "gigantamax")
-    ) {
-      // Toggle shiny state for current form
-      const isShiny = getShiny(img, version);
-      const newVariant = isShiny ? "front_default" : "front_shiny";
-      let spriteUrl = "";
-
-      // Get form name if present
-      let form = formName;
-      // Special handling for some Pokémon
-      if (baseName.startsWith("giratina")) {
-        form = formName || "altered";
-        if (version === "brilliantdiamond-shiningpearl") {
-          spriteUrl =
-            bdspImages[
-              `Giratina-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else if (version === "pla") {
-          spriteUrl =
-            plaImages[
-              `Giratina-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else {
-          const gen = generationMap[version];
-          const ver = generationMap2[version];
-          if (form === "altered") {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
-              !isShiny ? "/shiny" : ""
-            }/487.png`;
-          } else {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
-              !isShiny ? "/shiny" : ""
-            }/487-origin.png`;
-          }
-        }
-      } else if (baseName === "rotom" && version !== "gen4") {
-        form = formName || "normal";
-        if (version === "gen8") {
-          spriteUrl =
-            swordShieldImages[
-              `Rotom-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else if (version === "brilliantdiamond-shiningpearl") {
-          if (newVariant === "front_shiny") {
-            spriteUrl = bdspImages[`Rotom_s`];
-          } else {
-            spriteUrl =
-              bdspImages[
-                `Rotom-${form}`
-                  .split("-")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-              ];
-          }
-        } else if (version === "gen9") {
-          const key =
-            `Rotom-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-          }
-        } else {
-          let generation = generationMap[version];
-          let formSuffix = form !== "normal" ? `-${form}` : "";
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${
-            generationMap2[version]
-          }${!isShiny ? "/shiny" : ""}/479${formSuffix}.png`;
-        }
-      } else if (baseName.startsWith("burmy")) {
-        form = formName || "plant";
-        if (version === "brilliantdiamond-shiningpearl") {
-          spriteUrl =
-            bdspImages[
-              `Burmy-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else if (version === "pla") {
-          spriteUrl =
-            plaImages[
-              `Burmy-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else {
-          if (form === "plant") {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-              !isShiny ? "shiny/" : ""
-            }412.png`;
-          } else {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-              !isShiny ? "shiny/" : ""
-            }412-${form}.png`;
-          }
-        }
-      } else if (baseName === "shaymin-land") {
-        form = formName || "land";
-        spriteUrl = await fetchPokemonSprite(
-          `shaymin-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "darmanitan-standard") {
-        form = formName || "standard";
-        spriteUrl = await fetchPokemonSprite(
-          `darmanitan-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "darmanitan-galar-standard") {
-        form = formName || "standard";
-        spriteUrl =
-          swordShieldImages[
-            `Darmanitan-Galar-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-          ];
-      } else if (baseName === "deerling") {
-        form = formName || "spring";
-        if (version === "gen9") {
-          const key =
-            `Deerling-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-          }
-        } else {
-          const generation = generationMap[version];
-          const ver = generationMap2[version];
-          const formSuffix = form === "spring" ? "" : `-${form}`;
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-            !isShiny ? "/shiny" : ""
-          }/585${formSuffix}.png`;
-        }
-      } else if (baseName === "sawsbuck") {
-        form = formName || "spring";
-        if (version === "gen9") {
-          const key =
-            `Sawsbuck-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-          }
-        } else {
-          const generation = generationMap[version];
-          const ver = generationMap2[version];
-          const formSuffix = form === "spring" ? "" : `-${form}`;
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-            !isShiny ? "/shiny" : ""
-          }/586${formSuffix}.png`;
-        }
-      } else if (baseName === "meloetta-aria") {
-        form = formName || "aria";
-        spriteUrl = await fetchPokemonSprite(
-          `meloetta-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "tornadus-incarnate") {
-        form = formName || "incarnate";
-        spriteUrl = await fetchPokemonSprite(
-          `tornadus-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "thundurus-incarnate") {
-        form = formName || "incarnate";
-        spriteUrl = await fetchPokemonSprite(
-          `thundurus-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "landorus-incarnate") {
-        form = formName || "incarnate";
-        spriteUrl = await fetchPokemonSprite(
-          `landorus-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "enamorus-incarnate") {
-        form = formName || "incarnate";
-        spriteUrl = await fetchPokemonSprite(
-          `enamorus-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "keldeo-ordinary") {
-        form = formName || "ordinary";
-        spriteUrl = await fetchPokemonSprite(
-          `keldeo-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "shellos") {
-        form = formName || "west";
-        const generation = generationMap[version];
-        const ver = generationMap2[version];
-        const formSuffix = form === "west" ? "" : "-east";
-        const key =
-          `Shellos-${form}`
-            .split("-")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-        if (version === "gen8") {
-          spriteUrl = swordShieldImages[key];
-        } else if (version === "brilliantdiamond-shiningpearl") {
-          spriteUrl = bdspImages[key];
-        } else if (version === "pla") {
-          spriteUrl = plaImages[key];
-        } else if (version === "gen9") {
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-          }
-        } else
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-            !isShiny ? "shiny/" : ""
-          }/422${formSuffix}.png`;
-      } else if (baseName === "gastrodon") {
-        form = formName || "west";
-        const generation = generationMap[version];
-        const ver = generationMap2[version];
-        const formSuffix = form === "west" ? "" : "-east";
-        const key =
-          `Gastrodon-${form}`
-            .split("-")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-        if (version === "gen8") {
-          spriteUrl = swordShieldImages[key];
-        } else if (version === "brilliantdiamond-shiningpearl") {
-          spriteUrl = bdspImages[key];
-        } else if (version === "pla") {
-          spriteUrl = plaImages[key];
-        } else if (version === "gen9") {
-          if (svImages[key]) {
-            spriteUrl = svImages[key];
-          }
-        } else
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}/${
-            !isShiny ? "shiny/" : ""
-          }423${formSuffix}.png`;
-      } else if (baseName === "cherrim") {
-        form = formName || "overcast";
-        if (version === "brilliantdiamond-shiningpearl") {
-          spriteUrl =
-            bdspImages[
-              `Cherrim-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else if (version === "pla") {
-          spriteUrl =
-            plaImages[
-              `Cherrim-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else {
-          const generation = generationMap[version];
-          const ver = generationMap2[version];
-          const formSuffix = form === "overcast" ? "" : "-sunshine";
-          if (version !== "gen8")
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-              !isShiny ? "/shiny" : ""
-            }/421${formSuffix}.png`;
-          else {
-            spriteUrl =
-              swordShieldImages[
-                `cherrim-${form}`
-                  .split("-")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-              ];
-          }
-        }
-      } else if (baseName.startsWith("meowstic")) {
-        form = formName || "male";
-        spriteUrl = await fetchPokemonSprite(
-          `meowstic-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName.startsWith("mimikyu")) {
-        form = formName || "disguised";
-        spriteUrl = await fetchPokemonSprite(
-          `mimikyu-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName.startsWith("ogerpon")) {
-        form = formName || "teal";
-        spriteUrl = await fetchPokemonSprite(
-          `ogerpon-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName.startsWith("cramorant")) {
-        form = formName || "normal";
-        spriteUrl =
-          swordShieldImages[
-            `Cramorant-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-          ];
-      } else if (baseName === "aegislash-shield") {
-        form = formName || "shield";
-        spriteUrl = await fetchPokemonSprite(
-          `aegislash-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName === "furfrou") {
-        form = formName || "natural";
-        if (version === "plza") {
-          const key =
-            `Furfrou-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (newVariant === "front_shiny" ? "_s" : "");
-          if (plzaImages[key]) {
-            spriteUrl = plzaImages[key];
-          }
-        } else {
-          const gen = generationMap[version];
-          const ver = generationMap2[version];
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/676-${form}.png`;
-        }
-      } else if (baseName.startsWith("vivillon")) {
-        form = formName || "modern";
-        if (version === "gen9") {
-          spriteUrl =
-            svImages[
-              `Vivillon-${form}`
-                .split("-")
-                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-            ];
-        } else if (version === "plza") {
-          if (newVariant === "front_shiny") {
-            spriteUrl = plzaImages[`Vivillon_s`];
-          } else {
-            spriteUrl =
-              plzaImages[
-                `Vivillon-${form}`
-                  .split("-")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-              ];
-          }
-        } else {
-          const gen = generationMap[version];
-          const ver = generationMap2[version];
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/666-${form}.png`;
-        }
-      } else if (baseName === "xerneas") {
-        form = formName || "active";
-        if (version === "plza") {
-          spriteUrl =
-            plzaImages[`Xerneas${newVariant === "front_shiny" ? "_s" : ""}`];
-        } else {
-          const gen = generationMap[version];
-          const ver = generationMap2[version];
-          if (form === "neutral") {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/716-neutral.png`;
-          } else {
-            spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/716-active.png`;
-          }
-        }
-      } else if (baseName.startsWith("wishiwashi")) {
-        form = formName || "solo";
-        spriteUrl = await fetchPokemonSprite(
-          `wishiwashi-${form}`,
-          version,
-          newVariant
-        );
-      } else if (baseName.startsWith("indeedee")) {
-        form = formName || "male";
-        spriteUrl = await fetchPokemonSprite(
-          `indeedee-${form}`,
-          version,
-          newVariant
-        );
-      } else if (
-        baseName.startsWith("zacian") ||
-        baseName.startsWith("zamazenta")
-      ) {
-        form = formName || "hero";
-        spriteUrl =
-          swordShieldImages[
-            `${
-              baseName.charAt(0).toUpperCase() + baseName.split("-")[0].slice(1)
-            }${form === "crowned" ? "-Crowned" : ""}${
-              newVariant === "front_shiny" ? "_s" : ""
-            }`
-          ];
-      } else if (baseName.startsWith("eiscue")) {
-        form = formName || "ice";
-        spriteUrl =
-          swordShieldImages[
-            `Eiscue-${form}${newVariant === "front_shiny" ? "_s" : ""}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-")
-          ];
-      } else if (baseName.startsWith("minior") && version === "gen9") {
-        // Only normal shiny
-        spriteUrl = svImages[`Minior_s`];
-      } else if (baseName.startsWith("pecharunt")) {
-        form = formName || "normal";
-        spriteUrl = await fetchPokemonSprite(
-          `pecharunt${newVariant !== "front_shiny" ? `-${form}` : ""}`,
-          version,
-          newVariant
-        );
-      } else if (baseName.startsWith("zygarde")) {
-        form = formName || "50";
-        if (version === "plza" && form === "mega")
-          spriteUrl =
-            plzaImages[
-              `Mega-zygarde${newVariant === "front_shiny" ? "_s" : ""}`
-            ];
-        else
-          spriteUrl = await fetchPokemonSprite(
-            `zygarde-${form}`,
-            version,
-            newVariant
-          );
-      } else {
-        // General case for other form-rotating Pokémon
-        form = formName || "normal";
-        spriteUrl = await fetchPokemonSprite(
-          `${baseName.replace("-normal", "")}-${form}`,
-          version,
-          newVariant
-        );
-      }
-
-      await updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
-        if (spriteUrl) pkmImg.src = spriteUrl;
-        setShiny(pkmImg, version, !isShiny);
-
-        // Reload checkbox state for current visible version & shiny
-        const li = pkmImg.closest("li");
-        const checkboxes = Array.from(
-          li.querySelectorAll("input[type=checkbox]")
-        );
-        const visibleIndex = li.dataset.visibleIndex
-          ? parseInt(li.dataset.visibleIndex)
-          : 0;
-        loadCheckboxState(
-          pkmImg.dataset.pokemon,
-          version,
-          !isShiny,
-          checkboxes,
-          visibleIndex
-        );
-      });
-      return;
-    } else if (baseName.startsWith("unown")) {
-      // In any gen except brilliantdiamond-shiningpearl, show shiny "a" form, if that gen, then show correct shiny form
-      const isShiny = !getShiny(img, version);
-      const form = img.dataset.form || "a";
-      let spriteUrl = "";
-      if (version === "brilliantdiamond-shiningpearl") {
-        spriteUrl =
-          bdspImages[
-            `Unown-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (isShiny ? "_s" : "")
-          ];
-      } else if (version === "pla") {
-        spriteUrl =
-          plaImages[
-            `Unown-${form}`
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + (isShiny ? "_s" : "")
-          ];
-      } else {
-        spriteUrl = await fetchPokemonSprite(
-          `unown-a`,
-          version,
-          isShiny ? "front_shiny" : "front_default"
-        );
-      }
-      await updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
-        if (spriteUrl) pkmImg.src = spriteUrl;
-        setShiny(pkmImg, version, isShiny);
-        // Reload checkbox state for current visible version & shiny
-        const li = pkmImg.closest("li");
-        const checkboxes = Array.from(
-          li.querySelectorAll("input[type=checkbox]")
-        );
-        const visibleIndex = li.dataset.visibleIndex
-          ? parseInt(li.dataset.visibleIndex)
-          : 0;
-        loadCheckboxState(
-          pkmImg.dataset.pokemon,
-          version,
-          isShiny,
-          checkboxes,
-          visibleIndex
-        );
-      });
-      return;
-    }
-
-    if (["gold", "silver"].includes(img.dataset.version)) {
-      const baseName = img.dataset.pokemon;
-      const isShiny = getShiny(img, "gen2");
-      // Toggle shiny state
-      const newShiny = !isShiny;
-      for (const v of ["gold", "silver"]) {
-        const imgs = document.querySelectorAll(
-          `img[data-pokemon="${baseName}"][data-version="${v}"]`
-        );
-        for (const i of imgs) {
-          const spriteUrl = await fetchPokemonSprite(
-            baseName,
-            v,
-            newShiny ? "front_shiny" : "front_default"
-          );
-          if (spriteUrl) i.src = spriteUrl;
-          setShiny(i, v, newShiny);
-          // Make sure the visible image matches the toggled shiny state
-          i.dataset.version = v;
-        }
-      }
-      // Optionally update checkboxes if needed
-      const li = img.closest("li");
-      const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
-      );
-      const visibleIndex = li.dataset.visibleIndex
-        ? parseInt(li.dataset.visibleIndex)
-        : 0;
-      loadCheckboxState(
-        img.dataset.pokemon,
-        img.dataset.version,
-        newShiny,
-        checkboxes,
-        visibleIndex
-      );
-      return;
-    }
-
-    // --- Normal Pokémon ---
-    const isShiny = getShiny(img, version);
-    const newVariant = isShiny ? "front_default" : "front_shiny";
-
-    let spriteUrl;
-    let key;
-    if (img.dataset.mega === "true") key = baseName + (!isShiny ? "_s" : "");
-    else
-      key = (
-        baseName
-          .split("-")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join("-") + (!getShiny(img, version) ? "_s" : "")
-      ).replace("-Gigantamax", "_g");
-    if (version === "gen8") {
-      if (swordShieldImages[key]) {
-        spriteUrl = swordShieldImages[key];
-      }
-    } else if (version === "brilliantdiamond-shiningpearl") {
-      if (bdspImages[key]) {
-        spriteUrl = bdspImages[key];
-      }
-    } else if (version === "pla") {
-      if (plaImages[key]) {
-        spriteUrl = plaImages[key];
-      }
-    } else if (version === "gen9") {
-      if (svImages[key]) {
-        spriteUrl = svImages[key];
-      }
-    } else if (version === "plza") {
-      if (plzaImages[key]) {
-        spriteUrl = plzaImages[key];
-      }
-    } else if (version === "letsgo") {
-      if (baseName.endsWith("-alola")) {
-        // Use pokeapi with ultra sun/moon
-        spriteUrl = await fetchPokemonSprite(
-          baseName,
-          "ultra-sun-ultra-moon",
-          newVariant
-        );
-      } else if (letsGoImages[key]) {
-        spriteUrl = letsGoImages[key];
-      }
-    } else spriteUrl = await fetchPokemonSprite(baseName, version, newVariant);
-
-    await updateAllOfPokemon(img.dataset.pokemon, async (pkmImg) => {
-      if (spriteUrl) pkmImg.src = spriteUrl;
-      setShiny(pkmImg, version, !isShiny);
-
-      // Reload checkbox state for current visible version & shiny
-      const li = pkmImg.closest("li");
-      const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
-      );
-      const visibleIndex = li.dataset.visibleIndex
-        ? parseInt(li.dataset.visibleIndex)
-        : 0;
-      loadCheckboxState(
-        pkmImg.dataset.pokemon,
-        pkmImg.dataset.version,
-        getShiny(pkmImg, pkmImg.dataset.version),
-        checkboxes,
-        visibleIndex
-      );
-    });
+    pressTimer = setTimeout(() => {
+      longPressed = true;
+      rightClickImage(e, wrapper);
+    }, 500);
   });
 
-  // LEFT CLICK → open Bulbapedia
+  wrapper.addEventListener("touchend", (e) => {
+    clearTimeout(pressTimer);
+
+    if (!longPressed) {
+      // normal tap / click behavior
+      console.log("tap");
+    }
+  });
+
   wrapper.addEventListener("click", (e) => {
-    const img = wrapper.querySelector("img[data-pokemon]");
-    if (!img) return;
+    // prevent the synthetic click if long press happened
+    if (longPressed) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    } else {
+      const img = wrapper.querySelector("img[data-pokemon]");
+      if (!img) return;
 
-    const pokemon = img.getAttribute("alt").split(" ")[0];
-    if (!pokemon) return;
+      const pokemon = img.getAttribute("alt").split(" ")[0];
+      if (!pokemon) return;
 
-    const urlPokemon =
-      pokemon.charAt(0).toUpperCase() + pokemon.slice(1).toLowerCase();
+      const urlPokemon =
+        pokemon.charAt(0).toUpperCase() + pokemon.slice(1).toLowerCase();
 
-    const url = `https://bulbapedia.bulbagarden.net/wiki/${urlPokemon}_(Pokémon)`;
+      const url = `https://bulbapedia.bulbagarden.net/wiki/${urlPokemon}_(Pokémon)`;
 
-    window.open(url, "_blank"); // open in new tab
+      window.open(url, "_blank"); // open in new tab
+    }
+  });
+  wrapper.addEventListener("contextmenu", (e) => {
+    rightClickImage(e, wrapper);
   });
 });
 
@@ -4789,4 +4808,5 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   });
 });
+
 
