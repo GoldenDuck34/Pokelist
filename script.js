@@ -2353,7 +2353,6 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
 
   wrapper.addEventListener("touchstart", (e) => {
     longPressed = false;
-
     pressTimer = setTimeout(() => {
       longPressed = true;
       rightClickImage(e, wrapper);
@@ -2362,11 +2361,16 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
 
   wrapper.addEventListener("touchend", (e) => {
     clearTimeout(pressTimer);
-
-    if (!longPressed) {
-      // normal tap / click behavior
-      console.log("tap");
+    // If longPressed, prevent any further action
+    if (longPressed) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
     }
+  });
+
+  wrapper.addEventListener("touchmove", () => {
+    // Cancel long press if finger moves
+    clearTimeout(pressTimer);
   });
 
   wrapper.addEventListener("click", (e) => {
@@ -4808,5 +4812,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   });
 });
+
 
 
