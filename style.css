@@ -1,0 +1,640 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--body-bg);
+}
+
+/* ---------- Grid ---------- */
+.square-list {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: decimal inside;
+}
+
+/* ---------- Card ---------- */
+.square-list li {
+  position: relative;
+  background: var(--card-bg, #f3f3f3);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s ease, background 0.3s ease;
+  max-width: 180px;
+  height: 260px;
+  overflow: visible; /* allow footer to overflow */
+  margin-bottom: 24px; /* space for footer */
+}
+
+.square-list li:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Header ---------- */
+.item-header {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--accent-text);
+}
+
+/* ---------- Tilt Wrapper / Image ---------- */
+.tilt-wrapper {
+  width: 100%;
+  height: 180px; /* fixed height for image box */
+  aspect-ratio: unset; /* remove aspect-ratio if set */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 0; /* remove negative margin */
+  box-sizing: border-box;
+  overflow: hidden; /* ensure image stays inside */
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tilt-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.favorite-star {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.5rem;
+  color: #ccc; /* default un-favorited */
+  cursor: pointer;
+  text-shadow: 0 0 2px black;
+  transition: color 0.2s ease;
+  user-select: none;
+  z-index: 2;
+  padding: 8px; /* increase clickable area */
+}
+
+.favorite-star.favorited {
+  color: gold; /* highlighted when favorited */
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  padding-top: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.controls button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.controls button:hover {
+  background-color: darkorange;
+}
+
+#reset-data {
+  /* specific button style */
+  background-color: crimson;
+}
+
+.custom-dropdown {
+  position: relative;
+  width: 180px;
+  font-weight: bold;
+}
+
+.custom-dropdown .selected {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 2px solid var(--accent-color);
+  background-color: var(--card-bg);
+  color: var(--accent-text);
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+}
+
+.custom-dropdown .options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+  border: 2px solid var(--accent-color);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: none;
+  z-index: 100;
+}
+
+.custom-dropdown .options li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--accent-color);
+  text-align: center;
+  transition: background 0.2s;
+  border-radius: 12px; /* rounded option */
+  color: var(--footer-text);
+}
+
+.custom-dropdown .options li:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+/* ---------- Search Box ---------- */
+#pokemonSearch {
+  display: inline-block; /* keep it inline with other elements */
+  vertical-align: middle; /* align with buttons */
+  width: 200px; /* fixed width */
+  padding: 6px 10px; /* reduce padding so it matches button size */
+  border-radius: 12px;
+  border: 2px solid var(--accent-color);
+  font-size: 0.9rem; /* match button font size */
+  background: var(--card-bg);
+  color: var(--accent-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-right: 10px; /* space between buttons and search */
+}
+
+#pokemonSearch:focus {
+  outline: none;
+  border-color: var(--accent-text);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Overlay styles */
+#random-card-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* Close button */
+#close-random-card {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+/* Card wrapper */
+#random-card-wrapper {
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* Card image */
+#random-card-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Favorite star */
+#random-favorite-star {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  top: auto;
+  pointer-events: auto;
+}
+
+/* Card info section */
+.card-info {
+  margin-top: 15px;
+  width: 100%;
+  text-align: center;
+  color: var(--footer-text);
+}
+
+.card-info #random-card-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Toggle shiny button */
+#toggle-random-shiny {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-color);
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Checkboxes container */
+#random-card-checkboxes {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.item-extension {
+  position: absolute;
+  top: 8px;
+  right: -48px; /* more space for two stones */
+  min-width: 56px; /* enough for two images */
+  height: auto;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12), 0 0 0 2px var(--accent-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 2;
+  overflow: visible;
+  border: 1.5px solid var(--accent-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  gap: 6px; /* space between stones */
+  padding: 4px 6px;
+}
+
+.item-extension img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.2s;
+  margin: 0;
+}
+
+.item-extension img:hover {
+  filter: brightness(1.2) drop-shadow(0 0 4px var(--accent-color));
+  transform: scale(1.15);
+}
+
+/* ---------- Light Mode ---------- */
+:root {
+  --card-bg: #f3f3f3;
+  --accent-color: coral;
+  --accent-text: #d14f4f;
+  --footer-bg: #ffffffcc;
+  --footer-text: #003366; /* dark blue */
+  --body-bg: #e0f7fa;
+}
+
+/* ---------- Dark Mode ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --card-bg: #1b1b1b;
+    --accent-color: #006400; /* dark green */
+    --accent-text: #00cc66; /* nice blue */
+    --footer-bg: rgba(20, 20, 20, 0.9);
+    --footer-text: #00ccff; /* accent blue */
+    --body-bg: rgba(10, 25, 50, 0.9); /* Dark blue, transparent a little */
+  }
+}
+
+.square-list .list-header {
+  width: 100%;
+  text-align: left;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--accent-text);
+  background: var(--card-bg);
+  padding: 18px 0 18px 16px;
+  margin: 0;
+  border-bottom: 3px solid var(--accent-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+/* Add extra spacing between list items before/after header */
+.list-header + li {
+  margin-top: 16px;
+}
+li + .list-header {
+  margin-top: 32px;
+}
+
+/* ---------- Pokelist Navigation Bar ---------- */
+#pokelist-navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Center the navbar items */
+  gap: 16px;
+  padding: 6px 0;
+  background: var(--card-bg, #fff);
+  border-bottom: 2px solid var(--accent-color, coral);
+  box-shadow: none;
+  font-size: 1.08rem; /* Slightly bigger */
+  position: static;
+  min-height: 0;
+  height: auto;
+}
+
+#pokelist-navbar a,
+.pokelist-dropdown .selected {
+  text-decoration: none;
+  color: var(--accent-text, #d14f4f);
+  font-weight: 700; /* Bolder */
+  padding: 6px 16px; /* Bigger button */
+  border-radius: 7px;
+  background: transparent;
+  border: 2px solid var(--accent-color, coral); /* More obvious border */
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  cursor: pointer;
+  font-size: 1.08rem; /* Slightly bigger */
+  margin: 0 4px;
+  box-shadow: 0 2px 8px rgba(220, 120, 80, 0.08);
+}
+
+#pokelist-navbar a:hover,
+#pokelist-navbar a:focus,
+.pokelist-dropdown .selected:hover,
+.pokelist-dropdown .selected:focus {
+  background: var(--accent-color, coral);
+  color: #fff;
+  border: 2px solid var(--accent-color, coral);
+  outline: none;
+}
+
+/* Dropdown container */
+.pokelist-dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 0 4px;
+}
+
+.pokelist-dropdown .selected {
+  padding: 6px 16px;
+  border-radius: 7px;
+  border: 2px solid var(--accent-color, coral);
+  background: transparent;
+  color: var(--accent-text, #d14f4f);
+  cursor: pointer;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.pokelist-dropdown .selected::after {
+  content: " ▼";
+  font-size: 0.9em;
+  color: inherit;
+  font-weight: bold;
+}
+
+.pokelist-dropdown .options {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  min-width: 140px;
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  margin-top: 2px;
+}
+
+.pokelist-dropdown.open .options {
+  display: block;
+}
+
+.pokelist-dropdown .options a {
+  display: block;
+  padding: 8px 16px;
+  color: var(--accent-text, #d14f4f);
+  background: var(--card-bg, #fff);
+  border-radius: 0;
+  text-decoration: none;
+  font-size: 1.08rem;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pokelist-dropdown .options a:hover,
+.pokelist-dropdown .options a:focus {
+  background: var(--accent-color, coral);
+  color: #fff;
+}
+
+/* ---------- Dark Mode ---------- */
+@media (prefers-color-scheme: dark) {
+  #pokelist-navbar {
+    background: var(--card-bg, #23273a);
+    border-bottom: 2px solid var(--accent-color, #00cc66);
+  }
+  #pokelist-navbar a,
+  .pokelist-dropdown .selected {
+    color: #fff;
+    background: var(--card-bg, #23273a);
+    border: 2px solid var(--accent-color, #00cc66);
+  }
+  #pokelist-navbar a:hover,
+  #pokelist-navbar a:focus,
+  .pokelist-dropdown .selected:hover,
+  .pokelist-dropdown .selected:focus {
+    background: var(--accent-color, #00cc66);
+    color: #fff;
+    border: 2px solid var(--accent-color, #00cc66);
+  }
+  .pokelist-dropdown .options a {
+    color: #fff;
+    font-weight: 700;
+  }
+  .pokelist-dropdown .options a:hover,
+  .pokelist-dropdown .options a:focus {
+    background: var(--accent-color, #00cc66);
+    color: #fff;
+  }
+}
+
+/* ---------- Manual Light/Dark Mode Override ---------- */
+body[data-theme="dark"] {
+  --card-bg: #1b1b1b;
+  --accent-color: #006400;
+  --accent-text: #00cc66;
+  --footer-bg: rgba(20, 20, 20, 0.9);
+  --footer-text: #00ccff;
+  --body-bg: rgba(10, 25, 50, 0.9);
+}
+body[data-theme="light"] {
+  --card-bg: #f3f3f3;
+  --accent-color: coral;
+  --accent-text: #d14f4f;
+  --footer-bg: #ffffffcc;
+  --footer-text: #003366;
+  --body-bg: #e0f7fa;
+}
+
+body[data-theme="light"] .pokelist-dropdown .options a {
+  color: var(--accent-text, #d14f4f) !important;
+  background: var(--card-bg, #fff) !important;
+}
+
+body[data-theme="light"] #pokelist-navbar a,
+body[data-theme="light"] .pokelist-dropdown .selected {
+  color: var(--accent-text, #d14f4f) !important;
+  background: var(--card-bg, #fff) !important;
+  border: 2px solid var(--accent-color, coral) !important;
+}
+
+body[data-theme="light"] #pokelist-navbar a:hover,
+body[data-theme="light"] #pokelist-navbar a:focus,
+body[data-theme="light"] .pokelist-dropdown .selected:hover,
+body[data-theme="light"] .pokelist-dropdown .selected:focus {
+  background: var(--accent-color, coral) !important;
+  color: #fff !important;
+  border: 2px solid var(--accent-color, coral) !important;
+}
+
+/* ---------- Mobile Styles ---------- */
+@media (max-width: 900px) {
+  .square-list {
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 12px;
+  }
+  .square-list li {
+    max-width: 140px;
+    height: 220px;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  .item-extension {
+    right: -36px;
+    min-width: 40px;
+    padding: 2px 4px;
+    gap: 4px;
+  }
+  .item-extension img {
+    width: 20px;
+    height: 20px;
+  }
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  #pokemonSearch {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  #random-card-wrapper {
+    max-width: 95vw;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .square-list {
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    gap: 8px;
+  }
+  .square-list li {
+    max-width: 110px;
+    height: 180px;
+    padding: 4px;
+    margin-bottom: 10px;
+  }
+  .item-header {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+  .tilt-wrapper {
+    height: 110px;
+    border-width: 1px;
+  }
+  .item-extension {
+    right: -24px;
+    min-width: 28px;
+    padding: 1px 2px;
+    gap: 2px;
+  }
+  .item-extension img {
+    width: 14px;
+    height: 14px;
+  }
+  .controls {
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 2px;
+    position: static;
+    top: auto;
+  }
+  #random-card-wrapper {
+    max-width: 99vw;
+    padding: 4px;
+  }
+  #random-card-img {
+    border-radius: 6px;
+  }
+  #close-random-card {
+    top: 8px;
+    right: 8px;
+    font-size: 1.5rem;
+  }
+  #random-card-overlay {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+  .custom-dropdown {
+    width: 100%;
+    min-width: 0;
+  }
+}

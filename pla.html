@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Legends: Arceus Pokélist</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="single_checkbox.css"
+      id="checkbox-stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="controls">
+      <button id="reset-data">Reset data</button>
+      <button id="toggle-shinies">Toggle All Shinies</button>
+      <button id="random-card-btn">Random Pokémon</button>
+      <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." />
+      <div class="custom-dropdown action-dropdown">
+        <div class="selected">Actions ▼</div>
+        <ul class="options">
+          <li data-value="complete-first">Complete Pokédex</li>
+          <li data-value="complete-first-shiny">Complete Shinydex</li>
+          <li data-value="clear-first">Clear Pokédex</li>
+          <li data-value="clear-first-shiny">Clear Shinydex</li>
+        </ul>
+      </div>
+      <div class="custom-dropdown">
+        <div class="selected">Pokédex Order ▼</div>
+        <ul class="options">
+          <li data-value="pokedex">Pokédex Order</li>
+          <li data-value="name-asc">Name ↑</li>
+          <li data-value="name-desc">Name ↓</li>
+          <li data-value="favorite">Favorite</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="random-card-overlay">
+      <button id="close-random-card">✕</button>
+      <div id="random-card-wrapper">
+        <div class="tilt-wrapper">
+          <img id="random-card-img" src="" alt="Random Pokémon" />
+        </div>
+        <div class="card-info">
+          <p id="random-card-name"></p>
+          <button id="toggle-random-shiny">Toggle Shiny</button>
+          <div id="random-card-checkboxes"></div>
+        </div>
+        <span id="random-favorite-star" class="favorite-star">★</span>
+      </div>
+    </div>
+
+    <div class="list-wrapper">
+      <ol
+        class="square-list"
+        data-version="pla"
+        data-mode="single"
+        data-pokemon="Rowlet,Dartrix,Decidueye,Cyndaquil,Quilava,Typhlosion,Oshawott,Dewott,Samurott,Bidoof,Bibarel,Starly,Staravia,Staraptor,Shinx,Luxio,Luxray,Wurmple,Silcoon,Beautifly,Cascoon,Dustox,Ponyta,Rapidash,Eevee,Vaporeon,Jolteon,Flareon,Espeon,Umbreon,Leafeon,Glaceon,Sylveon,Zubat,Golbat,Crobat,Drifloon,Drifblim,Kricketot,Kricketune,Buizel,Floatzel,Burmy,Wormadam (Plant),Wormadam (Sandy),Wormadam (Trash),Mothim,Geodude,Graveler,Golem,Stantler,Wyrdeer,Munchlax,Snorlax,Paras,Parasect,Pichu,Pikachu,Raichu,Abra,Kadabra,Alakazam,Chimchar,Monferno,Infernape,Buneary,Lopunny,Cherubi,Cherrim,Psyduck,Golduck,Combee,Vespiquen,Scyther,Kleavor,Scizor,Heracross,Mime Jr.,Mr. Mime,Aipom,Ambipom,Magikarp,Gyarados,Shellos,Gastrodon,Qwilfish,Overqwil,Happiny,Chansey,Blissey,Budew,Roselia,Roserade,Carnivine,Petilil,Lilligant,Tangela,Tangrowth,Barboach,Whiscash,Croagunk,Toxicroak,Ralts,Kirlia,Gardevoir,Gallade,Yanma,Yanmega,Hippopotas,Hippowdon,Pachirisu,Stunky,Skuntank,Teddiursa,Ursaring,Ursaluna,Goomy,Sliggoo,Goodra,Onix,Steelix,Rhyhorn,Rhydon,Rhyperior,Bonsly,Sudowoodo,Lickitung,Lickilicky,Togepi,Togetic,Togekiss,Turtwig,Grotle,Torterra,Porygon,Porygon2,Porygon-Z,Gastly,Haunter,Gengar,Spiritomb,Murkrow,Honchkrow,Unown,Spheal,Sealeo,Walrein,Remoraid,Octillery,Skorupi,Drapion,Growlithe,Arcanine,Glameow,Purugly,Machop,Machoke,Machamp,Chatot,Duskull,Dusclops,Dusknoir,Piplup,Prinplup,Empoleon,Mantyke,Mantine,Basculin (White),Basculegion,Vulpix,Ninetales,Tentacool,Tentacruel,Finneon,Lumineon,Magby,Magmar,Magmortar,Magnemite,Magneton,Magnezone,Bronzor,Bronzong,Elekid,Electabuzz,Electivire,Gligar,Gliscor,Gible,Gabite,Garchomp,Nosepass,Probopass,Voltorb,Electrode,Rotom,Chingling,Chimecho,Misdreavus,Mismagius,Cleffa,Clefairy,Clefable,Hisuian Sneasel,Sneasler,Sneasel,Weavile,Snorunt,Glalie,Froslass,Cranidos,Rampardos,Shieldon,Bastiodon,Swinub,Piloswine,Mamoswine,Bergmite,Avalugg,Snover,Abomasnow,Zorua,Zoroark,Rufflet,Braviary,Riolu,Lucario,Uxie,Mesprit,Azelf,Heatran,Regigigas,Cresselia,Tornadus,Thundurus,Landorus,Enamorus,Dialga,Palkia,Giratina,Arceus,Phione,Manaphy,Shaymin,Darkrai"
+      ></ol>
+    </div>
+    <script type="text/javascript" src="script.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+/* Footer now holds two checkboxes side-by-side */
+.item-footer {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--footer-bg);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  align-items: center;
+}
+
+/* Each label has checkbox + text */
+.version-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--footer-text);
+}
+
+/* Smaller circular checkboxes */
+.version-option input[type="checkbox"] {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-color);
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+}
+
+/* Checkmark fill */
+.version-option input[type="checkbox"]:checked {
+  background-color: var(--accent-color);
+}
+
+.version-option input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+.version-option input[type="checkbox"]:checked::after {
+  transform: translate(-50%, -50%) scale(1);
+}

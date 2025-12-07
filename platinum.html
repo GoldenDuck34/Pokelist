@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Platinum Pokélist</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="single_checkbox.css"
+      id="checkbox-stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+
+  <body>
+    <!-- Top Controls -->
+    <div class="controls">
+      <button id="reset-data">Reset data</button>
+      <button id="toggle-shinies">Toggle All Shinies</button>
+      <button id="random-card-btn">Random Pokémon</button>
+      <button id="toggle-national" data-dex="Sinnoh">National Pokédex</button>
+
+      <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." />
+
+      <div class="custom-dropdown action-dropdown">
+        <div class="selected">Actions ▼</div>
+        <ul class="options">
+          <li data-value="complete-first">Complete Pokédex</li>
+          <li data-value="complete-first-shiny">Complete Shinydex</li>
+          <li data-value="clear-first">Clear Pokédex</li>
+          <li data-value="clear-first-shiny">Clear Shinydex</li>
+        </ul>
+      </div>
+
+      <div class="custom-dropdown">
+        <div class="selected">Pokédex Order ▼</div>
+        <ul class="options">
+          <li data-value="pokedex">Pokédex Order</li>
+          <li data-value="name-asc">Name ↑</li>
+          <li data-value="name-desc">Name ↓</li>
+          <li data-value="favorite">Favorite</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Random Card Overlay -->
+    <div id="random-card-overlay">
+      <button id="close-random-card">✕</button>
+      <div id="random-card-wrapper">
+        <div class="tilt-wrapper">
+          <img id="random-card-img" src="" alt="Random Pokémon" />
+        </div>
+
+        <div class="card-info">
+          <p id="random-card-name"></p>
+          <button id="toggle-random-shiny">Toggle Shiny</button>
+          <div id="random-card-checkboxes"></div>
+        </div>
+
+        <span id="random-favorite-star" class="favorite-star">★</span>
+      </div>
+    </div>
+
+    <!-- Pokémon List -->
+    <div class="list-wrapper">
+      <ol
+        class="square-list"
+        data-version="platinum"
+        data-mode="single"
+        ,
+        data-pokemon="Turtwig,Grotle,Torterra,Chimchar,Monferno,Infernape,Piplup,Prinplup,Empoleon,Starly,Staravia,Staraptor,Bidoof,Bibarel,Kricketot,Kricketune,Shinx,Luxio,Luxray,Abra,Kadabra,Alakazam,Magikarp,Gyarados,Budew,Roselia,Roserade,Zubat,Golbat,Crobat,Geodude,Graveler,Golem,Onix,Steelix,Cranidos,Rampardos,Shieldon,Bastiodon,Machop,Machoke,Machamp,Psyduck,Golduck,Burmy,Wormadam (Plant), Wormadam (Sandy), Wormadam (Trash),Mothim,Wurmple,Silcoon,Beautifly,Cascoon,Dustox,Combee,Vespiquen,Pachirisu,Buizel,Floatzel,Cherubi,Cherrim,Shellos,Gastrodon,Heracross,Aipom,Ambipom,Drifloon,Drifblim,Buneary,Lopunny,Gastly,Haunter,Gengar,Misdreavus,Mismagius,Murkrow,Honchkrow,Glameow,Purugly,Goldeen,Seaking,Barboach,Whiscash,Chingling,Chimecho,Stunky,Skuntank,Meditite,Medicham,Bronzor,Bronzong,Ponyta,Rapidash,Bonsly,Sudowoodo,MimeJr.,Mr.Mime,Happiny,Chansey,Blissey,Cleffa,Clefairy,Clefable,Chatot,Pichu,Pikachu,Raichu,Hoothoot,Noctowl,Spiritomb,Gible,Gabite,Garchomp,Munchlax,Snorlax,Unown,Riolu,Lucario,Wooper,Quagsire,Wingull,Pelipper,Girafarig,Hippopotas,Hippowdon,Azurill,Marill,Azumarill,Skorupi,Drapion,Croagunk,Toxicroak,Carnivine,Remoraid,Octillery,Finneon,Lumineon,Tentacool,Tentacruel,Feebas,Milotic,Mantyke,Mantine,Snover,Abomasnow,Sneasel,Weavile,Uxie,Mesprit,Azelf,Dialga,Palkia,Manaphy,Rotom,Gligar,Gliscor,Nosepass,Probopass,Ralts,Kirlia,Gardevoir,Gallade,Lickitung,Lickilicky,Eevee,Vaporeon,Jolteon,Flareon,Espeon,Umbreon,Leafeon,Glaceon,Swablu,Altaria,Togepi,Togetic,Togekiss,Houndour,Houndoom,Magnemite,Magneton,Magnezone,Tangela,Tangrowth,Yanma,Yanmega,Tropius,Rhyhorn,Rhydon,Rhyperior,Duskull,Dusclops,Dusknoir,Porygon,Porygon2,Porygon-Z,Scyther,Scizor,Elekid,Electabuzz,Electivire,Magby,Magmar,Magmortar,Swinub,Piloswine,Mamoswine,Snorunt,Glalie,Froslass,Absol,Giratina"
+        data-national="Bulbasaur,Ivysaur,Venusaur,Charmander,Charmeleon,Charizard,Squirtle,Wartortle,Blastoise,Caterpie,Metapod,Butterfree,Weedle,Kakuna,Beedrill,Pidgey,Pidgeotto,Pidgeot,Rattata,Raticate,Spearow,Fearow,Ekans,Arbok,Pikachu,Raichu,Sandshrew,Sandslash,Nidoran♀,Nidorina,Nidoqueen,Nidoran♂,Nidorino,Nidoking,Clefairy,Clefable,Vulpix,Ninetales,Jigglypuff,Wigglytuff,Zubat,Golbat,Oddish,Gloom,Vileplume,Paras,Parasect,Venonat,Venomoth,Diglett,Dugtrio,Meowth,Persian,Psyduck,Golduck,Mankey,Primeape,Growlithe,Arcanine,Poliwag,Poliwhirl,Poliwrath,Abra,Kadabra,Alakazam,Machop,Machoke,Machamp,Bellsprout,Weepinbell,Victreebel,Tentacool,Tentacruel,Geodude,Graveler,Golem,Ponyta,Rapidash,Slowpoke,Slowbro,Magnemite,Magneton,Farfetch'd,Doduo,Dodrio,Seel,Dewgong,Grimer,Muk,Shellder,Cloyster,Gastly,Haunter,Gengar,Onix,Drowzee,Hypno,Krabby,Kingler,Voltorb,Electrode,Exeggcute,Exeggutor,Cubone,Marowak,Hitmonlee,Hitmonchan,Lickitung,Koffing,Weezing,Rhyhorn,Rhydon,Chansey,Tangela,Kangaskhan,Horsea,Seadra,Goldeen,Seaking,Staryu,Starmie,Mr.Mime,Scyther,Jynx,Electabuzz,Magmar,Pinsir,Tauros,Magikarp,Gyarados,Lapras,Ditto,Eevee,Vaporeon,Jolteon,Flareon,Porygon,Omanyte,Omastar,Kabuto,Kabutops,Aerodactyl,Snorlax,Articuno,Zapdos,Moltres,Dratini,Dragonair,Dragonite,Mewtwo,Mew,Chikorita,Bayleef,Meganium,Cyndaquil,Quilava,Typhlosion,Totodile,Croconaw,Feraligatr,Sentret,Furret,Hoothoot,Noctowl,Ledyba,Ledian,Spinarak,Ariados,Crobat,Chinchou,Lanturn,Pichu,Cleffa,Igglybuff,Togepi,Togetic,Natu,Xatu,Mareep,Flaaffy,Ampharos,Bellossom,Marill,Azumarill,Sudowoodo,Politoed,Hoppip,Skiploom,Jumpluff,Aipom,Sunkern,Sunflora,Yanma,Wooper,Quagsire,Espeon,Umbreon,Murkrow,Slowking,Misdreavus,Unown,Wobbuffet,Girafarig,Pineco,Forretress,Dunsparce,Gligar,Steelix,Snubbull,Granbull,Qwilfish,Scizor,Shuckle,Heracross,Sneasel,Teddiursa,Ursaring,Slugma,Magcargo,Swinub,Piloswine,Corsola,Remoraid,Octillery,Delibird,Mantine,Skarmory,Houndour,Houndoom,Kingdra,Phanpy,Donphan,Porygon2,Stantler,Smeargle,Tyrogue,Hitmontop,Smoochum,Elekid,Magby,Miltank,Blissey,Raikou,Entei,Suicune,Larvitar,Pupitar,Tyranitar,Lugia,Ho-oh,Celebi,Treecko,Grovyle,Sceptile,Torchic,Combusken,Blaziken,Mudkip,Marshtomp,Swampert,Poochyena,Mightyena,Zigzagoon,Linoone,Wurmple,Silcoon,Beautifly,Cascoon,Dustox,Lotad,Lombre,Ludicolo,Seedot,Nuzleaf,Shiftry,Taillow,Swellow,Wingull,Pelipper,Ralts,Kirlia,Gardevoir,Surskit,Masquerain,Shroomish,Breloom,Slakoth,Vigoroth,Slaking,Nincada,Ninjask,Shedinja,Whismur,Loudred,Exploud,Makuhita,Hariyama,Azurill,Nosepass,Skitty,Delcatty,Sableye,Mawile,Aron,Lairon,Aggron,Meditite,Medicham,Electrike,Manectric,Plusle,Minun,Volbeat,Illumise,Roselia,Gulpin,Swalot,Carvanha,Sharpedo,Wailmer,Wailord,Numel,Camerupt,Torkoal,Spoink,Grumpig,Spinda,Trapinch,Vibrava,Flygon,Cacnea,Cacturne,Swablu,Altaria,Zangoose,Seviper,Lunatone,Solrock,Barboach,Whiscash,Corphish,Crawdaunt,Baltoy,Claydol,Lileep,Cradily,Anorith,Armaldo,Feebas,Milotic,Castform,Kecleon,Shuppet,Banette,Duskull,Dusclops,Tropius,Chimecho,Absol,Wynaut,Snorunt,Glalie,Spheal,Sealeo,Walrein,Clamperl,Huntail,Gorebyss,Relicanth,Luvdisc,Bagon,Shelgon,Salamence,Beldum,Metang,Metagross,Regirock,Regice,Registeel,Latias,Latios,Kyogre,Groudon,Rayquaza,Jirachi,Deoxys,Turtwig,Grotle,Torterra,Chimchar,Monferno,Infernape,Piplup,Prinplup,Empoleon,Starly,Staravia,Staraptor,Bidoof,Bibarel,Kricketot,Kricketune,Shinx,Luxio,Luxray,Budew,Roserade,Cranidos,Rampardos,Shieldon,Bastiodon,Burmy,Wormadam (Plant), Wormadam (Sandy), Wormadam (Trash),Mothim,Combee,Vespiquen,Pachirisu,Buizel,Floatzel,Cherubi,Cherrim,Shellos,Gastrodon,Ambipom,Drifloon,Drifblim,Buneary,Lopunny,Mismagius,Honchkrow,Glameow,Purugly,Chingling,Stunky,Skuntank,Bronzor,Bronzong,Bonsly,MimeJr.,Happiny,Chatot,Spiritomb,Gible,Gabite,Garchomp,Munchlax,Riolu,Lucario,Hippopotas,Hippowdon,Skorupi,Drapion,Croagunk,Toxicroak,Carnivine,Finneon,Lumineon,Mantyke,Snover,Abomasnow,Weavile,Magnezone,Lickilicky,Rhyperior,Tangrowth,Electivire,Magmortar,Togekiss,Yanmega,Leafeon,Glaceon,Gliscor,Mamoswine,Porygon-Z,Gallade,Probopass,Dusknoir,Froslass,Rotom,Uxie,Mesprit,Azelf,Dialga,Palkia,Heatran,Regigigas,Giratina,Cresselia,Phione,Manaphy,Darkrai,Shaymin,Arceus"
+      ></ol>
+    </div>
+
+    <script type="text/javascript" src="script.js" defer></script>
+  </body>
+</html>

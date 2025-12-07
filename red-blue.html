@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Red and Blue Pokélist</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="double_checkbox.css"
+      id="checkbox-stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="controls">
+      <button id="reset-data">Reset data</button>
+      <button id="complete-pokedex">Complete Pokédex</button>
+      <button id="show-only-first-version">Show only first version</button>
+      <button id="show-only-second-version">Show only second version</button>
+      <button id="show-both-versions">Show both versions</button>
+      <button id="random-card-btn">Random Pokémon</button>
+      <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." />
+
+      <div class="custom-dropdown action-dropdown">
+        <div class="selected">Actions ▼</div>
+        <ul class="options">
+          <li data-value="complete-first">Complete Pokédex — Red</li>
+          <li data-value="complete-second">Complete Pokédex — Blue</li>
+          <li data-value="clear-first">Clear Pokédex — Red</li>
+          <li data-value="clear-second">Clear Pokédex — Blue</li>
+        </ul>
+      </div>
+
+      <div class="custom-dropdown">
+        <div class="selected">Pokédex Order ▼</div>
+        <ul class="options">
+          <li data-value="pokedex">Pokédex Order</li>
+          <li data-value="name-asc">Name ↑</li>
+          <li data-value="name-desc">Name ↓</li>
+          <li data-value="favorite">Favorite</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="random-card-overlay">
+      <!-- Close button fixed to top-right of screen -->
+      <button id="close-random-card">✕</button>
+
+      <div id="random-card-wrapper">
+        <div class="tilt-wrapper">
+          <img id="random-card-img" src="" alt="Random Pokémon" />
+        </div>
+
+        <div class="card-info">
+          <p id="random-card-name"></p>
+          <button id="toggle-random-shiny">Toggle Shiny</button>
+          <div id="random-card-checkboxes"></div>
+        </div>
+        <span id="random-favorite-star" class="favorite-star">★</span>
+      </div>
+    </div>
+
+    <div class="list-wrapper">
+      <ol
+        class="square-list"
+        data-version="gen1"
+        data-mode="double"
+        data-options="Red,Blue"
+        data-pokemon="Bulbasaur,Ivysaur,Venusaur,Charmander,Charmeleon,Charizard,Squirtle,Wartortle,Blastoise,Caterpie,Metapod,Butterfree,Weedle,Kakuna,Beedrill,Pidgey,Pidgeotto,Pidgeot,Rattata,Raticate,Spearow,Fearow,Ekans,Arbok,Pikachu,Raichu,Sandshrew,Sandslash,Nidoran♀,Nidorina,Nidoqueen,Nidoran♂,Nidorino,Nidoking,Clefairy,Clefable,Vulpix,Ninetales,Jigglypuff,Wigglytuff,Zubat,Golbat,Oddish,Gloom,Vileplume,Paras,Parasect,Venonat,Venomoth,Diglett,Dugtrio,Meowth,Persian,Psyduck,Golduck,Mankey,Primeape,Growlithe,Arcanine,Poliwag,Poliwhirl,Poliwrath,Abra,Kadabra,Alakazam,Machop,Machoke,Machamp,Bellsprout,Weepinbell,Victreebel,Tentacool,Tentacruel,Geodude,Graveler,Golem,Ponyta,Rapidash,Slowpoke,Slowbro,Magnemite,Magneton,Farfetch'd,Doduo,Dodrio,Seel,Dewgong,Grimer,Muk,Shellder,Cloyster,Gastly,Haunter,Gengar,Onix,Drowzee,Hypno,Krabby,Kingler,Voltorb,Electrode,Exeggcute,Exeggutor,Cubone,Marowak,Hitmonlee,Hitmonchan,Lickitung,Koffing,Weezing,Rhyhorn,Rhydon,Chansey,Tangela,Kangaskhan,Horsea,Seadra,Goldeen,Seaking,Staryu,Starmie,Mr.Mime,Scyther,Jynx,Electabuzz,Magmar,Pinsir,Tauros,Magikarp,Gyarados,Lapras,Ditto,Eevee,Vaporeon,Jolteon,Flareon,Porygon,Omanyte,Omastar,Kabuto,Kabutops,Aerodactyl,Snorlax,Articuno,Zapdos,Moltres,Dratini,Dragonair,Dragonite,Mewtwo,Mew"
+      ></ol>
+    </div>
+
+    <script type="text/javascript" src="script.js" defer></script>
+  </body>
+</html>

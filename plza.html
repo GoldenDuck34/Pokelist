@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Legends: Z-A Pokélist</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="single_checkbox.css"
+      id="checkbox-stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="controls">
+      <button id="reset-data">Reset data</button>
+      <button id="toggle-shinies">Toggle All Shinies</button>
+      <button id="random-card-btn">Random Pokémon</button>
+      <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." />
+      <div class="custom-dropdown action-dropdown">
+        <div class="selected">Actions ▼</div>
+        <ul class="options">
+          <li data-value="complete-first">Complete Pokédex</li>
+          <li data-value="complete-first-shiny">Complete Shinydex</li>
+          <li data-value="clear-first">Clear Pokédex</li>
+          <li data-value="clear-first-shiny">Clear Shinydex</li>
+        </ul>
+      </div>
+      <div class="custom-dropdown">
+        <div class="selected">Pokédex Order ▼</div>
+        <ul class="options">
+          <li data-value="pokedex">Pokédex Order</li>
+          <li data-value="name-asc">Name ↑</li>
+          <li data-value="name-desc">Name ↓</li>
+          <li data-value="favorite">Favorite</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="random-card-overlay">
+      <button id="close-random-card">✕</button>
+      <div id="random-card-wrapper">
+        <div class="tilt-wrapper">
+          <img id="random-card-img" src="" alt="Random Pokémon" />
+        </div>
+        <div class="card-info">
+          <p id="random-card-name"></p>
+          <button id="toggle-random-shiny">Toggle Shiny</button>
+          <div id="random-card-checkboxes"></div>
+        </div>
+        <span id="random-favorite-star" class="favorite-star">★</span>
+      </div>
+    </div>
+
+    <div class="list-wrapper">
+      <ol
+        class="square-list"
+        data-version="plza"
+        data-mode="single"
+        data-pokemon="Chikorita,Bayleef,Meganium,Tepig,Pignite,Emboar,Totodile,Croconaw,Feraligatr,Fletchling,Fletchinder,Talonflame,Bunnelby,Diggersby,Scatterbug,Spewpa,Vivillon,Weedle,Kakuna,Beedrill,Pidgey,Pidgeotto,Pidgeot,Mareep,Flaaffy,Ampharos,Patrat,Watchog,Budew,Roselia,Roserade,Magikarp,Gyarados,Binacle,Barbaracle,Staryu,Starmie,Flabébé (Red),Flabébé (Blue),Flabébé (Yellow),Flabébé (Orange),Flabébé (White),Floette (Red),Floette (Blue),Floette (Yellow),Floette (Orange),Floette (White),Floette (Black),Florges (Red),Florges (Blue),Florges (Yellow),Florges (Orange),Florges (White),Skiddo,Gogoat,Espurr,Meowstic,Litleo,Pyroar,Pancham,Pangoro,Trubbish,Garbodor,Dedenne,Pichu,Pikachu,Raichu,Cleffa,Clefairy,Clefable,Spinarak,Ariados,Ekans,Arbok,Abra,Kadabra,Alakazam,Gastly,Haunter,Gengar,Venipede,Whirlipede,Scolipede,Honedge,Doublade,Aegislash,Bellsprout,Weepinbell,Victreebel,Pansage,Simisage,Pansear,Simisear,Panpour,Simipour,Meditite,Medicham,Electrike,Manectric,Ralts,Kirlia,Gardevoir,Gallade,Houndour,Houndoom,Swablu,Altaria,Audino,Spritzee,Aromatisse,Swirlix,Slurpuff,Eevee,Vaporeon,Jolteon,Flareon,Espeon,Umbreon,Leafeon,Glaceon,Sylveon,Buneary,Lopunny,Shuppet,Banette,Vanillite,Vanillish,Vanilluxe,Numel,Camerupt,Hippopotas,Hippowdon,Drilbur,Excadrill,Sandile,Krokorok,Krookodile,Machop,Machoke,Machamp,Gible,Gabite,Garchomp,Carbink,Sableye,Mawile,Absol,Riolu,Lucario,Slowpoke,Slowbro,Slowking,Carvanha,Sharpedo,Tynamo,Eelektrik,Eelektross,Dratini,Dragonair,Dragonite,Bulbasaur,Ivysaur,Venusaur,Charmander,Charmeleon,Charizard,Squirtle,Wartortle,Blastoise,Stunfisk,Furfrou,Inkay,Malamar,Skrelp,Dragalge,Clauncher,Clawitzer,Goomy,Sliggoo,Goodra,Delibird,Snorunt,Glalie,Froslass,Snover,Abomasnow,Bergmite,Avalugg,Scyther,Scizor,Pinsir,Heracross,Emolga,Hawlucha,Phantump,Trevenant,Scraggy,Scrafty,Noibat,Noivern,Klefki,Litwick,Lampent,Chandelure,Aerodactyl,Tyrunt,Tyrantrum,Amaura,Aurorus,Onix,Steelix,Aron,Lairon,Aggron,Helioptile,Heliolisk,Pumpkaboo,Gourgeist,Larvitar,Pupitar,Tyranitar,Froakie,Frogadier,Greninja,Falinks,Chespin,Quilladin,Chesnaught,Skarmory,Fennekin,Braixen,Delphox,Bagon,Shelgon,Salamence,Kangaskhan,Drampa,Beldum,Metang,Metagross,Xerneas,Yveltal,Zygarde,Diancie,Mewtwo"
+      ></ol>
+    </div>
+    <script type="text/javascript" src="script.js" defer></script>
+  </body>
+</html>

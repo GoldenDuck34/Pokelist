@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokémon Let's Go Pikachu and Eevee Pokélist</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="double_checkbox.css"
+      id="checkbox-stylesheet"
+    />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="controls">
+      <button id="reset-data">Reset data</button>
+      <button id="toggle-shinies">Toggle All Shinies</button>
+      <button id="show-only-first-version">Show only first version</button>
+      <button id="show-only-second-version">Show only second version</button>
+      <button id="show-both-versions">Show both versions</button>
+      <button id="random-card-btn">Random Pokémon</button>
+      <input type="text" id="pokemonSearch" placeholder="Search Pokémon..." />
+      <div class="custom-dropdown action-dropdown">
+        <div class="selected">Actions ▼</div>
+        <ul class="options">
+          <li data-value="complete-first">
+            Complete Pokédex — Let's Go Pikachu
+          </li>
+          <li data-value="complete-second">
+            Complete Pokédex — Let's Go Eevee
+          </li>
+          <li data-value="complete-first-shiny">
+            Complete Shinydex — Let's Go Pikachu
+          </li>
+          <li data-value="complete-second-shiny">
+            Complete Shinydex — Let's Go Eevee
+          </li>
+          <li data-value="clear-first">Clear Pokédex — Let's Go Pikachu</li>
+          <li data-value="clear-second">Clear Pokédex — Let's Go Eevee</li>
+          <li data-value="clear-first-shiny">
+            Clear Shinydex — Let's Go Pikachu
+          </li>
+          <li data-value="clear-second-shiny">
+            Clear Shinydex — Let's Go Eevee
+          </li>
+        </ul>
+      </div>
+      <div class="custom-dropdown">
+        <div class="selected">Pokédex Order ▼</div>
+        <ul class="options">
+          <li data-value="pokedex">Pokédex Order</li>
+          <li data-value="name-asc">Name ↑</li>
+          <li data-value="name-desc">Name ↓</li>
+          <li data-value="favorite">Favorite</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="random-card-overlay">
+      <button id="close-random-card">✕</button>
+      <div id="random-card-wrapper">
+        <div class="tilt-wrapper">
+          <img id="random-card-img" src="" alt="Random Pokémon" />
+        </div>
+        <div class="card-info">
+          <p id="random-card-name"></p>
+          <button id="toggle-random-shiny">Toggle Shiny</button>
+          <div id="random-card-checkboxes"></div>
+        </div>
+        <span id="random-favorite-star" class="favorite-star">★</span>
+      </div>
+    </div>
+
+    <div class="list-wrapper">
+      <ol
+        class="square-list"
+        data-version="letsgo"
+        data-mode="both"
+        data-options="Pikachu,Eevee"
+        data-pokemon="Bulbasaur,Ivysaur,Venusaur,Charmander,Charmeleon,Charizard,Squirtle,Wartortle,Blastoise,Caterpie,Metapod,Butterfree,Weedle,Kakuna,Beedrill,Pidgey,Pidgeotto,Pidgeot,Rattata,Raticate,Alolan Rattata,Alolan Raticate,Spearow,Fearow,Ekans,Arbok,Pikachu,Raichu,Alolan Raichu,Sandshrew,Sandslash,Alolan Sandshrew,Alolan Sandslash,Nidoran♀,Nidorina,Nidoqueen,Nidoran♂,Nidorino,Nidoking,Clefairy,Clefable,Vulpix,Ninetales,Alolan Vulpix,Alolan Ninetales,Jigglypuff,Wigglytuff,Zubat,Golbat,Oddish,Gloom,Vileplume,Paras,Parasect,Venonat,Venomoth,Diglett,Dugtrio,Alolan Diglett,Alolan Dugtrio,Meowth,Persian,Alolan Meowth,Alolan Persian,Psyduck,Golduck,Mankey,Primeape,Growlithe,Arcanine,Poliwag,Poliwhirl,Poliwrath,Abra,Kadabra,Alakazam,Machop,Machoke,Machamp,Bellsprout,Weepinbell,Victreebel,Tentacool,Tentacruel,Geodude,Graveler,Golem,Alolan Geodude,Alolan Graveler,Alolan Golem,Ponyta,Rapidash,Slowpoke,Slowbro,Magnemite,Magneton,Farfetch'd,Doduo,Dodrio,Seel,Dewgong,Grimer,Muk,Alolan Grimer,Alolan Muk,Shellder,Cloyster,Gastly,Haunter,Gengar,Onix,Drowzee,Hypno,Krabby,Kingler,Voltorb,Electrode,Exeggcute,Exeggutor,Alolan Exeggutor,Cubone,Marowak,Alolan Marowak,Hitmonlee,Hitmonchan,Lickitung,Koffing,Weezing,Rhyhorn,Rhydon,Chansey,Tangela,Kangaskhan,Horsea,Seadra,Goldeen,Seaking,Staryu,Starmie,Mr. Mime,Scyther,Jynx,Electabuzz,Magmar,Pinsir,Tauros,Magikarp,Gyarados,Lapras,Ditto,Eevee,Vaporeon,Jolteon,Flareon,Porygon,Omanyte,Omastar,Kabuto,Kabutops,Aerodactyl,Snorlax,Articuno,Zapdos,Moltres,Dratini,Dragonair,Dragonite,Mewtwo,Mew,Meltan,Melmetal"
+      ></ol>
+    </div>
+    <script type="text/javascript" src="script.js" defer></script>
+  </body>
+</html>
