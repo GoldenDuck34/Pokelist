@@ -502,11 +502,12 @@ const plzaImages = {};
     // Dropdown toggle logic
     selected.onclick = (e) => {
       dropdown.classList.toggle("open");
-      dropdown.classList.toggle("open");
+      dropdown.classList.toggle("left");
     };
 
     selected.onblur = () => {
       dropdown.classList.remove("open");
+      dropdown.classList.remove("left");
     };
 
     nav.appendChild(dropdown);
