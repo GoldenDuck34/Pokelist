@@ -1422,7 +1422,6 @@ const observer = new IntersectionObserver(
 );
 
 async function rightClickImage(e, wrapper) {
-  e.preventDefault();
   const img = wrapper.querySelector("img[data-pokemon]");
   if (!img) return;
 
@@ -2372,6 +2371,7 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
 
   if (window.matchMedia("(pointer: coarse)").matches) {
     wrapper.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // Prevent default touch behavior
       longPressed = false;
       pressTimer = setTimeout(() => {
         longPressed = true;
@@ -2395,6 +2395,7 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     wrapper.addEventListener("click", (e) => {
       // If long press was triggered, prevent default click behavior
       if (longPressed) {
+        e.preventDefault();
         e.stopImmediatePropagation();
       } else {
         rightClickImage(); // Inverted on mobile
@@ -2402,9 +2403,11 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     });
   } else {
     wrapper.addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent default click behavior
       leftClickImage(e, wrapper);
     });
     wrapper.addEventListener("contextmenu", (e) => {
+      e.preventDefault(); // Prevent default context menu
       rightClickImage(e, wrapper);
     });
   }
