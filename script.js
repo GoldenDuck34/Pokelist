@@ -4726,7 +4726,6 @@ async function megaRightClick(e, img) {
     !legendsStones[lowerName]
   )
     return;
-  console.log(lowerName);
 
   await updateAllOfPokemon(lowerName, async (pokeImg) => {
     const isMegaActive = pokeImg.dataset.mega === "true";
@@ -4749,17 +4748,11 @@ async function megaRightClick(e, img) {
       if (version !== "letsgo") {
         if (version === "plza") {
           // Use PLZA image, Mega-chandelure or Mega-charizard-X
-          parts = megaName.split("-");
-          console.log(megaName, 
-              "Mega-" +
-                parts[0] +
-                (parts[2] ? parts[2].toUpperCase() : "") +
-                (isShiny ? "_s" : ""));
           spriteUrl =
             plzaImages[
               "Mega-" +
                 parts[0] +
-                (parts[2] ? parts[2].toUpperCase() : "") +
+                (parts[2] ? `-${parts[2].toUpperCase()}` : "") +
                 (isShiny ? "_s" : "")
             ];
         } else spriteUrl = await fetchPokemonSprite(megaName, version, variant);
@@ -4836,5 +4829,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
+
 
 
