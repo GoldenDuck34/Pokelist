@@ -579,6 +579,9 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
     max-width: 95vw;
     padding: 10px;
   }
+  .pokelist-dropdown {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 600px) {
