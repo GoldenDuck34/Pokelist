@@ -4753,7 +4753,7 @@ async function megaRightClick(e, img) {
             plzaImages[
               "Mega-" +
                 parts[0] +
-                (parts[2] ? parts[2].toUpperCase() : "") +
+                (parts[2] ? `-${parts[2].toUpperCase()}` : "") +
                 (isShiny ? "_s" : "")
             ];
         } else spriteUrl = await fetchPokemonSprite(megaName, version, variant);
@@ -4830,3 +4830,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
+
+
+
+
