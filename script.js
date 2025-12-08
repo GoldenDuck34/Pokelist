@@ -4748,6 +4748,7 @@ async function megaRightClick(e, img) {
       if (version !== "letsgo") {
         if (version === "plza") {
           // Use PLZA image, Mega-chandelure or Mega-charizard-X
+          parts = megaName.split("-");
           spriteUrl =
             plzaImages[
               "Mega-" +
@@ -4829,6 +4830,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
+
 
 
 
