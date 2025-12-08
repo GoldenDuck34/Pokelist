@@ -1421,7 +1421,6 @@ const observer = new IntersectionObserver(
   }
 );
 
-
 async function rightClickImage(e, wrapper) {
   e.preventDefault();
   const img = wrapper.querySelector("img[data-pokemon]");
@@ -2337,6 +2336,23 @@ async function rightClickImage(e, wrapper) {
     );
   });
 }
+
+function leftClickImage(e, wrapper) {
+  // prevent the synthetic click if long press happened
+  const img = wrapper.querySelector("img[data-pokemon]");
+  if (!img) return;
+
+  const pokemon = img.getAttribute("alt").split(" ")[0];
+  if (!pokemon) return;
+
+  const urlPokemon =
+    pokemon.charAt(0).toUpperCase() + pokemon.slice(1).toLowerCase();
+
+  const url = `https://bulbapedia.bulbagarden.net/wiki/${urlPokemon}_(Pokémon)`;
+
+  window.open(url, "_blank"); // open in new tab
+}
+
 // Right-click to toggle shiny variant
 document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
   const star = wrapper.querySelector(".favorite-star");
@@ -2354,51 +2370,45 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
   let pressTimer;
   let longPressed = false;
 
-  wrapper.addEventListener("touchstart", (e) => {
-    longPressed = false;
-    pressTimer = setTimeout(() => {
-      longPressed = true;
+  if (window.matchMedia("(pointer: coarse)").matches) {
+    wrapper.addEventListener("touchstart", (e) => {
+      longPressed = false;
+      pressTimer = setTimeout(() => {
+        longPressed = true;
+        leftClickImage(e, wrapper);
+      }, 500);
+    });
+
+    wrapper.addEventListener("touchend", (e) => {
+      clearTimeout(pressTimer);
+      // If longPressed, prevent any further action
+      if (longPressed) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    });
+
+    wrapper.addEventListener("touchmove", () => {
+      // Cancel long press if finger moves
+      clearTimeout(pressTimer);
+    });
+    wrapper.addEventListener("click", (e) => {
+      // If long press was triggered, prevent default click behavior
+      if (longPressed) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      } else {
+        rightClickImage(); // Inverted on mobile
+      }
+    });
+  } else {
+    wrapper.addEventListener("click", (e) => {
+      leftClickImage(e, wrapper);
+    });
+    wrapper.addEventListener("contextmenu", (e) => {
       rightClickImage(e, wrapper);
-    }, 500);
-  });
-
-  wrapper.addEventListener("touchend", (e) => {
-    clearTimeout(pressTimer);
-    // If longPressed, prevent any further action
-    if (longPressed) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    }
-  });
-
-  wrapper.addEventListener("touchmove", () => {
-    // Cancel long press if finger moves
-    clearTimeout(pressTimer);
-  });
-
-  wrapper.addEventListener("click", (e) => {
-    // prevent the synthetic click if long press happened
-    if (longPressed) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    } else {
-      const img = wrapper.querySelector("img[data-pokemon]");
-      if (!img) return;
-
-      const pokemon = img.getAttribute("alt").split(" ")[0];
-      if (!pokemon) return;
-
-      const urlPokemon =
-        pokemon.charAt(0).toUpperCase() + pokemon.slice(1).toLowerCase();
-
-      const url = `https://bulbapedia.bulbagarden.net/wiki/${urlPokemon}_(Pokémon)`;
-
-      window.open(url, "_blank"); // open in new tab
-    }
-  });
-  wrapper.addEventListener("contextmenu", (e) => {
-    rightClickImage(e, wrapper);
-  });
+    });
+  }
 });
 
 function saveCheckboxState(pokemonName, version, isShiny, index, checked) {
@@ -4776,46 +4786,43 @@ async function updateAllOfPokemon(pokemonName, updater) {
   }
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg))
-      .catch(err => console.log('Service Worker failed:', err));
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then((reg) => console.log("Service Worker registered:", reg))
+      .catch((err) => console.log("Service Worker failed:", err));
   });
 }
 let deferredPrompt;
 
 // Listen for the install prompt event
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
   // Create the install button dynamically
-  const installBtn = document.createElement('button');
-  installBtn.id = 'install-btn';
-  installBtn.textContent = 'Install App';
-  installBtn.style.position = 'fixed';
-  installBtn.style.bottom = '20px';
-  installBtn.style.left = '20px';
-  installBtn.style.padding = '10px 20px';
-  installBtn.style.fontSize = '16px';
-  installBtn.style.zIndex = '1000';
-  
+  const installBtn = document.createElement("button");
+  installBtn.id = "install-btn";
+  installBtn.textContent = "Install App";
+  installBtn.style.position = "fixed";
+  installBtn.style.bottom = "20px";
+  installBtn.style.left = "20px";
+  installBtn.style.padding = "10px 20px";
+  installBtn.style.fontSize = "16px";
+  installBtn.style.zIndex = "1000";
+
   document.body.appendChild(installBtn);
 
   // Show the button when the app can be installed
-  installBtn.style.display = 'block';
+  installBtn.style.display = "block";
 
   // Handle button click
-  installBtn.addEventListener('click', () => {
+  installBtn.addEventListener("click", () => {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(() => {
       deferredPrompt = null;
-      installBtn.style.display = 'none'; // Hide after install
+      installBtn.style.display = "none"; // Hide after install
     });
   });
 });
-
-
-
-
