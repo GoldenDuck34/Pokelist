@@ -337,6 +337,7 @@ function getMegaStoneImgUrl(stoneName, version) {
     .toLowerCase()
     .replace(/ /g, "-")
     .replace("-", "");
+  console.log(normalized);
   return `https://www.serebii.net/itemdex/sprites/${
     version === "plza" ? "za" : "pgl"
   }/${normalized}.png`;
@@ -4830,3 +4831,4 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
+
