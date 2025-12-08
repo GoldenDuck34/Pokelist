@@ -4674,83 +4674,103 @@ document.querySelectorAll(".item-extension img").forEach((img) => {
     })();
   });
 
-  // Add right-click handler for Mega form toggle
-  img.addEventListener("contextmenu", async function (e) {
-    e.preventDefault();
-    const li = img.closest("li");
-    const lowerName = li
-      .querySelector(".item-header")
-      .textContent.toLowerCase();
-    if (lowerName === "zygarde") return;
-    const megaStone = img.alt;
-    const version = li.querySelector("img[data-pokemon]").dataset.version;
-    const isShiny = getShiny(li.querySelector("img[data-pokemon]"), version);
+  if (window.matchMedia("pointer: coarse").matches) {
+    let pressTimer = null;
+    const longPressTime = 500; // ms
 
-    // Only act if mega extension is present (in either map)
-    if (
-      !megaMap[lowerName] &&
-      !megaStoneMap[lowerName] &&
-      !legendsStones[lowerName]
-    )
-      return;
-
-    await updateAllOfPokemon(lowerName, async (pokeImg) => {
-      const isMegaActive = pokeImg.dataset.mega === "true";
-      if (!isMegaActive) {
-        // Switch to Mega form
-        let megaName = lowerName;
-        if (lowerName === "charizard") {
-          megaName = megaStone.toLowerCase().includes("x")
-            ? "charizard-mega-x"
-            : "charizard-mega-y";
-        } else if (lowerName === "mewtwo") {
-          megaName = megaStone.toLowerCase().includes("x")
-            ? "mewtwo-mega-x"
-            : "mewtwo-mega-y";
-        } else {
-          megaName = `${lowerName}-mega`;
-        }
-        const variant = isShiny ? "front_shiny" : "front_default";
-        let spriteUrl;
-        if (version !== "letsgo") {
-          if (version === "plza") {
-            // Use PLZA image, Mega-chandelure or Mega-charizard-X
-            parts = megaName.split("-");
-            spriteUrl =
-              plzaImages[
-                "Mega-" +
-                  parts[0] +
-                  (parts[2] ? parts[2].toUpperCase() : "") +
-                  (isShiny ? "_s" : "")
-              ];
-          } else
-            spriteUrl = await fetchPokemonSprite(megaName, version, variant);
-        } else {
-          // Use ultra sun/moon image
-          spriteUrl = await fetchPokemonSprite(
-            megaName,
-            "ultra-sun-ultra-moon",
-            variant
-          );
-        }
-        if (spriteUrl) pokeImg.src = spriteUrl;
-        pokeImg.dataset.mega = "true";
-        pokeImg.dataset.megaStone = megaStone;
-        localStorage.setItem(`${lowerName}-mega-active-${version}`, "true");
-        localStorage.setItem(`${lowerName}-mega-stone-${version}`, megaStone);
-      } else {
-        // Switch back to normal form
-        const variant = isShiny ? "front_shiny" : "front_default";
-        const spriteUrl = await fetchPokemonSprite(lowerName, version, variant);
-        if (spriteUrl) pokeImg.src = spriteUrl;
-        pokeImg.dataset.mega = "false";
-        pokeImg.dataset.megaStone = "";
-        localStorage.setItem(`${lowerName}-mega-active-${version}`, "false");
-        localStorage.setItem(`${lowerName}-mega-stone-${version}`, "");
-      }
+    img.addEventListener("touchstart", (e) => {
+      pressTimer = setTimeout(() => {
+        mobileMegaClick(e);
+      }, longPressTime);
     });
+
+    img.addEventListener("touchend", () => clearTimeout(pressTimer));
+    img.addEventListener("touchcancel", () => clearTimeout(pressTimer));
+    img.addEventListener("touchmove", () => clearTimeout(pressTimer));
+
+    function mobileMegaClick(e) {
+      megaRightClick(e, img);
+    }
+  }
+
+  // Add right-click handler for Mega form toggle
+  img.addEventListener("contextmenu", async () => {
+    await megaRightClick(e, img);
   });
 });
+
+async function megaRightClick(e, img) {
+  e.preventDefault();
+  const li = img.closest("li");
+  const lowerName = li.querySelector(".item-header").textContent.toLowerCase();
+  if (lowerName === "zygarde") return;
+  const megaStone = img.alt;
+  const version = li.querySelector("img[data-pokemon]").dataset.version;
+  const isShiny = getShiny(li.querySelector("img[data-pokemon]"), version);
+
+  // Only act if mega extension is present (in either map)
+  if (
+    !megaMap[lowerName] &&
+    !megaStoneMap[lowerName] &&
+    !legendsStones[lowerName]
+  )
+    return;
+
+  await updateAllOfPokemon(lowerName, async (pokeImg) => {
+    const isMegaActive = pokeImg.dataset.mega === "true";
+    if (!isMegaActive) {
+      // Switch to Mega form
+      let megaName = lowerName;
+      if (lowerName === "charizard") {
+        megaName = megaStone.toLowerCase().includes("x")
+          ? "charizard-mega-x"
+          : "charizard-mega-y";
+      } else if (lowerName === "mewtwo") {
+        megaName = megaStone.toLowerCase().includes("x")
+          ? "mewtwo-mega-x"
+          : "mewtwo-mega-y";
+      } else {
+        megaName = `${lowerName}-mega`;
+      }
+      const variant = isShiny ? "front_shiny" : "front_default";
+      let spriteUrl;
+      if (version !== "letsgo") {
+        if (version === "plza") {
+          // Use PLZA image, Mega-chandelure or Mega-charizard-X
+          parts = megaName.split("-");
+          spriteUrl =
+            plzaImages[
+              "Mega-" +
+                parts[0] +
+                (parts[2] ? parts[2].toUpperCase() : "") +
+                (isShiny ? "_s" : "")
+            ];
+        } else spriteUrl = await fetchPokemonSprite(megaName, version, variant);
+      } else {
+        // Use ultra sun/moon image
+        spriteUrl = await fetchPokemonSprite(
+          megaName,
+          "ultra-sun-ultra-moon",
+          variant
+        );
+      }
+      if (spriteUrl) pokeImg.src = spriteUrl;
+      pokeImg.dataset.mega = "true";
+      pokeImg.dataset.megaStone = megaStone;
+      localStorage.setItem(`${lowerName}-mega-active-${version}`, "true");
+      localStorage.setItem(`${lowerName}-mega-stone-${version}`, megaStone);
+    } else {
+      // Switch back to normal form
+      const variant = isShiny ? "front_shiny" : "front_default";
+      const spriteUrl = await fetchPokemonSprite(lowerName, version, variant);
+      if (spriteUrl) pokeImg.src = spriteUrl;
+      pokeImg.dataset.mega = "false";
+      pokeImg.dataset.megaStone = "";
+      localStorage.setItem(`${lowerName}-mega-active-${version}`, "false");
+      localStorage.setItem(`${lowerName}-mega-stone-${version}`, "");
+    }
+  });
+}
 
 async function updateAllOfPokemon(pokemonName, updater) {
   const imgs = document.querySelectorAll(`img[data-pokemon="${pokemonName}"]`);
