@@ -2366,42 +2366,11 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     const isFav = star.classList.toggle("favorited");
     localStorage.setItem(key, isFav.toString());
   });
-  let pressTimer;
-  let longPressed = false;
 
   if (window.matchMedia("(pointer: coarse)").matches) {
-    wrapper.addEventListener("touchstart", (e) => {
-      e.preventDefault(); // Prevent default touch behavior
-      longPressed = false;
-      pressTimer = setTimeout(() => {
-        longPressed = true;
-        // Hold: open Bulbapedia
-        leftClickImage(e, wrapper);
-      }, 500);
-    });
-
-    wrapper.addEventListener("touchend", (e) => {
-      clearTimeout(pressTimer);
-      // If longPressed, prevent any further action
-      if (longPressed) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-      }
-    });
-
-    wrapper.addEventListener("touchmove", () => {
-      // Cancel long press if finger moves
-      clearTimeout(pressTimer);
-    });
     wrapper.addEventListener("click", (e) => {
-      // If long press was triggered, prevent default click behavior
-      if (longPressed) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-      } else {
-        // Tap: toggle shiny
-        rightClickImage(e, wrapper);
-      }
+      e.preventDefault(); // Prevent default click behavior
+      rightClickImage(e, wrapper);
     });
   } else {
     wrapper.addEventListener("click", (e) => {
