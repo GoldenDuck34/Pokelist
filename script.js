@@ -2395,7 +2395,6 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     wrapper.addEventListener("click", (e) => {
       // If long press was triggered, prevent default click behavior
       if (longPressed) {
-        e.preventDefault();
         e.stopImmediatePropagation();
       } else {
         rightClickImage(); // Inverted on mobile
