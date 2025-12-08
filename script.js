@@ -4694,7 +4694,7 @@ document.querySelectorAll(".item-extension img").forEach((img) => {
   }
 
   // Add right-click handler for Mega form toggle
-  img.addEventListener("contextmenu", async () => {
+  img.addEventListener("contextmenu", async (e) => {
     await megaRightClick(e, img);
   });
 });
