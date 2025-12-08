@@ -500,9 +500,21 @@ const plzaImages = {};
     dropdown.appendChild(options);
 
     // Dropdown toggle logic
-    selected.onclick = () => {
+    selected.onclick = (e) => {
       dropdown.classList.toggle("open");
+
+      const options = dropdown.querySelector(".options");
+      const rect = options.getBoundingClientRect();
+
+      // Reset any previous positioning
+      dropdown.classList.remove("left");
+
+      // If dropdown goes off-screen on the right → flip to the left
+      if (rect.right > window.innerWidth) {
+        dropdown.classList.add("left");
+      }
     };
+
     selected.onblur = () => {
       setTimeout(() => dropdown.classList.remove("open"), 150);
     };

@@ -433,6 +433,11 @@ li + .list-header {
   font-weight: 700;
 }
 
+.pokelist-dropdown.left .options {
+  right: 0;
+  left: auto;
+}
+
 .pokelist-dropdown .selected::after {
   content: " ▼";
   font-size: 0.9em;
