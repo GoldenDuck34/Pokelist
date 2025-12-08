@@ -417,8 +417,10 @@ li + .list-header {
 /* Dropdown container */
 .pokelist-dropdown {
   position: relative;
-  display: inline-block;
   margin: 0 4px;
+  display: flex;
+  align-items: center;
+  
 }
 
 .pokelist-dropdown .selected {
@@ -578,9 +580,6 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
   #random-card-wrapper {
     max-width: 95vw;
     padding: 10px;
-  }
-  .pokelist-dropdown .selected {
-    font-size: 0.9rem;
   }
 }
 
