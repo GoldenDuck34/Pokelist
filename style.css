@@ -588,7 +588,7 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
     gap: 8px;
   }
   .square-list li {
-    max-width: 110px;
+    max-width: 90px;
     height: 180px;
     padding: 4px;
     margin-bottom: 10px;
@@ -637,5 +637,8 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
   .custom-dropdown {
     width: 100%;
     min-width: 0;
+  }
+  .pokelist-dropdown .selected {
+    padding: 4px 8px;
   }
 }
