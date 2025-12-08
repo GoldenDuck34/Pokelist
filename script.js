@@ -332,8 +332,11 @@ const visibilityMap = new WeakMap();
 
 // --- Mega stone image fetcher ---
 function getMegaStoneImgUrl(stoneName, version) {
-  // Fetch the default sprite from pokeapi.co/api/v2/item/mega stone (e.g. charizardite X would be charizardite-x)
-  const normalized = stoneName.toLowerCase().replace(/ /g, "-");
+  // Get the image from serebii
+  const normalized = stoneName
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace("-", "");
   return `https://www.serebii.net/itemdex/sprites/${
     version === "plza" ? "za" : "pgl"
   }/${normalized}.png`;
@@ -4812,6 +4815,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   });
 });
+
 
 
 
