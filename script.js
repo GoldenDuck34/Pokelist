@@ -428,6 +428,7 @@ const plzaImages = {};
   const groups = [
     {
       label: "Gen 1-3",
+      type: "right",
       links: [
         { href: "red-blue.html", label: "Red/Blue" },
         { href: "gold-silver.html", label: "Gold/Silver" },
@@ -439,6 +440,7 @@ const plzaImages = {};
     },
     {
       label: "Gen 4-6",
+      type: "left",
       links: [
         { href: "diamond-pearl.html", label: "Diamond/Pearl" },
         { href: "platinum.html", label: "Platinum" },
@@ -454,6 +456,7 @@ const plzaImages = {};
     },
     {
       label: "Gen 7+",
+      type: "left",
       links: [
         { href: "sun-moon.html", label: "Sun/Moon" },
         { href: "letsgo.html", label: "Let's Go Pikachu/Eevee" },
@@ -482,6 +485,9 @@ const plzaImages = {};
   groups.forEach((group) => {
     const dropdown = document.createElement("div");
     dropdown.className = "pokelist-dropdown";
+    if (group.type === "left") {
+      dropdown.classList.add("left");
+    }
 
     const selected = document.createElement("span");
     selected.className = "selected";
@@ -502,12 +508,10 @@ const plzaImages = {};
     // Dropdown toggle logic
     selected.onclick = (e) => {
       dropdown.classList.toggle("open");
-      dropdown.classList.toggle("left");
     };
 
     selected.onblur = () => {
       dropdown.classList.remove("open");
-      dropdown.classList.remove("left");
     };
 
     nav.appendChild(dropdown);
