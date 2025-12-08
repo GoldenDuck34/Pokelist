@@ -2368,7 +2368,6 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
   });
   let pressTimer;
   let longPressed = false;
-  let blockClick = false;
 
   if (window.matchMedia("(pointer: coarse)").matches) {
     wrapper.addEventListener("touchstart", (e) => {
@@ -2376,13 +2375,8 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
       longPressed = false;
       pressTimer = setTimeout(() => {
         longPressed = true;
-        blockClick = true;
         // Hold: open Bulbapedia
         leftClickImage(e, wrapper);
-
-        setTimeout(() => {
-          blockClick = false;
-        }, 50);
       }, 500);
     });
 
@@ -2401,10 +2395,9 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
     });
     wrapper.addEventListener("click", (e) => {
       // If long press was triggered, prevent default click behavior
-      if (longPressed || blockClick) {
+      if (longPressed) {
         e.preventDefault();
         e.stopImmediatePropagation();
-        return;
       } else {
         // Tap: toggle shiny
         rightClickImage(e, wrapper);
