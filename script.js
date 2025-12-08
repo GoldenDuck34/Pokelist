@@ -337,7 +337,6 @@ function getMegaStoneImgUrl(stoneName, version) {
     .toLowerCase()
     .replace(/ /g, "-")
     .replace("-", "");
-  console.log(normalized);
   return `https://www.serebii.net/itemdex/sprites/${
     version === "plza" ? "za" : "pgl"
   }/${normalized}.png`;
@@ -4727,6 +4726,7 @@ async function megaRightClick(e, img) {
     !legendsStones[lowerName]
   )
     return;
+  console.log(lowerName);
 
   await updateAllOfPokemon(lowerName, async (pokeImg) => {
     const isMegaActive = pokeImg.dataset.mega === "true";
@@ -4750,6 +4750,11 @@ async function megaRightClick(e, img) {
         if (version === "plza") {
           // Use PLZA image, Mega-chandelure or Mega-charizard-X
           parts = megaName.split("-");
+          console.log(megaName, 
+              "Mega-" +
+                parts[0] +
+                (parts[2] ? parts[2].toUpperCase() : "") +
+                (isShiny ? "_s" : ""));
           spriteUrl =
             plzaImages[
               "Mega-" +
@@ -4831,4 +4836,5 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
+
 
