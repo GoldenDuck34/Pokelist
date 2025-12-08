@@ -2375,6 +2375,7 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
       longPressed = false;
       pressTimer = setTimeout(() => {
         longPressed = true;
+        // Hold: open Bulbapedia
         leftClickImage(e, wrapper);
       }, 500);
     });
@@ -2398,7 +2399,8 @@ document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
         e.preventDefault();
         e.stopImmediatePropagation();
       } else {
-        rightClickImage(); // Inverted on mobile
+        // Tap: toggle shiny
+        rightClickImage(e, wrapper);
       }
     });
   } else {
