@@ -510,13 +510,13 @@ const plzaImages = {};
       dropdown.classList.remove("left");
 
       // If dropdown goes off-screen on the right → flip to the left
-      if (rect.right + 100 > window.innerWidth) {
+      if (rect.right > window.innerWidth) {
         dropdown.classList.add("left");
       }
     };
 
     selected.onblur = () => {
-      setTimeout(() => dropdown.classList.remove("open"), 150);
+      dropdown.classList.remove("open");
     };
 
     nav.appendChild(dropdown);
@@ -4830,7 +4830,3 @@ window.addEventListener("beforeinstallprompt", (e) => {
     });
   });
 });
-
-
-
-
