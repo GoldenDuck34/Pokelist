@@ -2337,7 +2337,6 @@ async function rightClickImage(e, wrapper) {
 }
 
 function leftClickImage(e, wrapper) {
-  // prevent the synthetic click if long press happened
   const img = wrapper.querySelector("img[data-pokemon]");
   if (!img) return;
 

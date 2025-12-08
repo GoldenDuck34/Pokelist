@@ -584,7 +584,7 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
 
 @media (max-width: 600px) {
   .square-list {
-    grid-template-columns: repeat(2, minmax(110px, 1fr));
+    grid-template-columns: repeat(3, minmax(110px, 1fr));
     gap: 8px;
   }
   .square-list li {
