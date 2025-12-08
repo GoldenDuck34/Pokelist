@@ -510,7 +510,7 @@ const plzaImages = {};
       dropdown.classList.remove("left");
 
       // If dropdown goes off-screen on the right → flip to the left
-      if (rect.right > window.innerWidth) {
+      if (rect.right + 30 > window.innerWidth) {
         dropdown.classList.add("left");
       }
     };
