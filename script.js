@@ -2187,7 +2187,6 @@ async function rightClickImage(e, wrapper) {
     });
     return;
   } else if (baseName.startsWith("unown")) {
-    console.log("here");
     // In any gen except brilliantdiamond-shiningpearl, show shiny "a" form, if that gen, then show correct shiny form
     const isShiny = !getShiny(img, version);
     const form = img.dataset.form || "a";
@@ -2210,7 +2209,7 @@ async function rightClickImage(e, wrapper) {
         ];
     } else {
       spriteUrl = await fetchPokemonSprite(
-        `unown-a`,
+        `unown`,
         version,
         isShiny ? "front_shiny" : "front_default"
       );
@@ -2236,7 +2235,6 @@ async function rightClickImage(e, wrapper) {
     });
     return;
   }
-  console.log("there");
 
   if (["gold", "silver"].includes(img.dataset.version)) {
     const baseName = img.dataset.pokemon;
