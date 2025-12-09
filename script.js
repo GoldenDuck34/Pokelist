@@ -1088,7 +1088,7 @@ async function fetchPokemonSprite(
     }
     if (!response.ok)
       throw new Error(
-        z`Pokemon ${pokemonName} not found ${custom ? custom : ""}`
+        `Pokemon ${pokemonName} not found ${custom ? custom : ""}`
       );
     if (custom !== "") return custom;
     const data = await response.json();
