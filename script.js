@@ -550,7 +550,11 @@ const plzaImages = {};
     // Mr. Rime → mr-rime
     if (lower === "mr. rime") return "mr-rime";
 
-    if (lower === "deoxys") return "deoxys-normal";
+    if (lower === "deoxys") {
+      if (version === "gen3") return "deoxys-normal";
+      if (version === "emerald") return "deoxys-speed";
+      if (version === "firered") return "deoxys-attack";
+    }
 
     if (lower === "giratina") return "giratina-altered";
 
@@ -3582,14 +3586,29 @@ function rotateAll() {
     });
   }
 
-  // Deoxys (special: uses deoxys-normal as baseName)
-  rotateForms({
-    baseName: "deoxys-normal",
-    forms: ["normal", "attack", "defense", "speed"],
-    getSpriteUrl: (form, version, variant) =>
-      fetchPokemonSprite(`deoxys-${form}`, version, variant),
-    interval: 2000,
-  });
+  if (
+    version !== "gen3" &&
+    version !== "emerald" &&
+    version !== "firered-leafgreen"
+  ) {
+    // Deoxys (special: uses deoxys-normal as baseName)
+    rotateForms({
+      baseName: "deoxys-normal",
+      forms: ["normal", "attack", "defense", "speed"],
+      getSpriteUrl: (form, version, variant) =>
+        fetchPokemonSprite(`deoxys-${form}`, version, variant),
+      interval: 2000,
+    });
+  } else if (version === "firered-leafgreen") {
+    // Rotate attack and defense
+    rotateForms({
+      baseName: "deoxys-attack",
+      forms: ["attack", "defense"],
+      getSpriteUrl: (form, version, variant) =>
+        fetchPokemonSprite(`deoxys-${form}`, version, variant),
+      interval: 3000,
+    });
+  }
 
   rotateForms({
     baseName: "deerling",
