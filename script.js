@@ -510,10 +510,6 @@ const plzaImages = {};
       dropdown.classList.toggle("open");
     };
 
-    selected.onblur = () => {
-      dropdown.classList.remove("open");
-    };
-
     nav.appendChild(dropdown);
   });
 
@@ -4823,5 +4819,13 @@ window.addEventListener("beforeinstallprompt", (e) => {
       deferredPrompt = null;
       installBtn.style.display = "none"; // Hide after install
     });
+  });
+});
+
+document.addEventListener("click", (e) => {
+  document.querySelectorAll(".pokelist-dropdown.open").forEach((dd) => {
+    if (!dd.contains(e.target)) {
+      dd.classList.remove("open");
+    }
   });
 });
