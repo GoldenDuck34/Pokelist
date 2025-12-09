@@ -3668,9 +3668,6 @@ function rotateAll() {
         "x",
         "y",
         "z",
-        "exclamation",
-        "question",
-        "default",
       ],
       getSpriteUrl: (form, version, variant, isShiny) => {
         if (version === "brilliantdiamond-shiningpearl") {
@@ -3697,7 +3694,7 @@ function rotateAll() {
           }/${formKey === "default" ? "201" : `201-${formKey}`}.png`
         );
       },
-      interval: 3000,
+      interval: 1000,
     });
   }
 
