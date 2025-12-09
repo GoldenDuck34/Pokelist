@@ -431,6 +431,7 @@ const plzaImages = {};
       type: "right",
       links: [
         { href: "red-blue.html", label: "Red/Blue" },
+        { href: "yellow.html", label: "Yellow" },
         { href: "gold-silver.html", label: "Gold/Silver" },
         { href: "crystal.html", label: "Crystal" },
         { href: "ruby-sapphire.html", label: "Ruby/Sapphire" },
