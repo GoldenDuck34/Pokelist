@@ -1996,13 +1996,15 @@ async function rightClickImage(e, wrapper) {
           ];
       } else {
         if (form === "plant") {
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            !isShiny ? "shiny/" : ""
-          }412.png`;
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${!isShiny ? "/shiny" : ""}/412.png`;
         } else {
-          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            !isShiny ? "shiny/" : ""
-          }412-${form}.png`;
+          spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${
+            !isShiny ? "/shiny" : ""
+          }/412-${form}.png`;
         }
       }
     } else if (baseName === "shaymin-land") {
