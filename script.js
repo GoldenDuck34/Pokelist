@@ -1065,7 +1065,7 @@ async function fetchPokemonSprite(
   // If the pokemon is not in first 151 and version is firered-leafgreen, change version to emerald
   if (
     version === "firered-leafgreen" &&
-    !first151.includes(
+    !pokemon151.includes(
       pokemonName
         .split("-")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
