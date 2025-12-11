@@ -1068,7 +1068,8 @@ async function fetchPokemonSprite(
         .split("-")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
         .join("-")
-    )
+    ) &&
+    !pokemonName.startsWith("deoxys")
   ) {
     version = "emerald";
   }
@@ -1262,13 +1263,6 @@ async function fetchPokemonSprite(
     const data = await response.json();
 
     const gen = generationMap[version] || "generation-i";
-    console.log(
-      data,
-      data.sprites.versions?.[gen]?.[generationMap2[version]]?.[variant],
-      pokemonName,
-      version,
-      gen
-    );
     if (data.sprites.versions?.[gen]?.[generationMap2[version]]?.[variant]) {
       spriteCache[cacheKey] =
         data.sprites.versions[gen][generationMap2[version]][variant];
@@ -3833,69 +3827,67 @@ function rotateAll() {
     interval: 3000,
   });
 
-  if (version !== "gen4") {
-    // Unown (shiny always shows "a" form)
-    rotateForms({
-      baseName: "unown",
-      forms: [
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z",
-      ],
-      getSpriteUrl: (form, version, variant, isShiny) => {
-        if (version === "brilliantdiamond-shiningpearl") {
-          // Can show any shiny
-          return bdspImages[
-            `Unown-${form.charAt(0).toUpperCase() + form.slice(1)}${
-              isShiny ? "_s" : ""
-            }`
-          ];
-        } else if (version === "pla") {
-          return plaImages[
-            `Unown-${form.charAt(0).toUpperCase() + form.slice(1)}${
-              isShiny ? "_s" : ""
-            }`
-          ];
-        } else if (version === "firered-leafgreen") {
-          // Use emerald version
-          return fetchPokemonSprite(`unown-${form}`, "emerald", variant);
-        }
-        const generation = generationMap[version];
-        const ver = generationMap2[version];
-        // If shiny, always use "a" form
-        const formKey = isShiny ? "a" : form;
-        return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-            isShiny ? "/shiny" : ""
-          }/${formKey === "default" ? "201" : `201-${formKey}`}.png`
-        );
-      },
-      interval: 1000,
-    });
-  }
+  // Unown (shiny always shows "a" form)
+  rotateForms({
+    baseName: "unown",
+    forms: [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h",
+      "i",
+      "j",
+      "k",
+      "l",
+      "m",
+      "n",
+      "o",
+      "p",
+      "q",
+      "r",
+      "s",
+      "t",
+      "u",
+      "v",
+      "w",
+      "x",
+      "y",
+      "z",
+    ],
+    getSpriteUrl: (form, version, variant, isShiny) => {
+      if (version === "brilliantdiamond-shiningpearl") {
+        // Can show any shiny
+        return bdspImages[
+          `Unown-${form.charAt(0).toUpperCase() + form.slice(1)}${
+            isShiny ? "_s" : ""
+          }`
+        ];
+      } else if (version === "pla") {
+        return plaImages[
+          `Unown-${form.charAt(0).toUpperCase() + form.slice(1)}${
+            isShiny ? "_s" : ""
+          }`
+        ];
+      } else if (version === "firered-leafgreen") {
+        // Use emerald version
+        version = "emerald";
+      }
+      const generation = generationMap[version];
+      const ver = generationMap2[version];
+      // If shiny, always use "a" form
+      const formKey = isShiny ? "a" : form;
+      return Promise.resolve(
+        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
+          isShiny ? "/shiny" : ""
+        }/${formKey === "default" ? "201" : `201-${formKey}`}.png`
+      );
+    },
+    interval: 1000,
+  });
 
   rotateForms({
     baseName: "meloetta-aria",
