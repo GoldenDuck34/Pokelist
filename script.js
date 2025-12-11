@@ -2774,12 +2774,8 @@ document
         for (const form of forms) {
           let url =
             form === "plant"
-              ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                  !isShiny ? "shiny/" : ""
-                }412.png`
-              : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                  !isShiny ? "shiny/" : ""
-                }412-${form}.png`;
+              ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412.png`
+              : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412-${form}.png`;
           img.src = url;
           img.dataset.form = form;
           setShiny(img, version, !isShiny);
@@ -3705,15 +3701,17 @@ function rotateAll() {
       }
       if (form === "plant") {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            isShiny ? "shiny/" : ""
-          }412.png`
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`
         );
       } else {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-            isShiny ? "shiny/" : ""
-          }412-${form}.png`
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${
+            isShiny ? "/shiny" : ""
+          }/412-${form}.png`
         );
       }
     },
