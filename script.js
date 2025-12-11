@@ -2132,7 +2132,7 @@ async function rightClickImage(e, wrapper) {
         }
       } else
         spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-          !isShiny ? "shiny/" : ""
+          !isShiny ? "/shiny" : ""
         }/422${formSuffix}.png`;
     } else if (baseName === "gastrodon") {
       form = formName || "west";
