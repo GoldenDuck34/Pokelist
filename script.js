@@ -3616,20 +3616,6 @@ function rotateForms({
       if (spriteUrl) img.src = spriteUrl;
       setShiny(img, img.dataset.version, isShiny);
 
-      const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
-      );
-      const visibleIndex = li.dataset.visibleIndex
-        ? parseInt(li.dataset.visibleIndex)
-        : 0;
-      loadCheckboxState(
-        baseName.replace(/-.*$/, ""), // Use base name for key
-        img.dataset.version,
-        isShiny,
-        checkboxes,
-        visibleIndex
-      );
-
       if (onFormChange) onFormChange(form, img, li);
     });
   }, interval);
