@@ -4253,52 +4253,105 @@ function rotateAll() {
     interval: 3000,
   });
 
-  rotateForms({
-    baseName: "arceus",
-    forms: [
-      "normal",
-      "fire",
-      "water",
-      "electric",
-      "grass",
-      "ice",
-      "fighting",
-      "poison",
-      "ground",
-      "flying",
-      "psychic",
-      "bug",
-      "rock",
-      "ghost",
-      "dragon",
-      "dark",
-      "steel",
-      "fairy",
-    ],
-    getSpriteUrl: (form, version, variant) => {
-      if (version === "brilliantdiamond-shiningpearl") {
-        return bdspImages[
-          `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
-            variant === "front_shiny" ? "_s" : ""
-          }`
-        ];
-      } else if (version === "pla") {
-        return plaImages[
-          `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
-            variant === "front_shiny" ? "_s" : ""
-          }`
-        ];
-      }
-      const gen = generationMap[version];
-      const ver = generationMap2[version];
-      return Promise.resolve(
-        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
-          variant === "front_shiny" ? "/shiny" : ""
-        }/493-${form}.png`
-      );
-    },
-    interval: 1000,
-  });
+  // Not in gen 4 or 5
+  if (
+    !["gen4", "platinum", "heartgold-soulsilver", "gen5", "gen52"].includes(
+      version
+    )
+  ) {
+    rotateForms({
+      baseName: "arceus",
+      forms: [
+        "normal",
+        "fire",
+        "water",
+        "electric",
+        "grass",
+        "ice",
+        "fighting",
+        "poison",
+        "ground",
+        "flying",
+        "psychic",
+        "bug",
+        "rock",
+        "ghost",
+        "dragon",
+        "dark",
+        "steel",
+        "fairy",
+      ],
+      getSpriteUrl: (form, version, variant) => {
+        if (version === "brilliantdiamond-shiningpearl") {
+          return bdspImages[
+            `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        } else if (version === "pla") {
+          return plaImages[
+            `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        return Promise.resolve(
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+            variant === "front_shiny" ? "/shiny" : ""
+          }/493-${form}.png`
+        );
+      },
+      interval: 1000,
+    });
+  } else {
+    rotateForms({
+      baseName: "arceus",
+      forms: [
+        "normal",
+        "fire",
+        "water",
+        "electric",
+        "grass",
+        "ice",
+        "fighting",
+        "poison",
+        "ground",
+        "flying",
+        "psychic",
+        "bug",
+        "rock",
+        "ghost",
+        "dragon",
+        "dark",
+        "steel",
+      ],
+      getSpriteUrl: (form, version, variant) => {
+        if (version === "brilliantdiamond-shiningpearl") {
+          return bdspImages[
+            `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        } else if (version === "pla") {
+          return plaImages[
+            `Arceus-${form.charAt(0).toUpperCase() + form.slice(1)}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        return Promise.resolve(
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+            variant === "front_shiny" ? "/shiny" : ""
+          }/493-${form}.png`
+        );
+      },
+      interval: 1000,
+    });
+  }
 
   rotateForms({
     baseName: "kyurem",
