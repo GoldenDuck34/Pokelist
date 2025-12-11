@@ -707,7 +707,7 @@ const plzaImages = {};
     if (lower === "deoxys") {
       if (version === "gen3") return "deoxys-normal";
       if (version === "emerald") return "deoxys-speed";
-      if (version === "firered") return "deoxys-attack";
+      if (version === "firered-leafgreen") return "deoxys-attack";
     }
 
     if (lower === "giratina") return "giratina-altered";
@@ -2377,6 +2377,12 @@ async function rightClickImage(e, wrapper) {
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
             .join("-") + (isShiny ? "_s" : "")
         ];
+    } else if (version === "firered-leafgreen") {
+      spriteUrl = await fetchPokemonSprite(
+        `unown`,
+        "emerald",
+        isShiny ? "front_shiny" : "front_default"
+      );
     } else {
       spriteUrl = await fetchPokemonSprite(
         `unown`,
@@ -3868,6 +3874,9 @@ function rotateAll() {
               isShiny ? "_s" : ""
             }`
           ];
+        } else if (version === "firered-leafgreen") {
+          // Use emerald version
+          return fetchPokemonSprite(`unown-${form}`, "emerald", variant);
         }
         const generation = generationMap[version];
         const ver = generationMap2[version];
