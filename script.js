@@ -1891,8 +1891,6 @@ async function rightClickImage(e, wrapper) {
     return;
   }
 
-  console.log(baseName);
-
   // If this is a form-rotating Pokémon (except unown)
   if (
     (formRotators.includes(baseName) &&
@@ -2347,6 +2345,11 @@ async function rightClickImage(e, wrapper) {
           version,
           newVariant
         );
+    } else if (baseName.startsWith("arceus")) {
+      form = formName || "normal";
+      spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+        generationMap[version]
+      }/${generationMap2[version]}/493${!isShiny ? "-shiny" : ""}-${form}.png`;
     } else {
       // General case for other form-rotating Pokémon
       form = formName || "normal";
