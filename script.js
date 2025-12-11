@@ -707,7 +707,7 @@ const plzaImages = {};
     if (lower === "deoxys") {
       if (version === "gen3") return "deoxys-normal";
       if (version === "emerald") return "deoxys-speed";
-      if (version === "firered-leafgreen") return "deoxys-attack";
+      if (version === "firered-leafgreen") {console.log("here");return "deoxys-attack";};
     }
 
     if (lower === "giratina") return "giratina-altered";
@@ -3763,6 +3763,7 @@ function rotateAll() {
     version !== "emerald" &&
     version !== "firered-leafgreen"
   ) {
+    console.log("everywhere");
     // Deoxys (special: uses deoxys-normal as baseName)
     rotateForms({
       baseName: "deoxys-normal",
@@ -3772,6 +3773,7 @@ function rotateAll() {
       interval: 2000,
     });
   } else if (version === "firered-leafgreen") {
+    console.log("there");
     // Rotate attack and defense
     rotateForms({
       baseName: "deoxys-attack",
