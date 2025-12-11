@@ -726,7 +726,6 @@ const plzaImages = {};
       if (version === "gen3") return "deoxys-normal";
       if (version === "emerald") return "deoxys-speed";
       if (version === "firered-leafgreen") return "deoxys-attack";
-    } else {
       return "deoxys-normal";
     }
 
