@@ -1891,6 +1891,8 @@ async function rightClickImage(e, wrapper) {
     return;
   }
 
+  console.log(baseName);
+
   // If this is a form-rotating Pokémon (except unown)
   if (
     (formRotators.includes(baseName) &&
