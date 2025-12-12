@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     body.classList.remove("dark-mode", "light-mode");
     if (theme === "dark") {
       body.classList.add("dark-mode");
-      themeToggle.textContent = "☀️";
+      themeToggle.textContent = "🖥️";
       themeToggle.title = "Switch to light mode";
     } else if (theme === "light") {
       body.classList.add("light-mode");
-      themeToggle.textContent = "🌙";
+      themeToggle.textContent = "☀️";
       themeToggle.title = "Switch to dark mode";
     } else {
       // Auto: follow system
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         body.classList.add("light-mode");
       }
-      themeToggle.textContent = "🖥️";
+      themeToggle.textContent = "🌙";
       themeToggle.title = "Switch to system mode";
     }
   }
@@ -52,44 +52,43 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('Service Worker registered:', reg))
-      .catch(err => console.log('Service Worker failed:', err));
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then((reg) => console.log("Service Worker registered:", reg))
+      .catch((err) => console.log("Service Worker failed:", err));
   });
 }
 let deferredPrompt;
 
 // Listen for the install prompt event
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
   // Create the install button dynamically
-  const installBtn = document.createElement('button');
-  installBtn.id = 'install-btn';
-  installBtn.textContent = 'Install App';
-  installBtn.style.position = 'fixed';
-  installBtn.style.bottom = '20px';
-  installBtn.style.left = '20px';
-  installBtn.style.padding = '10px 20px';
-  installBtn.style.fontSize = '16px';
-  installBtn.style.zIndex = '1000';
-  
+  const installBtn = document.createElement("button");
+  installBtn.id = "install-btn";
+  installBtn.textContent = "Install App";
+  installBtn.style.position = "fixed";
+  installBtn.style.bottom = "20px";
+  installBtn.style.left = "20px";
+  installBtn.style.padding = "10px 20px";
+  installBtn.style.fontSize = "16px";
+  installBtn.style.zIndex = "1000";
+
   document.body.appendChild(installBtn);
 
   // Show the button when the app can be installed
-  installBtn.style.display = 'block';
+  installBtn.style.display = "block";
 
   // Handle button click
-  installBtn.addEventListener('click', () => {
+  installBtn.addEventListener("click", () => {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then(() => {
       deferredPrompt = null;
-      installBtn.style.display = 'none'; // Hide after install
+      installBtn.style.display = "none"; // Hide after install
     });
   });
 });
-
-
