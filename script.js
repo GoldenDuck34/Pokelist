@@ -75,7 +75,7 @@ legendsStones = {
   drampa: ["Drampanite"],
   falinks: ["Falinksite"],
   "floette (black)": ["Floettite"],
-  zygarde: ["zygardite"],
+  zygarde: ["Zygardite"],
 };
 
 const alolanForms = [
