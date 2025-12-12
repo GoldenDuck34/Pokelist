@@ -1,13 +1,12 @@
-// Disable all caching
+// Minimal service worker for PWA — does not cache anything
 self.addEventListener("install", () => self.skipWaiting());
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key))))
-  );
-  self.clients.claim();
-});
+self.addEventListener("activate", () => self.clients.claim());
 
-// Always fetch from network, never cache
+// Don't cache script.js. It is updated frequently.
 self.addEventListener("fetch", event => {
-  event.respondWith(fetch(event.request));
+  if (event.request.url.endsWith("script.js") ) {
+    event.respondWith(
+      fetch(event.request, { cache: "no-store" })
+    );
+  }
 });
