@@ -2066,8 +2066,14 @@ async function rightClickImage(e, wrapper) {
         version,
         newVariant
       );
-    } else if (baseName === "darmanitan-standard-galar") {
+    } else if (baseName.includes("darmanitan") && baseName.includes("galar")) {
       form = formName || "standard-galar";
+      console.log(
+        `Darmanitan-Galar-${form.slice(9)}`
+          .split("-")
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+      );
       spriteUrl =
         swordShieldImages[
           `Darmanitan-Galar-${form.slice(9)}`
