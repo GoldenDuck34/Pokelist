@@ -450,6 +450,7 @@ const formRotators = [
   "eiscue",
   "eiscue-ice",
   "eiscue-no-ice",
+  "calyrex",
   "calyrex-ice",
   "calyrex-shadow",
   "zarude-dada",
