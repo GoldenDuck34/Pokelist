@@ -2067,10 +2067,10 @@ async function rightClickImage(e, wrapper) {
         newVariant
       );
     } else if (baseName === "darmanitan-standard-galar") {
-      form = formName || "standard";
+      form = formName || "standard-galar";
       spriteUrl =
         swordShieldImages[
-          `Darmanitan-Galar-${form}`
+          `Darmanitan-Galar-${form.slice(9)}`
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
             .join("-") + (newVariant === "front_shiny" ? "_s" : "")
@@ -3727,9 +3727,9 @@ function rotateAll() {
     forms: ["standard-galar", "zen-galar"],
     getSpriteUrl: (form, version, variant) =>
       swordShieldImages[
-        `Darmanitan${form === "standard" ? "" : "-Zen"}${
-          variant === "front_shiny" ? "_s" : ""
-        }`
+        `Darmanitan${
+          form === "standard-galar" ? "-Standard-Galar" : "-Zen-Galar"
+        }${variant === "front_shiny" ? "_s" : ""}`
       ],
   });
 
