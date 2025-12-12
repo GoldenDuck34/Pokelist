@@ -3933,28 +3933,28 @@ function rotateAll() {
       interval: 3000,
     });
 
-  rotateForms({
-    baseName: "kyurem",
-    forms: ["normal", "black", "white"],
-    getSpriteUrl: (form, version, variant) => {
-      const gen = generationMap[version];
-      const ver = generationMap2[version];
-      return Promise.resolve(
-        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
-          variant === "front_shiny" ? "/shiny" : ""
-        }/646${form !== "normal" ? `-${form}` : ""}.png`
-      );
-    },
-    interval: 3000,
-  });
+    rotateForms({
+      baseName: "kyurem",
+      forms: ["normal", "black", "white"],
+      getSpriteUrl: (form, version, variant) => {
+        const gen = generationMap[version];
+        const ver = generationMap2[version];
+        return Promise.resolve(
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+            variant === "front_shiny" ? "/shiny" : ""
+          }/646${form !== "normal" ? `-${form}` : ""}.png`
+        );
+      },
+      interval: 3000,
+    });
 
-  rotateForms({
-    baseName: "keldeo-ordinary",
-    forms: ["ordinary", "resolute"],
-    getSpriteUrl: (form, version, variant) =>
-      fetchPokemonSprite(`keldeo-${form}`, version, variant),
-    interval: 3000,
-  });
+    rotateForms({
+      baseName: "keldeo-ordinary",
+      forms: ["ordinary", "resolute"],
+      getSpriteUrl: (form, version, variant) =>
+        fetchPokemonSprite(`keldeo-${form}`, version, variant),
+      interval: 3000,
+    });
   }
 
   rotateForms({
