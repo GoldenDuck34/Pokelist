@@ -2068,12 +2068,6 @@ async function rightClickImage(e, wrapper) {
       );
     } else if (baseName.includes("darmanitan") && baseName.includes("galar")) {
       form = formName || "standard-galar";
-      console.log(
-        `Darmanitan-${form.slice(0, -6)}-Galar`
-          .split("-")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join("-") + (newVariant === "front_shiny" ? "_s" : "")
-      );
       spriteUrl =
         swordShieldImages[
           `Darmanitan-${form.slice(0, -6)}-Galar`
