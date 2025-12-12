@@ -133,7 +133,6 @@ const gigantamaxForms = [
   "Rillaboom",
   "Cinderace",
   "Inteleon",
-  "Eternatus",
 ];
 
 const pokemon151 = [
@@ -2402,6 +2401,15 @@ async function rightClickImage(e, wrapper) {
       }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}493-${form}.png`;
     } else if (baseName.startsWith("silvally")) {
       form = formName || "normal";
+      if (version === "gen8") {
+        spriteUrl =
+          swordShieldImages[
+            `Silvally-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      }
       spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
         generationMap[version]
       }/${generationMap2[version]}/${
