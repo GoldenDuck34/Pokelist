@@ -2272,7 +2272,9 @@ async function rightClickImage(e, wrapper) {
       } else {
         const gen = generationMap[version];
         const ver = generationMap2[version];
-        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/666-${form}.png`;
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
+          newVariant === "front_shiny" ? "/shiny" : ""
+        }/666-${form}.png`;
       }
     } else if (baseName === "xerneas") {
       form = formName || "active";
