@@ -4620,6 +4620,13 @@ function rotateAll() {
       "fairy",
     ],
     getSpriteUrl: (form, version, variant) => {
+      if (version === "gen8") {
+        return swordShieldImages[
+          `Silvally-${form.charAt(0).toUpperCase() + form.slice(1)}${
+            variant === "front_shiny" ? "_s" : ""
+          }`
+        ];
+      }
       const gen = generationMap[version];
       const ver = generationMap2[version];
       return Promise.resolve(
