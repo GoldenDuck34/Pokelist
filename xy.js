@@ -30,4 +30,9 @@ function insertHeader(ol, listItems, index) {
   }
 }
 
-if (!localStorage.getItem("showNationalOnly")) adjustOrderedListHeaders();
+if (
+  !localStorage.getItem(
+    `showNationalOnly${document.querySelector(".square-list").dataset.version}`
+  )
+)
+  adjustOrderedListHeaders();
