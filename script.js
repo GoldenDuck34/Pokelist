@@ -1269,9 +1269,17 @@ async function fetchPokemonSprite(
         spriteCache[cacheKey] = blankImg;
         return blankImg;
       } else {
-        response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
-        );
+        // Flabebe handling for games that use pokeapi, use the links in the shiny toggling
+        if (customUrls.includes(pokemonName)) {
+          const key = customUrlNames[pokemonName];
+          response = await fetch(
+            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/${key}.png`
+          );
+        } else {
+          response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+          );
+        }
       }
     }
     if (!response.ok)
