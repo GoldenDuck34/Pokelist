@@ -1698,6 +1698,7 @@ async function rightClickImage(e, wrapper) {
       baseName = "Mega-" + parts[0] + (parts[2] ? parts[2].toUpperCase() : "");
     }
   }
+  console.log(baseName, parts);
   // Flabebe, Floette, Florges color forms handling
   if (
     baseName.startsWith("flabebe") ||
