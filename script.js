@@ -632,6 +632,7 @@ const plzaImages = {};
       type: "left",
       links: [
         { href: "sun-moon.html", label: "Sun/Moon" },
+        { href: "ultra-sun-ultra-moon.html", label: "Ultra Sun/Ultra Moon" },
         { href: "letsgo.html", label: "Let's Go Pikachu/Eevee" },
         { href: "sword-shield.html", label: "Sword/Shield" },
         {
