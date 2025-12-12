@@ -3938,7 +3938,10 @@ function rotateAll() {
       const generation = generationMap[version];
       const ver = generationMap2[version];
       // If shiny, always use "a" form
-      const formKey = isShiny ? "a" : form;
+      let formKey;
+      if (version === "omegaruby-alphasapphire") {
+        formKey = isShiny ? "default" : form;
+      } else formKey = isShiny ? "a" : form;
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
           isShiny ? "/shiny" : ""
