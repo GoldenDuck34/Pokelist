@@ -1310,7 +1310,8 @@ async function fetchPokemonSprite(
               }.png`;
             }
           }
-          response = await fetch(spriteUrl);
+          spriteCache[cacheKey] = spriteUrl;
+          return spriteUrl;
         } else {
           response = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
