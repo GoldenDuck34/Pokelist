@@ -1673,19 +1673,11 @@ async function rightClickImage(e, wrapper) {
     if (version === "letsgo") version = "ultra-sun-ultra-moon";
     // Use Mega form name
     if (baseName === "charizard") {
-      baseName = img
-        .closest("li")
-        .querySelector(".item-extension img")
-        .alt.toLowerCase()
-        .includes("x")
+      baseName = img.dataset.megaStone.includes("X")
         ? "charizard-mega-x"
         : "charizard-mega-y";
     } else if (baseName === "mewtwo") {
-      baseName = img
-        .closest("li")
-        .querySelector(".item-extension img")
-        .alt.toLowerCase()
-        .includes("x")
+      baseName = img.dataset.megaStone.includes("X")
         ? "mewtwo-mega-x"
         : "mewtwo-mega-y";
     } else {
