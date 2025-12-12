@@ -2015,6 +2015,14 @@ async function rightClickImage(e, wrapper) {
         if (svImages[key]) {
           spriteUrl = svImages[key];
         }
+      } else if (version === "pla") {
+        spriteUrl =
+          plaImages[
+            `Rotom-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
       } else {
         let generation = generationMap[version];
         let formSuffix = form !== "normal" ? `-${form}` : "";
@@ -3827,6 +3835,13 @@ function rotateAll() {
           ];
         } else if (version === "gen9") {
           return svImages[
+            `Rotom${form === "normal" ? "" : "-" + form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (isShiny ? "_s" : "")
+          ];
+        } else if (version === "pla") {
+          return plaImages[
             `Rotom${form === "normal" ? "" : "-" + form}`
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
