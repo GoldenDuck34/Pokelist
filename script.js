@@ -3723,7 +3723,7 @@ function rotateAll() {
   });
   rotateForms({
     baseName: "darmanitan-standard-galar",
-    forms: ["standard", "zen"],
+    forms: ["standard-galar", "zen-galar"],
     getSpriteUrl: (form, version, variant) =>
       swordShieldImages[
         `Darmanitan${form === "standard" ? "" : "-Zen"}${
