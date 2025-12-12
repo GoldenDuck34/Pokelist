@@ -1275,22 +1275,41 @@ async function fetchPokemonSprite(
           pokemonName.includes("floette") ||
           pokemonName.includes("florges")
         ) {
-          pokemonName = pokemonName.replace(/[\(\)]/g, "").replace(" ", "-");
-          let key = customUrlNames[pokemonName]
-            ? customUrlNames[pokemonName]
-            : null;
-          if (!key) {
-            if (pokemonName.includes("flabebe")) {
-              key = flabebeColorMap[pokemonName] || null;
-            } else if (pokemonName.includes("floette")) {
-              key = floetteColorMap[pokemonName] || null;
-            } else if (pokemonName.includes("florges")) {
-              key = florgesColorMap[pokemonName] || null;
+          if (baseName.startsWith("flabebe")) {
+            colorKey = Object.keys(flabebeColorMap).find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            );
+            if (colorKey) {
+              spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+                generationMap[version]
+              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+                flabebeColorMap[colorKey]
+              }.png`;
+            }
+          } else if (baseName.startsWith("floette")) {
+            colorKey = Object.keys(floetteColorMap).find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            );
+            if (colorKey) {
+              spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+                generationMap[version]
+              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+                floetteColorMap[colorKey]
+              }.png`;
+            }
+          } else if (baseName.startsWith("florges")) {
+            colorKey = Object.keys(florgesColorMap).find(
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+            );
+            if (colorKey) {
+              spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+                generationMap[version]
+              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+                florgesColorMap[colorKey]
+              }.png`;
             }
           }
-          response = await fetch(
-            `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/${key}.png`
-          );
+          response = await fetch(spriteUrl);
         } else {
           response = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
