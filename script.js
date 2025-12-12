@@ -2404,7 +2404,9 @@ async function rightClickImage(e, wrapper) {
       form = formName || "normal";
       spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
         generationMap[version]
-      }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}773-${form}.png`;
+      }/${generationMap2[version]}/${
+        newVariant === "front_shiny" ? "shiny/" : ""
+      }773-${form}.png`;
     } else {
       // General case for other form-rotating Pokémon
       form = formName || "normal";
