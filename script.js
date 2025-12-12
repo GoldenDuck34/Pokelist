@@ -2413,6 +2413,14 @@ async function rightClickImage(e, wrapper) {
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + (newVariant === "front_shiny" ? "_s" : "")
           ];
+      } else if (version === "pla") {
+        spriteUrl =
+          plaImages[
+            `Arceus-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
       } else {
         spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
           generationMap[version]
