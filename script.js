@@ -294,8 +294,8 @@ const pokemon151 = [
 const formRotators = [
   "darmanitan-standard",
   "darmanitan-zen",
-  "darmanitan-galar-standard",
-  "darmanitan-galar-zen",
+  "darmanitan-standard-galar",
+  "darmanitan-zen-galar",
   "shaymin-land",
   "shaymin-sky",
   "castform",
@@ -734,7 +734,7 @@ const plzaImages = {};
     if (lower === "shaymin") return "shaymin-land";
 
     if (lower === "darmanitan") return "darmanitan-standard";
-    if (lower === "darmanitan-galar") return "darmanitan-galar-standard";
+    if (lower === "darmanitan-galar") return "darmanitan-standard-galar";
 
     if (lower === "basculin (red)") return "basculin-red-striped";
     if (lower === "basculin (blue)") return "basculin-blue-striped";
@@ -2066,7 +2066,7 @@ async function rightClickImage(e, wrapper) {
         version,
         newVariant
       );
-    } else if (baseName === "darmanitan-galar-standard") {
+    } else if (baseName === "darmanitan-standard-galar") {
       form = formName || "standard";
       spriteUrl =
         swordShieldImages[
@@ -3722,7 +3722,7 @@ function rotateAll() {
     interval: 3000,
   });
   rotateForms({
-    baseName: "darmanitan-galar",
+    baseName: "darmanitan-standard-galar",
     forms: ["standard", "zen"],
     getSpriteUrl: (form, version, variant) =>
       swordShieldImages[
