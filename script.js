@@ -1283,7 +1283,7 @@ async function fetchPokemonSprite(
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
                 generationMap[version]
-              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+              }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}${
                 flabebeColorMap[colorKey]
               }.png`;
             }
@@ -1294,7 +1294,7 @@ async function fetchPokemonSprite(
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
                 generationMap[version]
-              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+              }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}${
                 floetteColorMap[colorKey]
               }.png`;
             }
@@ -1305,7 +1305,7 @@ async function fetchPokemonSprite(
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
                 generationMap[version]
-              }/${generationMap2[version]}/${!isShiny ? "shiny/" : ""}${
+              }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}${
                 florgesColorMap[colorKey]
               }.png`;
             }
