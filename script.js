@@ -1275,9 +1275,9 @@ async function fetchPokemonSprite(
           pokemonName.includes("floette") ||
           pokemonName.includes("florges")
         ) {
-          if (baseName.startsWith("flabebe")) {
+          if (pokemonName.startsWith("flabebe")) {
             colorKey = Object.keys(flabebeColorMap).find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
@@ -1286,9 +1286,9 @@ async function fetchPokemonSprite(
                 flabebeColorMap[colorKey]
               }.png`;
             }
-          } else if (baseName.startsWith("floette")) {
+          } else if (pokemonName.startsWith("floette")) {
             colorKey = Object.keys(floetteColorMap).find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
@@ -1297,9 +1297,9 @@ async function fetchPokemonSprite(
                 floetteColorMap[colorKey]
               }.png`;
             }
-          } else if (baseName.startsWith("florges")) {
+          } else if (pokemonName.startsWith("florges")) {
             colorKey = Object.keys(florgesColorMap).find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
