@@ -453,8 +453,6 @@ const formRotators = [
   "calyrex",
   "calyrex-ice",
   "calyrex-shadow",
-  "zarude-dada",
-  "zarude",
   "dialga-origin",
   "palkia-origin",
   "dialga",
@@ -1699,6 +1697,7 @@ async function rightClickImage(e, wrapper) {
         "Mega-" + parts[0] + (parts[2] ? `-${parts[2].toUpperCase()}` : "");
     }
   }
+  console.log(baseName, parts);
   // Flabebe, Floette, Florges color forms handling
   if (
     baseName.startsWith("flabebe") ||
@@ -4928,19 +4927,6 @@ function rotateAll() {
       ];
     },
     interval: 5000,
-  });
-
-  rotateForms({
-    baseName: "zarude",
-    forms: ["normal", "dada"],
-    getSpriteUrl: (form, version, variant) => {
-      return swordShieldImages[
-        `Zarude${form === "dada" ? "-Dada" : ""}${
-          variant === "front_shiny" ? "_s" : ""
-        }`
-      ];
-    },
-    interval: 3000,
   });
 
   if (version === "pla") {
