@@ -3738,6 +3738,7 @@ function rotateAll() {
   rotateGenderedPokemon("bidoof");
   rotateGenderedPokemon("bibarel");
   rotateGenderedPokemon("oinkologne");
+  rotateGenderedPokemon("basculegion");
 
   // --- Use generic rotator for all multi-form Pokémon ---
 
