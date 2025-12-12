@@ -1275,6 +1275,7 @@ async function fetchPokemonSprite(
           pokemonName.includes("floette") ||
           pokemonName.includes("florges")
         ) {
+          pokemonName = pokemonName.replace(/[\(\)]/g, "").replace(" ", "-");
           let key = customUrlNames[pokemonName]
             ? customUrlNames[pokemonName]
             : null;
