@@ -1270,8 +1270,23 @@ async function fetchPokemonSprite(
         return blankImg;
       } else {
         // Flabebe handling for games that use pokeapi, use the links in the shiny toggling
-        if (customUrls.includes(pokemonName)) {
-          const key = customUrlNames[pokemonName];
+        if (
+          pokemonName.includes("flabebe") ||
+          pokemonName.includes("floette") ||
+          pokemonName.includes("florges")
+        ) {
+          let key = customUrlNames[pokemonName]
+            ? customUrlNames[pokemonName]
+            : null;
+          if (!key) {
+            if (pokemonName.includes("flabebe")) {
+              key = flabebeColorMap[pokemonName] || null;
+            } else if (pokemonName.includes("floette")) {
+              key = floetteColorMap[pokemonName] || null;
+            } else if (pokemonName.includes("florges")) {
+              key = florgesColorMap[pokemonName] || null;
+            }
+          }
           response = await fetch(
             `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/${key}.png`
           );
