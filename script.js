@@ -2290,7 +2290,9 @@ async function rightClickImage(e, wrapper) {
       } else {
         const gen = generationMap[version];
         const ver = generationMap2[version];
-        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/676-${form}.png`;
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/${
+          newVariant === "front_shiny" ? "shiny/" : ""
+        }676-${form}.png`;
       }
     } else if (baseName.startsWith("vivillon")) {
       form = formName || "modern";
