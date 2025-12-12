@@ -4868,7 +4868,9 @@ function rotateAll() {
         getSpriteUrl: (form, version, variant) => {
           return plzaImages[
             `${form === "mega" ? "Mega-z" : "Z"}ygarde${
-              form === "mega" ? "" : `-${form}`
+              form === "mega"
+                ? ""
+                : `-${form === "complete" ? "Complete" : form}`
             }${variant === "front_shiny" ? "_s" : ""}`
           ];
         },
