@@ -3687,9 +3687,11 @@ function rotateAll() {
   rotateGenderedPokemon("frillish");
   rotateGenderedPokemon("jellicent");
 
-  if (version !== "gen8")
-    // Pikachu has a gigantamax version that will be rotated instead
+  if (version !== "gen8") {
+    // These has a gigantamax version that will be rotated instead
+    rotateGenderedPokemon("butterfree");
     rotateGenderedPokemon("pikachu");
+  }
   rotateGenderedPokemon("gyarados");
 
   rotateGenderedPokemon("hippopotas");
@@ -3699,7 +3701,6 @@ function rotateAll() {
   rotateGenderedPokemon("combee");
   rotateGenderedPokemon("bidoof");
   rotateGenderedPokemon("bibarel");
-  rotateGenderedPokemon("butterfree");
   rotateGenderedPokemon("oinkologne");
 
   // --- Use generic rotator for all multi-form Pokémon ---
