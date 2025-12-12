@@ -2399,6 +2399,11 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
         generationMap[version]
       }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}493-${form}.png`;
+    } else if (baseName.startsWith("silvally")) {
+      form = formName || "normal";
+      spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+        generationMap[version]
+      }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}739-${form}.png`;
     } else {
       // General case for other form-rotating Pokémon
       form = formName || "normal";
