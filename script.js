@@ -1695,10 +1695,10 @@ async function rightClickImage(e, wrapper) {
     }
     if (version === "plza") {
       parts = baseName.split("-");
-      baseName = "Mega-" + parts[0] + (parts[2] ? parts[2].toUpperCase() : "");
+      baseName =
+        "Mega-" + parts[0] + (parts[2] ? `-${parts[2].toUpperCase()}` : "");
     }
   }
-  console.log(baseName, parts);
   // Flabebe, Floette, Florges color forms handling
   if (
     baseName.startsWith("flabebe") ||
