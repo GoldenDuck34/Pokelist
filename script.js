@@ -1275,6 +1275,7 @@ async function fetchPokemonSprite(
           pokemonName.includes("floette") ||
           pokemonName.includes("florges")
         ) {
+          isShiny = variant === "front_shiny";
           if (pokemonName.startsWith("flabebe")) {
             colorKey = Object.keys(flabebeColorMap).find(
               (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
