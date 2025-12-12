@@ -2397,6 +2397,15 @@ async function rightClickImage(e, wrapper) {
         );
     } else if (baseName.startsWith("arceus")) {
       form = formName || "normal";
+      if (version === "brilliantdiamond-shiningpearl") {
+        spriteUrl =
+          bdspImages[
+            `Arceus-${form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
+      }
       spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
         generationMap[version]
       }/${generationMap2[version]}/${isShiny ? "shiny/" : ""}493-${form}.png`;
