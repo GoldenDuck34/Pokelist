@@ -595,7 +595,7 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
     max-height: 90vh;
   }
   #random-card-wrapper .tilt-wrapper {
-    max-width: 350px;
+    max-width: 25vw;
     aspect-ratio: 1 / 1;
   }
 }
