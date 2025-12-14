@@ -645,4 +645,8 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
   .pokelist-dropdown .selected {
     padding: 4px 8px;
   }
+  .favorite-star {
+    top: 2px;
+    right: 2px;
+  }
 }
