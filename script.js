@@ -3550,7 +3550,7 @@ function rotateGenderedPokemon(pokemonName) {
   );
   if (!lis.length) return;
 
-  // Skip unsupported versions for Pikachu/Wobbuffet
+  // Skip unsupported versions for Pikachu/Wobbuffet/Gyarados
   lis.forEach((li) => {
     const img = li.querySelector(`img[data-pokemon='${pokemonName}']`);
     if (!img) return;
@@ -3715,11 +3715,14 @@ function rotateAll() {
   rotateGenderedPokemon("jellicent");
 
   if (version !== "gen8") {
-    // These has a gigantamax version that will be rotated instead
+    // These have a gigantamax version that will be rotated instead
     rotateGenderedPokemon("butterfree");
     rotateGenderedPokemon("pikachu");
   }
-  rotateGenderedPokemon("gyarados");
+  if (["gen6", "gen7", "ultra-sun-ultra-moon", "plza"].includes(version)) {
+    // Gyarados has a mega that will be used instead
+    rotateGenderedPokemon("gyarados");
+  }
 
   rotateGenderedPokemon("hippopotas");
   rotateGenderedPokemon("hippowdon");
