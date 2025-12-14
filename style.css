@@ -574,6 +574,7 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
   .controls {
     gap: 8px;
     padding-top: 4px;
+    position: static;
   }
   #pokemonSearch {
     width: 100%;
