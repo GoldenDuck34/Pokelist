@@ -552,7 +552,7 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
 /* ---------- Mobile Styles ---------- */
 @media (max-width: 900px) {
   .square-list {
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
     gap: 12px;
   }
   .square-list li {
@@ -572,7 +572,6 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
     height: 20px;
   }
   .controls {
-    flex-direction: column;
     gap: 8px;
     padding-top: 4px;
   }
