@@ -221,8 +221,8 @@ body {
 /* Card wrapper */
 #random-card-wrapper {
   position: relative;
-  max-width: 400px;
-  width: 90%;
+  max-width: 520px;
+  width: 95%;
   padding: 20px;
   background: var(--card-bg);
   border-radius: 16px;
@@ -479,6 +479,14 @@ li + .list-header {
   color: #fff;
 }
 
+#random-card-wrapper .tilt-wrapper {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1; /* force square */
+  height: auto;
+  margin-bottom: 12px;
+}
+
 /* ---------- Dark Mode ---------- */
 @media (prefers-color-scheme: dark) {
   #pokelist-navbar {
@@ -638,6 +646,9 @@ body[data-theme="light"] .pokelist-dropdown .selected:focus {
   #random-card-overlay {
     align-items: flex-start;
     padding-top: 20px;
+  }
+  #random-card-wraper .tilt-wrapper {
+    max-width: 300px;
   }
   .custom-dropdown {
     width: 100%;
