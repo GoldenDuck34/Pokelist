@@ -3719,7 +3719,7 @@ function rotateAll() {
     rotateGenderedPokemon("butterfree");
     rotateGenderedPokemon("pikachu");
   }
-  if (["gen6", "gen7", "ultra-sun-ultra-moon", "plza"].includes(version)) {
+  if (!["gen6", "gen7", "ultra-sun-ultra-moon", "plza"].includes(version)) {
     // Gyarados has a mega that will be used instead
     rotateGenderedPokemon("gyarados");
   }
