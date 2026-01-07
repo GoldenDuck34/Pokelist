@@ -15,5 +15,5 @@ A Pokédex tracker for every mainline Pokémon game. Simply and easy to use.
 - All code by me
 - The images by pokeapi up to ultra sun and ultra moon
 - The images by wikidex after that
-- ChatGPT for the Pokéball icon
+- ChatGPT for the Pokéball icon (lol)
 - Serebii for the mega stone images
