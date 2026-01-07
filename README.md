@@ -8,7 +8,7 @@ A Pokédex tracker for every mainline Pokémon game. Simply and easy to use.
 - Left clicking on a Pokémon will send you to the bulbapedia page for that Pokémon.
 - You can mark favorites, mark off the circles, and perform other obvious actions.
 - Empty circles next to Pokémon in the top right are mega stones slots. Left click to mark off the mega stone, right click to show the mega image of the Pokémon.
-- On mobile, tap to shiny a Pokémon, and there is no bulbapedia link. Hold tap to show the mega image of a Pokémon.
+- On mobile, tap to shiny a Pokémon, and there is no bulbapedia link. Hold tap on the mega stone to show the mega image of a Pokémon.
 
 ## Credits
 
