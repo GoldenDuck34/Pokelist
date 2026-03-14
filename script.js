@@ -903,7 +903,7 @@ const plzaImages = {};
                   <input type="checkbox" />
                   <span>${opt}</span>
                 </label>
-              `
+              `,
                 )
                 .join("")
         }
@@ -918,7 +918,7 @@ const plzaImages = {};
                       extStates[idx] === "stone"
                         ? getMegaStoneImgUrl(stone, version)
                         : "circle.png"
-                    }" alt="${stone}" data-stone-index="${idx}">`
+                    }" alt="${stone}" data-stone-index="${idx}">`,
                 )
                 .join("")}
             </div>`
@@ -1076,7 +1076,7 @@ async function fetchPokemonSprite(
   pokemonName,
   version = "gen1",
   variant = "front_default",
-  custom = ""
+  custom = "",
 ) {
   // If the pokemon is not in first 151 and version is firered-leafgreen, change version to emerald
   if (
@@ -1085,7 +1085,7 @@ async function fetchPokemonSprite(
       pokemonName
         .split("-")
         .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join("-")
+        .join("-"),
     ) &&
     !pokemonName.startsWith("deoxys")
   ) {
@@ -1190,7 +1190,7 @@ async function fetchPokemonSprite(
             pokemonName,
             "ultra-sun-ultra-moon",
             variant,
-            custom
+            custom,
           );
           return spriteCache[cacheKey];
         }
@@ -1247,7 +1247,7 @@ async function fetchPokemonSprite(
                 pokemonName,
                 "ultra-sun-ultra-moon",
                 variant,
-                custom
+                custom,
               );
               url = spriteCache[cacheKey];
             } else if (letsGoImages[key]) {
@@ -1260,7 +1260,7 @@ async function fetchPokemonSprite(
             console.warn(
               "Image not found for key:",
               key,
-              "using blankImg instead."
+              "using blankImg instead.",
             );
           }
         }
@@ -1277,7 +1277,7 @@ async function fetchPokemonSprite(
           isShiny = variant === "front_shiny";
           if (pokemonName.startsWith("flabebe")) {
             colorKey = Object.keys(flabebeColorMap).find(
-              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
@@ -1288,7 +1288,7 @@ async function fetchPokemonSprite(
             }
           } else if (pokemonName.startsWith("floette")) {
             colorKey = Object.keys(floetteColorMap).find(
-              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
@@ -1299,7 +1299,7 @@ async function fetchPokemonSprite(
             }
           } else if (pokemonName.startsWith("florges")) {
             colorKey = Object.keys(florgesColorMap).find(
-              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => pokemonName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             );
             if (colorKey) {
               spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
@@ -1313,14 +1313,14 @@ async function fetchPokemonSprite(
           return spriteUrl;
         } else {
           response = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+            `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`,
           );
         }
       }
     }
     if (!response.ok)
       throw new Error(
-        `Pokemon ${pokemonName} not found ${custom ? custom : ""}`
+        `Pokemon ${pokemonName} not found ${custom ? custom : ""}`,
       );
     if (custom !== "") return custom;
     const data = await response.json();
@@ -1379,7 +1379,7 @@ async function setAllPokemonImages() {
       // Flabébé color forms
       if (pokemon.startsWith("flabebe")) {
         const key = Object.keys(flabebeColorMap).find((k) =>
-          pokemon.includes(k.split("-")[1])
+          pokemon.includes(k.split("-")[1]),
         );
         if (version === "gen9") {
           const key =
@@ -1410,7 +1410,7 @@ async function setAllPokemonImages() {
       // Floette color forms
       else if (pokemon.startsWith("floette")) {
         const key = Object.keys(floetteColorMap).find((k) =>
-          pokemon.includes(k.split("-")[1])
+          pokemon.includes(k.split("-")[1]),
         );
         if (version === "plza") {
           const plzaKey =
@@ -1427,7 +1427,7 @@ async function setAllPokemonImages() {
             Object.keys(floetteColorMap)
               .find(
                 (k) =>
-                  pokemon.includes(k.split("-")[1]) && !k.includes("florges") // Exclude Florges keys
+                  pokemon.includes(k.split("-")[1]) && !k.includes("florges"), // Exclude Florges keys
               )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1442,14 +1442,14 @@ async function setAllPokemonImages() {
       // Florges color forms
       else if (pokemon.startsWith("florges")) {
         const key = Object.keys(florgesColorMap).find((k) =>
-          pokemon.includes(k.split("-")[1])
+          pokemon.includes(k.split("-")[1]),
         );
         if (version === "gen9") {
           const svKey =
             Object.keys(florgesColorMap)
               .find(
                 (k) =>
-                  pokemon.includes(k.split("-")[1]) && !k.includes("flabebe") // Exclude Flabebe keys
+                  pokemon.includes(k.split("-")[1]) && !k.includes("flabebe"), // Exclude Flabebe keys
               )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1462,7 +1462,7 @@ async function setAllPokemonImages() {
             Object.keys(florgesColorMap)
               .find(
                 (k) =>
-                  pokemon.includes(k.split("-")[1]) && !k.includes("flabebe") // Exclude Flabebe keys
+                  pokemon.includes(k.split("-")[1]) && !k.includes("flabebe"), // Exclude Flabebe keys
               )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1497,7 +1497,7 @@ async function setAllPokemonImages() {
         spriteUrl = await fetchPokemonSprite(pokemon, version);
       }
       if (spriteUrl) img.src = spriteUrl;
-    })
+    }),
   );
 }
 
@@ -1542,7 +1542,7 @@ async function init() {
   Array.from(document.querySelectorAll("img[data-version]"))
     .filter((img) => {
       return ["gen8", "brilliantdiamond-shiningpearl"].includes(
-        img.dataset.version
+        img.dataset.version,
       );
     })
     .forEach(async (img) => {
@@ -1577,7 +1577,7 @@ async function init() {
               pokemon,
               "ultra-sun-ultra-moon",
               variant,
-              custom
+              custom,
             );
             img.src = spriteCache[cacheKey];
           } else if (letsGoImages[key]) img.src = letsGoImages[key];
@@ -1585,7 +1585,7 @@ async function init() {
           img.src = await fetchPokemonSprite(
             pokemon,
             version,
-            shiny ? "front_shiny" : "front_default"
+            shiny ? "front_shiny" : "front_default",
           );
         }
       }
@@ -1634,7 +1634,7 @@ const observer = new IntersectionObserver(
           img.src = await fetchPokemonSprite(
             pokemon,
             "ultra-sun-ultra-moon",
-            shiny ? "front_shiny" : "front_default"
+            shiny ? "front_shiny" : "front_default",
           );
         } else {
           // For other gens, fetch sprite
@@ -1654,7 +1654,7 @@ const observer = new IntersectionObserver(
     root: null,
     rootMargin: "200px", // pre-load just before entering view
     threshold: 0.1,
-  }
+  },
 );
 
 async function rightClickImage(e, wrapper) {
@@ -1700,13 +1700,13 @@ async function rightClickImage(e, wrapper) {
     let spriteUrl = "";
     if (baseName.startsWith("flabebe")) {
       colorKey = Object.keys(flabebeColorMap).find(
-        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
       );
       if (version === "gen9") {
         const key =
           Object.keys(flabebeColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1717,7 +1717,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1727,7 +1727,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1735,7 +1735,7 @@ async function rightClickImage(e, wrapper) {
         const key =
           Object.keys(flabebeColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1746,7 +1746,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1756,7 +1756,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1770,13 +1770,13 @@ async function rightClickImage(e, wrapper) {
       }
     } else if (baseName.startsWith("floette")) {
       colorKey = Object.keys(floetteColorMap).find(
-        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
       );
       if (version === "gen9") {
         const svKey =
           Object.keys(floetteColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1787,7 +1787,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1797,7 +1797,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1805,7 +1805,7 @@ async function rightClickImage(e, wrapper) {
         const plzaKey =
           Object.keys(floetteColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1816,7 +1816,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1826,7 +1826,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1840,13 +1840,13 @@ async function rightClickImage(e, wrapper) {
       }
     } else if (baseName.startsWith("florges")) {
       colorKey = Object.keys(florgesColorMap).find(
-        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+        (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
       );
       if (version === "gen9") {
         const svKey =
           Object.keys(florgesColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1857,7 +1857,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1867,7 +1867,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1875,7 +1875,7 @@ async function rightClickImage(e, wrapper) {
         const plzaKey =
           Object.keys(florgesColorMap)
             .find(
-              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k
+              (k) => baseName.replace(" ", "-").replace(/[\(\)]/g, "") === k,
             )
             .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -1886,7 +1886,7 @@ async function rightClickImage(e, wrapper) {
           setShiny(img, version, !isShiny);
           const li = wrapper.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -1896,7 +1896,7 @@ async function rightClickImage(e, wrapper) {
             version,
             !isShiny,
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
           return;
         }
@@ -1923,7 +1923,7 @@ async function rightClickImage(e, wrapper) {
       version,
       !isShiny,
       checkboxes,
-      visibleIndex
+      visibleIndex,
     );
     return;
   }
@@ -2057,14 +2057,14 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `shaymin-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "darmanitan-standard") {
       form = formName || "standard";
       spriteUrl = await fetchPokemonSprite(
         `darmanitan-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.includes("darmanitan") && baseName.includes("galar")) {
       form = formName || "standard-galar";
@@ -2118,42 +2118,42 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `meloetta-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "tornadus-incarnate") {
       form = formName || "incarnate";
       spriteUrl = await fetchPokemonSprite(
         `tornadus-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "thundurus-incarnate") {
       form = formName || "incarnate";
       spriteUrl = await fetchPokemonSprite(
         `thundurus-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "landorus-incarnate") {
       form = formName || "incarnate";
       spriteUrl = await fetchPokemonSprite(
         `landorus-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "enamorus-incarnate") {
       form = formName || "incarnate";
       spriteUrl = await fetchPokemonSprite(
         `enamorus-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "keldeo-ordinary") {
       form = formName || "ordinary";
       spriteUrl = await fetchPokemonSprite(
         `keldeo-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "shellos") {
       form = formName || "west";
@@ -2244,21 +2244,21 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `meowstic-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.startsWith("mimikyu")) {
       form = formName || "disguised";
       spriteUrl = await fetchPokemonSprite(
         `mimikyu-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.startsWith("ogerpon")) {
       form = formName || "teal";
       spriteUrl = await fetchPokemonSprite(
         `ogerpon-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.startsWith("cramorant")) {
       form = formName || "normal";
@@ -2274,7 +2274,7 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `aegislash-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName === "furfrou") {
       form = formName || "natural";
@@ -2342,14 +2342,14 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `wishiwashi-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.startsWith("indeedee")) {
       form = formName || "male";
       spriteUrl = await fetchPokemonSprite(
         `indeedee-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (
       baseName.startsWith("zacian") ||
@@ -2381,7 +2381,7 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `pecharunt${newVariant !== "front_shiny" ? `-${form}` : ""}`,
         version,
-        newVariant
+        newVariant,
       );
     } else if (baseName.startsWith("zygarde")) {
       form = formName || "50";
@@ -2392,7 +2392,7 @@ async function rightClickImage(e, wrapper) {
         spriteUrl = await fetchPokemonSprite(
           `zygarde-${form}`,
           version,
-          newVariant
+          newVariant,
         );
     } else if (baseName.startsWith("arceus")) {
       form = formName || "normal";
@@ -2440,7 +2440,7 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `${baseName.replace("-normal", "")}-${form}`,
         version,
-        newVariant
+        newVariant,
       );
     }
 
@@ -2451,7 +2451,7 @@ async function rightClickImage(e, wrapper) {
       // Reload checkbox state for current visible version & shiny
       const li = pkmImg.closest("li");
       const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
+        li.querySelectorAll("input[type=checkbox]"),
       );
       const visibleIndex = li.dataset.visibleIndex
         ? parseInt(li.dataset.visibleIndex)
@@ -2461,7 +2461,7 @@ async function rightClickImage(e, wrapper) {
         version,
         !isShiny,
         checkboxes,
-        visibleIndex
+        visibleIndex,
       );
     });
     return;
@@ -2490,13 +2490,13 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         `unown`,
         "emerald",
-        isShiny ? "front_shiny" : "front_default"
+        isShiny ? "front_shiny" : "front_default",
       );
     } else {
       spriteUrl = await fetchPokemonSprite(
         `unown`,
         version,
-        isShiny ? "front_shiny" : "front_default"
+        isShiny ? "front_shiny" : "front_default",
       );
     }
     await updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
@@ -2505,7 +2505,7 @@ async function rightClickImage(e, wrapper) {
       // Reload checkbox state for current visible version & shiny
       const li = pkmImg.closest("li");
       const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
+        li.querySelectorAll("input[type=checkbox]"),
       );
       const visibleIndex = li.dataset.visibleIndex
         ? parseInt(li.dataset.visibleIndex)
@@ -2515,7 +2515,7 @@ async function rightClickImage(e, wrapper) {
         version,
         isShiny,
         checkboxes,
-        visibleIndex
+        visibleIndex,
       );
     });
     return;
@@ -2528,13 +2528,13 @@ async function rightClickImage(e, wrapper) {
     const newShiny = !isShiny;
     for (const v of ["gold", "silver"]) {
       const imgs = document.querySelectorAll(
-        `img[data-pokemon="${baseName}"][data-version="${v}"]`
+        `img[data-pokemon="${baseName}"][data-version="${v}"]`,
       );
       for (const i of imgs) {
         const spriteUrl = await fetchPokemonSprite(
           baseName,
           v,
-          newShiny ? "front_shiny" : "front_default"
+          newShiny ? "front_shiny" : "front_default",
         );
         if (spriteUrl) i.src = spriteUrl;
         setShiny(i, v, newShiny);
@@ -2553,7 +2553,7 @@ async function rightClickImage(e, wrapper) {
       img.dataset.version,
       newShiny,
       checkboxes,
-      visibleIndex
+      visibleIndex,
     );
     return;
   }
@@ -2598,7 +2598,7 @@ async function rightClickImage(e, wrapper) {
       spriteUrl = await fetchPokemonSprite(
         baseName,
         "ultra-sun-ultra-moon",
-        newVariant
+        newVariant,
       );
     } else if (letsGoImages[key]) {
       spriteUrl = letsGoImages[key];
@@ -2620,7 +2620,7 @@ async function rightClickImage(e, wrapper) {
       pkmImg.dataset.version,
       getShiny(pkmImg, pkmImg.dataset.version),
       checkboxes,
-      visibleIndex
+      visibleIndex,
     );
   });
 }
@@ -2700,13 +2700,13 @@ document.querySelectorAll(".square-list li").forEach((li) => {
       img.dataset.pokemon,
       "gold",
       getShiny(img, "gold"),
-      checkboxes
+      checkboxes,
     );
     loadCheckboxState(
       img.dataset.pokemon,
       "silver",
       getShiny(img, "silver"),
-      checkboxes
+      checkboxes,
     );
   } else {
     loadCheckboxState(
@@ -2714,7 +2714,7 @@ document.querySelectorAll(".square-list li").forEach((li) => {
       img.dataset.version,
       getShiny(img, img.dataset.version),
       checkboxes,
-      visibleIndex
+      visibleIndex,
     );
   }
 
@@ -2727,14 +2727,14 @@ document.querySelectorAll(".square-list li").forEach((li) => {
           "gold",
           getShiny(img, "gold"),
           i,
-          checkbox.checked
+          checkbox.checked,
         );
         saveCheckboxState(
           img.dataset.pokemon,
           "silver",
           getShiny(img, "silver"),
           i,
-          checkbox.checked
+          checkbox.checked,
         );
       } else {
         saveCheckboxState(
@@ -2742,7 +2742,7 @@ document.querySelectorAll(".square-list li").forEach((li) => {
           img.dataset.version,
           getShiny(img, img.dataset.version),
           i,
-          checkbox.checked
+          checkbox.checked,
         );
       }
       updateAllOfPokemon(img.dataset.pokemon, (pkmImg) => {
@@ -2755,21 +2755,21 @@ document.querySelectorAll(".square-list li").forEach((li) => {
             "gold",
             getShiny(pkmImg, "gold"),
             Array.from(
-              pkmImg.closest("li").querySelectorAll("input[type=checkbox]")
-            )
+              pkmImg.closest("li").querySelectorAll("input[type=checkbox]"),
+            ),
           );
           loadCheckboxState(
             pkmImg.dataset.pokemon,
             "silver",
             getShiny(pkmImg, "silver"),
             Array.from(
-              pkmImg.closest("li").querySelectorAll("input[type=checkbox]")
-            )
+              pkmImg.closest("li").querySelectorAll("input[type=checkbox]"),
+            ),
           );
         } else {
           const li = pkmImg.closest("li");
           const checkboxes = Array.from(
-            li.querySelectorAll("input[type=checkbox]")
+            li.querySelectorAll("input[type=checkbox]"),
           );
           const visibleIndex = li.dataset.visibleIndex
             ? parseInt(li.dataset.visibleIndex)
@@ -2779,7 +2779,7 @@ document.querySelectorAll(".square-list li").forEach((li) => {
             pkmImg.dataset.version,
             getShiny(pkmImg, pkmImg.dataset.version),
             checkboxes,
-            visibleIndex
+            visibleIndex,
           );
         }
       });
@@ -2841,7 +2841,7 @@ document
           const spriteUrl = await fetchPokemonSprite(
             `deoxys-${form}`,
             version,
-            newVariant
+            newVariant,
           );
           if (spriteUrl) img.src = spriteUrl;
           img.dataset.form = form;
@@ -2876,7 +2876,7 @@ document
         const spriteUrl = await fetchPokemonSprite(
           img.dataset.pokemon,
           version,
-          newVariant
+          newVariant,
         );
         if (spriteUrl) img.src = spriteUrl;
         setShiny(img, version, !isShiny);
@@ -2884,7 +2884,7 @@ document
 
       const li = wrapper.closest("li");
       const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
+        li.querySelectorAll("input[type=checkbox]"),
       );
       const visibleIndex = li.dataset.visibleIndex
         ? parseInt(li.dataset.visibleIndex)
@@ -2894,7 +2894,7 @@ document
         version,
         !isShiny,
         checkboxes,
-        visibleIndex
+        visibleIndex,
       );
     }
   });
@@ -2941,11 +2941,11 @@ if (document.getElementById("show-only-first-version")) {
     .addEventListener("click", () => {
       document.querySelectorAll("li .item-footer").forEach((footer) => {
         const versionCheckboxes = footer.querySelectorAll(
-          "label.version-option input[type=checkbox]"
+          "label.version-option input[type=checkbox]",
         );
         // Hide all original checkboxes
         versionCheckboxes.forEach(
-          (cb) => (cb.closest("label").style.display = "none")
+          (cb) => (cb.closest("label").style.display = "none"),
         );
 
         // Copy state from first checkbox
@@ -2969,7 +2969,7 @@ if (document.getElementById("show-only-first-version")) {
               img.dataset.version,
               getShiny(img, img.dataset.version),
               0,
-              checked
+              checked,
             );
         });
 
@@ -2987,10 +2987,10 @@ if (document.getElementById("show-only-second-version")) {
     .addEventListener("click", () => {
       document.querySelectorAll("li .item-footer").forEach((footer) => {
         const versionCheckboxes = footer.querySelectorAll(
-          "label.version-option input[type=checkbox]"
+          "label.version-option input[type=checkbox]",
         );
         versionCheckboxes.forEach(
-          (cb) => (cb.closest("label").style.display = "none")
+          (cb) => (cb.closest("label").style.display = "none"),
         );
 
         const li = footer.closest("li");
@@ -3012,7 +3012,7 @@ if (document.getElementById("show-only-second-version")) {
               img.dataset.version,
               getShiny(img, img.dataset.version),
               1,
-              checked
+              checked,
             );
         });
 
@@ -3035,10 +3035,10 @@ if (document.getElementById("show-both-versions")) {
 
         // Show original version-option labels
         const versionCheckboxes = footer.querySelectorAll(
-          "label.version-option input[type=checkbox]"
+          "label.version-option input[type=checkbox]",
         );
         versionCheckboxes.forEach(
-          (cb) => (cb.closest("label").style.display = "flex")
+          (cb) => (cb.closest("label").style.display = "flex"),
         );
 
         // Reload saved state for each checkbox
@@ -3053,7 +3053,7 @@ if (document.getElementById("show-both-versions")) {
             img.dataset.version,
             getShiny(img, img.dataset.version),
             Array.from(versionCheckboxes),
-            visibleIndex
+            visibleIndex,
           );
 
         document
@@ -3066,7 +3066,7 @@ if (document.getElementById("show-both-versions")) {
 // --- Utility to pick a random Pokémon ---
 function getRandomPokemon() {
   const imgs = Array.from(
-    document.querySelectorAll("img[data-pokemon]")
+    document.querySelectorAll("img[data-pokemon]"),
   ).filter((img) => isVisible(img.closest("li")));
   if (!imgs.length) return null;
   return imgs[Math.floor(Math.random() * imgs.length)];
@@ -3124,8 +3124,8 @@ document
       const li = Array.from(document.querySelectorAll(".square-list li")).find(
         (li) =>
           li.querySelector(
-            `img[data-pokemon="${name}"][data-version="${version}"]`
-          )
+            `img[data-pokemon="${name}"][data-version="${version}"]`,
+          ),
       );
       const checkboxes = li
         ? Array.from(li.querySelectorAll("input[type=checkbox]"))
@@ -3142,7 +3142,9 @@ document
 
         const storedChecked =
           JSON.parse(
-            localStorage.getItem(`${name}-${version}${isShiny ? "-shiny" : ""}`)
+            localStorage.getItem(
+              `${name}-${version}${isShiny ? "-shiny" : ""}`,
+            ),
           ) || [];
 
         if (storedChecked[i]) {
@@ -3202,11 +3204,11 @@ function sortPokemonList(sortValue) {
       case "favorite":
         const aFav =
           localStorage.getItem(
-            `${aImg.dataset.pokemon}-${aImg.dataset.version}-favorite`
+            `${aImg.dataset.pokemon}-${aImg.dataset.version}-favorite`,
           ) === "true";
         const bFav =
           localStorage.getItem(
-            `${bImg.dataset.pokemon}-${bImg.dataset.version}-favorite`
+            `${bImg.dataset.pokemon}-${bImg.dataset.version}-favorite`,
           ) === "true";
 
         // Favorites first, then preserve Pokédex order for ties
@@ -3252,7 +3254,7 @@ function completePokedexForIndex(index, shiny = false, complete = true) {
         img.dataset.version,
         shiny,
         index,
-        complete
+        complete,
       );
     }
   });
@@ -3266,7 +3268,7 @@ searchBox.addEventListener("input", () => {
     localStorage.getItem(
       `showNationalOnly${
         document.querySelector(".square-list").dataset.version
-      }`
+      }`,
     ) === "true";
 
   document.querySelectorAll(".square-list li").forEach((li) => {
@@ -3292,7 +3294,7 @@ searchBox.addEventListener("keydown", async (e) => {
     (li) => {
       const img = li.querySelector("img[data-pokemon]");
       return img && img.dataset.pokemon.toLowerCase() === query;
-    }
+    },
   );
 
   if (!li) {
@@ -3333,7 +3335,7 @@ searchBox.addEventListener("keydown", async (e) => {
   function renderCheckboxes() {
     cardCheckboxes.innerHTML = "";
     const liOriginal = Array.from(
-      document.querySelectorAll(".square-list li")
+      document.querySelectorAll(".square-list li"),
     ).find((l) => l.querySelector(`img[data-pokemon="${name}"]`) === img);
     const checkboxes = liOriginal
       ? Array.from(liOriginal.querySelectorAll("input[type=checkbox]"))
@@ -3350,7 +3352,7 @@ searchBox.addEventListener("keydown", async (e) => {
 
       const storedChecked =
         JSON.parse(
-          localStorage.getItem(`${name}-${version}${isShiny ? "-shiny" : ""}`)
+          localStorage.getItem(`${name}-${version}${isShiny ? "-shiny" : ""}`),
         ) || [];
 
       if (storedChecked[i]) {
@@ -3436,7 +3438,7 @@ function isVisible(li) {
 // Rotates all images with data-version="gen2" between gold and silver sprites
 function rotateGen2Images() {
   const imgs = Array.from(
-    document.querySelectorAll("img[data-version='gold']")
+    document.querySelectorAll("img[data-version='gold']"),
   );
   if (!imgs.length) return;
 
@@ -3449,7 +3451,7 @@ function rotateGen2Images() {
       const spriteUrl = await fetchPokemonSprite(
         pokemon,
         currentVersion,
-        variant
+        variant,
       );
       if (spriteUrl) img.src = spriteUrl;
       img.dataset.version = currentVersion;
@@ -3546,7 +3548,7 @@ if (document.querySelector(".square-list")?.dataset.version === "gold")
 function rotateGenderedPokemon(pokemonName) {
   // Find all li elements with this pokemon
   const lis = Array.from(document.querySelectorAll(".square-list li")).filter(
-    (li) => li.querySelector(`img[data-pokemon='${pokemonName}']`)
+    (li) => li.querySelector(`img[data-pokemon='${pokemonName}']`),
   );
   if (!lis.length) return;
 
@@ -3641,7 +3643,7 @@ function rotateGenderedPokemon(pokemonName) {
 
       // Optionally update checkboxes if needed
       const checkboxes = Array.from(
-        li.querySelectorAll("input[type=checkbox]")
+        li.querySelectorAll("input[type=checkbox]"),
       );
       const visibleIndex = li.dataset.visibleIndex
         ? parseInt(li.dataset.visibleIndex)
@@ -3651,7 +3653,7 @@ function rotateGenderedPokemon(pokemonName) {
         version,
         isShiny,
         checkboxes,
-        visibleIndex
+        visibleIndex,
       );
     }, 3000);
   });
@@ -3675,7 +3677,7 @@ function rotateForms({
 }) {
   // Find all li elements with this baseName
   const lis = Array.from(document.querySelectorAll(".square-list li")).filter(
-    (li) => li.querySelector(`img[data-pokemon='${baseName}']`)
+    (li) => li.querySelector(`img[data-pokemon='${baseName}']`),
   );
   if (!lis.length) return;
 
@@ -3698,7 +3700,7 @@ function rotateForms({
         form,
         img.dataset.version,
         variant,
-        isShiny
+        isShiny,
       );
       if (spriteUrl) img.src = spriteUrl;
       setShiny(img, img.dataset.version, isShiny);
@@ -3772,7 +3774,7 @@ function rotateAll() {
       fetchPokemonSprite(
         form !== "normal" ? `castform-${form}` : "castform",
         version,
-        variant
+        variant,
       ),
     interval: 3000,
   });
@@ -3799,7 +3801,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
             generationMap[version]
-          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`
+          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`,
         );
       } else {
         return Promise.resolve(
@@ -3807,7 +3809,7 @@ function rotateAll() {
             generationMap[version]
           }/${generationMap2[version]}${
             isShiny ? "/shiny" : ""
-          }/412-${form}.png`
+          }/412-${form}.png`,
         );
       }
     },
@@ -3850,13 +3852,20 @@ function rotateAll() {
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + (isShiny ? "_s" : "")
           ];
+        } else if (version === "plza") {
+          return plzaImages[
+            `Rotom${form === "normal" ? "" : "-" + form}`
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (isShiny ? "_s" : "")
+          ];
         }
         let generation = generationMap[version];
         let formSuffix = form !== "normal" ? `-${form}` : "";
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${
             generationMap2[version]
-          }${isShiny ? "/shiny" : ""}/479${formSuffix}.png`
+          }${isShiny ? "/shiny" : ""}/479${formSuffix}.png`,
         );
       },
       interval: 3000,
@@ -3904,7 +3913,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
           isShiny ? "/shiny" : ""
-        }/585${formSuffix}.png`
+        }/585${formSuffix}.png`,
       );
     },
     interval: 3000,
@@ -3927,7 +3936,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
           isShiny ? "/shiny" : ""
-        }/586${formSuffix}.png`
+        }/586${formSuffix}.png`,
       );
     },
     interval: 3000,
@@ -3992,7 +4001,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
           isShiny ? "/shiny" : ""
-        }/${formKey === "default" ? "201" : `201-${formKey}`}.png`
+        }/${formKey === "default" ? "201" : `201-${formKey}`}.png`,
       );
     },
     interval: 1000,
@@ -4041,7 +4050,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/646${form !== "normal" ? `-${form}` : ""}.png`
+          }/646${form !== "normal" ? `-${form}` : ""}.png`,
         );
       },
       interval: 3000,
@@ -4108,7 +4117,7 @@ function rotateAll() {
             generationMap[version]
           }/${generationMap2[version]}${
             isShiny ? "shiny/" : ""
-          }/422${formSuffix}.png`
+          }/422${formSuffix}.png`,
         );
     },
     interval: 3000,
@@ -4158,7 +4167,7 @@ function rotateAll() {
             generationMap[version]
           }/${generationMap2[version]}/${
             isShiny ? "shiny/" : ""
-          }423${formSuffix}.png`
+          }423${formSuffix}.png`,
         );
     },
     interval: 3000,
@@ -4198,7 +4207,7 @@ function rotateAll() {
             generationMap[version]
           }/${generationMap2[version]}${
             isShiny ? "/shiny" : ""
-          }/421${formSuffix}.png`
+          }/421${formSuffix}.png`,
         );
     },
     interval: 3000,
@@ -4244,13 +4253,13 @@ function rotateAll() {
           return Promise.resolve(
             `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
               isShiny ? "/shiny" : ""
-            }/487.png`
+            }/487.png`,
           );
         } else {
           return Promise.resolve(
             `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
               isShiny ? "/shiny" : ""
-            }/487-origin.png`
+            }/487-origin.png`,
           );
         }
       },
@@ -4288,7 +4297,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
           variant === "front_shiny" ? "/shiny" : ""
-        }/676-${form}.png`
+        }/676-${form}.png`,
       );
     },
     interval: 3000,
@@ -4343,7 +4352,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
           variant === "front_shiny" ? "/shiny" : ""
-        }/666-${form}.png`
+        }/666-${form}.png`,
       );
     },
     interval: 3000,
@@ -4362,13 +4371,13 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/716-neutral.png`
+          }/716-neutral.png`,
         );
       } else {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/716-active.png`
+          }/716-active.png`,
         );
       }
     },
@@ -4378,7 +4387,7 @@ function rotateAll() {
   // Not in gen 4 or 5
   if (
     !["gen4", "platinum", "heartgold-soulsilver", "gen5", "gen52"].includes(
-      version
+      version,
     )
   ) {
     rotateForms({
@@ -4422,7 +4431,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/493-${form}.png`
+          }/493-${form}.png`,
         );
       },
       interval: 1000,
@@ -4468,7 +4477,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/493-${form}.png`
+          }/493-${form}.png`,
         );
       },
       interval: 1000,
@@ -4492,12 +4501,19 @@ function rotateAll() {
       baseName: "rayquaza",
       forms: ["normal", "mega"],
       getSpriteUrl: (form, version, variant) => {
+        if (version === "plza") {
+          return plzaImages[
+            `Rayquaza${form === "normal" ? "" : "-Mega"}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
         const gen = generationMap[version];
         const ver = generationMap2[version];
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/384${form === "mega" ? "-mega" : ""}.png`
+          }/384${form === "mega" ? "-mega" : ""}.png`,
         );
       },
       interval: 3000,
@@ -4522,12 +4538,19 @@ function rotateAll() {
       baseName: "kyogre",
       forms: ["normal", "primal"],
       getSpriteUrl: (form, version, variant) => {
+        if (version === "plza") {
+          return plzaImages[
+            `Kyogre${form === "normal" ? "" : "-Primal"}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
         const gen = generationMap[version];
         const ver = generationMap2[version];
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/382${form === "primal" ? "-primal" : ""}.png`
+          }/382${form === "primal" ? "-primal" : ""}.png`,
         );
       },
       interval: 3000,
@@ -4536,12 +4559,19 @@ function rotateAll() {
       baseName: "groudon",
       forms: ["normal", "primal"],
       getSpriteUrl: (form, version, variant) => {
+        if (version === "plza") {
+          return plzaImages[
+            `Groudon${form === "normal" ? "" : "-Primal"}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
         const gen = generationMap[version];
         const ver = generationMap2[version];
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/383${form === "primal" ? "-primal" : ""}.png`
+          }/383${form === "primal" ? "-primal" : ""}.png`,
         );
       },
       interval: 3000,
@@ -4553,12 +4583,19 @@ function rotateAll() {
       baseName: "hoopa",
       forms: ["normal", "unbound"],
       getSpriteUrl: (form, version, variant) => {
+        if (version === "plza") {
+          return plzaImages[
+            `Hoopa${form === "normal" ? "" : "-Unbound"}${
+              variant === "front_shiny" ? "_s" : ""
+            }`
+          ];
+        }
         const gen = generationMap[version];
         const ver = generationMap2[version];
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}/${
             variant === "front_shiny" ? "shiny/" : ""
-          }720${form === "unbound" ? "-unbound" : ""}.png`
+          }720${form === "unbound" ? "-unbound" : ""}.png`,
         );
       },
       interval: 3000,
@@ -4584,7 +4621,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/800${form !== "normal" ? `-${form}` : ""}.png`
+          }/800${form !== "normal" ? `-${form}` : ""}.png`,
         );
       },
       interval: 3000,
@@ -4599,7 +4636,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             variant === "front_shiny" ? "/shiny" : ""
-          }/800${form !== "normal" ? `-${form}` : ""}.png`
+          }/800${form !== "normal" ? `-${form}` : ""}.png`,
         );
       },
       interval: 3000,
@@ -4662,7 +4699,7 @@ function rotateAll() {
       return Promise.resolve(
         `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
           variant === "front_shiny" ? "/shiny" : ""
-        }/773${form !== "normal" ? `-${form}` : ""}.png`
+        }/773${form !== "normal" ? `-${form}` : ""}.png`,
       );
     },
     interval: 1000,
@@ -4693,7 +4730,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${gen}/${ver}${
             isShiny ? "/shiny" : ""
-          }/774${form !== "red-meteor" ? `-${form}` : ""}.png`
+          }/774${form !== "red-meteor" ? `-${form}` : ""}.png`,
         );
       },
       interval: 1000,
@@ -4760,7 +4797,7 @@ function rotateAll() {
       return fetchPokemonSprite(
         `dudunsparce${form === "normal" ? "" : "-three-segment"}`,
         version,
-        variant
+        variant,
       );
     },
     interval: 3000,
@@ -4774,7 +4811,7 @@ function rotateAll() {
           form === "normal" || variant === "front_shiny" ? "" : "-shell"
         }`,
         version,
-        variant
+        variant,
       );
     },
     interval: 3000,
@@ -4801,7 +4838,7 @@ function rotateAll() {
       return fetchPokemonSprite(
         `maushold${form === "normal" ? "" : "-family-of-three"}`,
         version,
-        variant
+        variant,
       );
     },
     interval: 3000,
@@ -4813,7 +4850,7 @@ function rotateAll() {
       return fetchPokemonSprite(
         `gimmighoul${form === "normal" ? "" : "-roaming"}`,
         version,
-        variant
+        variant,
       );
     },
     interval: 3000,
@@ -4995,7 +5032,7 @@ document.querySelectorAll(".item-extension img").forEach((img) => {
     }-${lowerName}-${stoneIdx}`;
     const megaImgUrl = getMegaStoneImgUrl(
       megaStone,
-      li.querySelector(".tilt-wrapper img").dataset.version
+      li.querySelector(".tilt-wrapper img").dataset.version,
     );
 
     // Load → toggle → save
@@ -5012,7 +5049,7 @@ document.querySelectorAll(".item-extension img").forEach((img) => {
         if (!pokeLi) return;
 
         const extImg = pokeLi.querySelector(
-          `.item-extension img[data-stone-index="${stoneIdx}"]`
+          `.item-extension img[data-stone-index="${stoneIdx}"]`,
         );
 
         if (!extImg) return;
@@ -5100,7 +5137,7 @@ async function megaRightClick(e, img) {
         spriteUrl = await fetchPokemonSprite(
           megaName,
           "ultra-sun-ultra-moon",
-          variant
+          variant,
         );
       }
       if (spriteUrl) pokeImg.src = spriteUrl;
