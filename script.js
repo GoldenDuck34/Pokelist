@@ -2014,6 +2014,15 @@ async function rightClickImage(e, wrapper) {
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + (newVariant === "front_shiny" ? "_s" : "")
           ];
+      } else if (version === "plza") {
+        spriteUrl =
+          plzaImages[
+            `Rotom-${form}`
+
+              .split("-")
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+              .join("-") + (newVariant === "front_shiny" ? "_s" : "")
+          ];
       } else {
         let generation = generationMap[version];
         let formSuffix = form !== "normal" ? `-${form}` : "";
