@@ -881,9 +881,11 @@ const plzaImages = {};
           megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
           if (version === "plza") {
             megaStones = megaStones || legendsStones[lowerName] || null;
-            megaStones[garchomp] = megaStones[garchomp] || ["Garchompite Z"];
-            megaStones[lucario] = megaStones[lucario] || ["Lucarionite Z"];
-            megaStones[absol] = megaStones[absol] || ["Absolite Z"];
+            megaStones["garchomp"] = megaStones["garchomp"] || [
+              "Garchompite Z",
+            ];
+            megaStones["lucario"] = megaStones["lucario"] || ["Lucarionite Z"];
+            megaStones["absol"] = megaStones["absol"] || ["Absolite Z"];
           }
         } else {
           megaStones = megaMap[lowerName] || null;
