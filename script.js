@@ -886,7 +886,7 @@ const plzaImages = {};
             megaStones = megaStones || legendsStones[lowerName] || null;
             console.log(
               lowerName,
-              megaStones[lowerName],
+              megaStones,
               legendsStones[lowerName],
             );
             // If the Pokémon is garchomp, absol, or lucario, add the z stone
