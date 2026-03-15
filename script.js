@@ -93,6 +93,7 @@ legendsStones = {
   lucario: ["Lucarionite Z"],
   zeraora: ["Zeraorite"],
   magearna: ["Magearnite"],
+  "magearna-original": ["Magearnite"],
   garchomp: ["Garchompite Z"],
 };
 
