@@ -780,6 +780,8 @@ const plzaImages = {};
 
     if (lower === "palafin") return "palafin-zero";
 
+    if (lower === "original magearna") return "magearna-original";
+
     if (lower.includes("tauros ")) {
       if (lower.includes("combat")) return "tauros-combat";
       if (lower.includes("blaze")) return "tauros-blaze";
