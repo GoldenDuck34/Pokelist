@@ -861,7 +861,7 @@ const plzaImages = {};
       const lowerName = name.toLowerCase();
 
       // --- Mega stone ---
-      let megaStones = {};
+      let megaStones = null;
       // Only show mega stones if version is a supported game
       if (
         version === "gen6" ||
@@ -878,16 +878,26 @@ const plzaImages = {};
           version === "ultra-sun-ultra-moon" ||
           version === "plza"
         ) {
-          megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || {};
+          megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
           if (version === "plza") {
-            megaStones = megaStones || legendsStones[lowerName] || {};
-            console.log(megaStones);
-            megaStones["garchomp"] = ["Garchompite", "Garchompite Z"];
-            megaStones["lucario"] = ["Lucarionite", "Lucarionite Z"];
-            megaStones["absol"] = ["Absolite", "Absolite Z"];
+            megaStones = megaStones || legendsStones[lowerName] || null;
+            // If the Pokémon is garchomp, absol, or lucario, add the z stone
+            if (lowerName === "garchomp") {
+              megaStones = megaStones
+                ? [...megaStones, "Garchompite Z"]
+                : ["Garchompite Z"];
+            } else if (lowerName === "absol") {
+              megaStones = megaStones
+                ? [...megaStones, "Absolite Z"]
+                : ["Absolite Z"];
+            } else if (lowerName === "lucario") {
+              megaStones = megaStones
+                ? [...megaStones, "Lucarionite Z"]
+                : ["Lucarionite Z"];
+            }
           }
         } else {
-          megaStones = megaMap[lowerName] || {};
+          megaStones = megaMap[lowerName] || null;
         }
       }
 
