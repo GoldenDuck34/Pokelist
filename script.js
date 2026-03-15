@@ -861,7 +861,7 @@ const plzaImages = {};
       const lowerName = name.toLowerCase();
 
       // --- Mega stone ---
-      let megaStones = null;
+      let megaStones = {};
       // Only show mega stones if version is a supported game
       if (
         version === "gen6" ||
@@ -878,21 +878,16 @@ const plzaImages = {};
           version === "ultra-sun-ultra-moon" ||
           version === "plza"
         ) {
-          megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
+          megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || {};
           if (version === "plza") {
-            megaStones = megaStones || legendsStones[lowerName] || null;
+            megaStones = megaStones || legendsStones[lowerName] || {};
+            console.log(megaStones);
             megaStones["garchomp"] = ["Garchompite", "Garchompite Z"];
-            megaStones["lucario"] = megaStones["lucario"] || [
-              "Lucarionite",
-              "Lucarionite Z",
-            ];
-            megaStones["absol"] = megaStones["absol"] || [
-              "Absolite",
-              "Absolite Z",
-            ];
+            megaStones["lucario"] = ["Lucarionite", "Lucarionite Z"];
+            megaStones["absol"] = ["Absolite", "Absolite Z"];
           }
         } else {
-          megaStones = megaMap[lowerName] || null;
+          megaStones = megaMap[lowerName] || {};
         }
       }
 
