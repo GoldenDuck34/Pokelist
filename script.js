@@ -94,7 +94,7 @@ legendsStones = {
   "lucario-z": ["Lucarionite Z"],
   zeraora: ["Zeraorite"],
   magearna: ["Magearnite"],
-  "garchomp-z": ["Garchompite Z"],
+  "garchomp-z": ["Garchompite Z"], // Not yet released
 };
 
 const alolanForms = [
@@ -1403,7 +1403,9 @@ async function setAllPokemonImages() {
         if (version === "gen9") {
           const key =
             Object.keys(flabebeColorMap)
-              .find((k) => pokemon.includes(k.split("-")[1]))
+              .find(
+                (k) => pokemon.includes(k.split("-")[1])
+              )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1413,7 +1415,9 @@ async function setAllPokemonImages() {
         } else if (version === "plza") {
           const key =
             Object.keys(flabebeColorMap)
-              .find((k) => pokemon.includes(k.split("-")[1]))
+              .find(
+                (k) => pokemon.includes(k.split("-")[1])
+              )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1434,7 +1438,9 @@ async function setAllPokemonImages() {
         if (version === "plza") {
           const plzaKey =
             Object.keys(floetteColorMap)
-              .find((k) => pokemon.includes(k.split("-")[1]))
+              .find(
+                (k) => pokemon.includes(k.split("-")[1])
+              )
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1595,7 +1601,8 @@ async function init() {
             spriteCache[cacheKey] = fetchPokemonSprite(
               pokemon,
               "ultra-sun-ultra-moon",
-              shiny ? "front_shiny" : "front_default",
+              variant,
+              custom,
             );
             img.src = spriteCache[cacheKey];
           } else if (letsGoImages[key]) img.src = letsGoImages[key];
@@ -2638,7 +2645,9 @@ async function rightClickImage(e, wrapper) {
 
     // Reload checkbox state for current visible version & shiny
     const li = pkmImg.closest("li");
-    const checkboxes = Array.from(li.querySelectorAll("input[type=checkbox]"));
+    const checkboxes = Array.from(
+      li.querySelectorAll("input[type=checkbox]"),
+    );
     const visibleIndex = li.dataset.visibleIndex
       ? parseInt(li.dataset.visibleIndex)
       : 0;
@@ -3127,8 +3136,18 @@ document
     // Function to update image based on shiny state
     async function updateSprite() {
       const variant = isShiny ? "front_shiny" : "front_default";
-      const spriteUrl = await fetchPokemonSprite(name, version, variant);
+
+      // Use form if present
+      let spriteName = name;
+      if (randomPokemonImg.dataset.form) {
+        if (name === "castform") {
+          spriteName = `${name}-` + img.dataset.form;
+        }
+      }
+
+      const spriteUrl = await fetchPokemonSprite(spriteName, version, variant);
       if (spriteUrl) cardImg.src = spriteUrl;
+
       setShiny(cardImg, version, isShiny);
       renderCheckboxes();
     }
@@ -3816,11 +3835,17 @@ function rotateAll() {
       }
       if (form === "plant") {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`,
         );
       } else {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412-${form}.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
+            generationMap[version]
+          }/${generationMap2[version]}${
+            isShiny ? "/shiny" : ""
+          }/412-${form}.png`,
         );
       }
     },
@@ -4066,6 +4091,7 @@ function rotateAll() {
       },
       interval: 3000,
     });
+
     rotateForms({
       baseName: "keldeo-ordinary",
       forms: ["ordinary", "resolute"],
