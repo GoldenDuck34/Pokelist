@@ -522,10 +522,7 @@ const visibilityMap = new WeakMap();
 // --- Mega stone image fetcher ---
 function getMegaStoneImgUrl(stoneName, version) {
   // Get the image from serebii
-  const normalized = stoneName
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace("-", "");
+  let normalized = stoneName.toLowerCase().replace(/ /g, "-").replace("-", "");
   return `https://www.serebii.net/itemdex/sprites/${
     version === "plza" ? "za" : "pgl"
   }/${normalized}.png`;
@@ -1403,9 +1400,7 @@ async function setAllPokemonImages() {
         if (version === "gen9") {
           const key =
             Object.keys(flabebeColorMap)
-              .find(
-                (k) => pokemon.includes(k.split("-")[1])
-              )
+              .find((k) => pokemon.includes(k.split("-")[1]))
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1415,9 +1410,7 @@ async function setAllPokemonImages() {
         } else if (version === "plza") {
           const key =
             Object.keys(flabebeColorMap)
-              .find(
-                (k) => pokemon.includes(k.split("-")[1])
-              )
+              .find((k) => pokemon.includes(k.split("-")[1]))
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1438,9 +1431,7 @@ async function setAllPokemonImages() {
         if (version === "plza") {
           const plzaKey =
             Object.keys(floetteColorMap)
-              .find(
-                (k) => pokemon.includes(k.split("-")[1])
-              )
+              .find((k) => pokemon.includes(k.split("-")[1]))
               .split("-")
               .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
               .join("-") + variantMap["front_default"];
@@ -1601,8 +1592,7 @@ async function init() {
             spriteCache[cacheKey] = fetchPokemonSprite(
               pokemon,
               "ultra-sun-ultra-moon",
-              variant,
-              custom,
+              shiny ? "front_shiny" : "front_default",
             );
             img.src = spriteCache[cacheKey];
           } else if (letsGoImages[key]) img.src = letsGoImages[key];
@@ -1705,6 +1695,22 @@ async function rightClickImage(e, wrapper) {
       baseName = img.dataset.megaStone.includes("X")
         ? "mewtwo-mega-x"
         : "mewtwo-mega-y";
+    } else if (baseName === "raichu") {
+      baseName = img.dataset.megaStone.includes("X")
+        ? "raichu-mega-x"
+        : "raichu-mega-y";
+    } else if (baseName === "absol") {
+      baseName = img.dataset.megaStone.includes("Z")
+        ? "absol-mega-z"
+        : "absol-mega";
+    } else if (baseName === "garchomp") {
+      baseName = img.dataset.megaStone.includes("Z")
+        ? "garchomp-mega-z"
+        : "garchomp-mega";
+    } else if (baseName === "lucario") {
+      baseName = img.dataset.megaStone.includes("Z")
+        ? "lucario-mega-z"
+        : "lucario-mega";
     } else {
       baseName = `${baseName}-mega`;
     }
@@ -2645,9 +2651,7 @@ async function rightClickImage(e, wrapper) {
 
     // Reload checkbox state for current visible version & shiny
     const li = pkmImg.closest("li");
-    const checkboxes = Array.from(
-      li.querySelectorAll("input[type=checkbox]"),
-    );
+    const checkboxes = Array.from(li.querySelectorAll("input[type=checkbox]"));
     const visibleIndex = li.dataset.visibleIndex
       ? parseInt(li.dataset.visibleIndex)
       : 0;
@@ -2866,6 +2870,38 @@ document
             .includes("x")
             ? "mewtwo-mega-x"
             : "mewtwo-mega-y";
+        } else if (baseName === "raichu") {
+          baseName = img
+            .closest("li")
+            .querySelector(".item-extension img")
+            .alt.toLowerCase()
+            .includes("x")
+            ? "raichu-mega-x"
+            : "raichu-mega-y";
+        } else if (baseName === "absol") {
+          baseName = img
+            .closest("li")
+            .querySelector(".item-extension img")
+            .alt.toLowerCase()
+            .includes("z")
+            ? "absol-mega-z"
+            : "absol-mega";
+        } else if (baseName === "garchomp") {
+          baseName = img
+            .closest("li")
+            .querySelector(".item-extension img")
+            .alt.toLowerCase()
+            .includes("z")
+            ? "garchomp-mega-z"
+            : "garchomp-mega";
+        } else if (baseName === "lucario") {
+          baseName = img
+            .closest("li")
+            .querySelector(".item-extension img")
+            .alt.toLowerCase()
+            .includes("z")
+            ? "lucario-mega-z"
+            : "lucario-mega";
         } else {
           baseName = `${baseName}-mega`;
         }
@@ -3136,18 +3172,8 @@ document
     // Function to update image based on shiny state
     async function updateSprite() {
       const variant = isShiny ? "front_shiny" : "front_default";
-
-      // Use form if present
-      let spriteName = name;
-      if (randomPokemonImg.dataset.form) {
-        if (name === "castform") {
-          spriteName = `${name}-` + img.dataset.form;
-        }
-      }
-
-      const spriteUrl = await fetchPokemonSprite(spriteName, version, variant);
+      const spriteUrl = await fetchPokemonSprite(name, version, variant);
       if (spriteUrl) cardImg.src = spriteUrl;
-
       setShiny(cardImg, version, isShiny);
       renderCheckboxes();
     }
@@ -3835,17 +3861,11 @@ function rotateAll() {
       }
       if (form === "plant") {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412.png`,
         );
       } else {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}${
-            isShiny ? "/shiny" : ""
-          }/412-${form}.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412-${form}.png`,
         );
       }
     },
@@ -4091,7 +4111,6 @@ function rotateAll() {
       },
       interval: 3000,
     });
-
     rotateForms({
       baseName: "keldeo-ordinary",
       forms: ["ordinary", "resolute"],
@@ -4151,7 +4170,7 @@ function rotateAll() {
         return Promise.resolve(
           `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
             generationMap[version]
-          }/${generationMap2[version]}${
+          }/${generationMap2[version]}/${
             isShiny ? "shiny/" : ""
           }/422${formSuffix}.png`,
         );
@@ -4203,7 +4222,7 @@ function rotateAll() {
             generationMap[version]
           }/${generationMap2[version]}/${
             isShiny ? "shiny/" : ""
-          }423${formSuffix}.png`,
+          }/423${formSuffix}.png`,
         );
     },
     interval: 3000,
@@ -5063,9 +5082,7 @@ document.querySelectorAll(".item-extension img").forEach((img) => {
     let lowerName = li.querySelector(".item-header").textContent.toLowerCase();
     const megaStone = img.alt;
     const stoneIdx = img.dataset.stoneIndex || 0;
-    const extKey = `mega-ext-${
-      li.querySelector(".tilt-wrapper img").dataset.version
-    }-${lowerName}-${stoneIdx}`;
+    const extKey = `mega-ext-${li.querySelector(".tilt-wrapper img").dataset.version}-${lowerName}-${stoneIdx}`;
     const megaImgUrl = getMegaStoneImgUrl(
       megaStone,
       li.querySelector(".tilt-wrapper img").dataset.version,
@@ -5151,6 +5168,22 @@ async function megaRightClick(e, img) {
         megaName = megaStone.toLowerCase().includes("x")
           ? "mewtwo-mega-x"
           : "mewtwo-mega-y";
+      } else if (lowerName === "raichu") {
+        megaName = megaStone.toLowerCase().includes("x")
+          ? "raichu-mega-x"
+          : "raichu-mega-y";
+      } else if (lowerName === "absol") {
+        megaName = megaStone.toLowerCase().includes("z")
+          ? "absol-mega-z"
+          : "absol-mega";
+      } else if (lowerName === "garchomp") {
+        megaName = megaStone.toLowerCase().includes("z")
+          ? "garchomp-mega-z"
+          : "garchomp-mega";
+      } else if (lowerName === "lucario") {
+        megaName = megaStone.toLowerCase().includes("z")
+          ? "lucario-mega-z"
+          : "lucario-mega";
       } else {
         megaName = `${lowerName}-mega`;
       }
