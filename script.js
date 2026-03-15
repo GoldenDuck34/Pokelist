@@ -93,7 +93,7 @@ legendsStones = {
   lucario: ["Lucarionite Z"],
   zeraora: ["Zeraorite"],
   magearna: ["Magearnite"],
-  "magearna-original": ["Magearnite"],
+  "magearna original": ["Magearnite"],
   garchomp: ["Garchompite Z"],
 };
 
@@ -884,7 +884,6 @@ const plzaImages = {};
           megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
           if (version === "plza") {
             megaStones = megaStones || legendsStones[lowerName] || null;
-            console.log(lowerName);
             // If the Pokémon is garchomp, absol, or lucario, add the z stone
             if (lowerName === "garchomp") {
               megaStones = megaStones
