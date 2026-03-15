@@ -881,6 +881,7 @@ const plzaImages = {};
           megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
           if (version === "plza") {
             megaStones = megaStones || legendsStones[lowerName] || null;
+            console.log(megaStones);
           }
         } else {
           megaStones = megaMap[lowerName] || null;
