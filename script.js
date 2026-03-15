@@ -76,6 +76,25 @@ legendsStones = {
   falinks: ["Falinksite"],
   "floette (black)": ["Floettite"],
   zygarde: ["Zygardite"],
+  "absol-z": ["Absolite Z"],
+  crabominable: ["Crabominite"],
+  staraptor: ["Staraptite"],
+  golisopod: ["Golisopite"],
+  meowstic: ["Meowsticite"],
+  golurk: ["Golurkite"],
+  glimmora: ["Glimmoranite"],
+  scovillain: ["Scovillainite"],
+  tatsugiri: ["Tatsugirinite"],
+  chimecho: ["Chimechite"],
+  "raichu-x": ["Raichunite X"],
+  "raichu-y": ["Raichunite Y"],
+  heatran: ["Heatranite"],
+  darkrai: ["Darkranite"],
+  baxcalibur: ["Baxcalibrite"],
+  "lucario-z": ["Lucarionite Z"],
+  zeraora: ["Zeraorite"],
+  magearna: ["Magearnite"],
+  "garchomp-z": ["Garchompite Z"],
 };
 
 const alolanForms = [
@@ -1576,8 +1595,7 @@ async function init() {
             spriteCache[cacheKey] = fetchPokemonSprite(
               pokemon,
               "ultra-sun-ultra-moon",
-              variant,
-              custom,
+              shiny ? "front_shiny" : "front_default",
             );
             img.src = spriteCache[cacheKey];
           } else if (letsGoImages[key]) img.src = letsGoImages[key];
@@ -2185,9 +2203,9 @@ async function rightClickImage(e, wrapper) {
           spriteUrl = svImages[key];
         }
       } else
-        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}${
-          !isShiny ? "/shiny" : ""
-        }/422${formSuffix}.png`;
+        spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generation}/${ver}/${
+          !isShiny ? "shiny/" : ""
+        }422${formSuffix}.png`;
     } else if (baseName === "gastrodon") {
       form = formName || "west";
       const generation = generationMap[version];
@@ -3109,18 +3127,8 @@ document
     // Function to update image based on shiny state
     async function updateSprite() {
       const variant = isShiny ? "front_shiny" : "front_default";
-
-      // Use form if present
-      let spriteName = name;
-      if (randomPokemonImg.dataset.form) {
-        if (name === "castform") {
-          spriteName = `${name}-` + img.dataset.form;
-        }
-      }
-
-      const spriteUrl = await fetchPokemonSprite(spriteName, version, variant);
+      const spriteUrl = await fetchPokemonSprite(name, version, variant);
       if (spriteUrl) cardImg.src = spriteUrl;
-
       setShiny(cardImg, version, isShiny);
       renderCheckboxes();
     }
@@ -3808,17 +3816,11 @@ function rotateAll() {
       }
       if (form === "plant") {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}${isShiny ? "/shiny" : ""}/412.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412.png`,
         );
       } else {
         return Promise.resolve(
-          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${
-            generationMap[version]
-          }/${generationMap2[version]}${
-            isShiny ? "/shiny" : ""
-          }/412-${form}.png`,
+          `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/${generationMap[version]}/${generationMap2[version]}/412-${form}.png`,
         );
       }
     },
@@ -4064,7 +4066,6 @@ function rotateAll() {
       },
       interval: 3000,
     });
-
     rotateForms({
       baseName: "keldeo-ordinary",
       forms: ["ordinary", "resolute"],
