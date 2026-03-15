@@ -76,7 +76,7 @@ legendsStones = {
   falinks: ["Falinksite"],
   "floette (black)": ["Floettite"],
   zygarde: ["Zygardite"],
-  "absol-z": ["Absolite Z"],
+  absol: ["Absolite Z"],
   crabominable: ["Crabominite"],
   staraptor: ["Staraptite"],
   golisopod: ["Golisopite"],
@@ -86,15 +86,14 @@ legendsStones = {
   scovillain: ["Scovillainite"],
   tatsugiri: ["Tatsugirinite"],
   chimecho: ["Chimechite"],
-  "raichu-x": ["Raichunite X"],
-  "raichu-y": ["Raichunite Y"],
+  "raichu-x": ["Raichunite X", "Raichunite Y"],
   heatran: ["Heatranite"],
   darkrai: ["Darkranite"],
   baxcalibur: ["Baxcalibrite"],
-  "lucario-z": ["Lucarionite Z"],
+  lucario: ["Lucarionite Z"],
   zeraora: ["Zeraorite"],
   magearna: ["Magearnite"],
-  "garchomp-z": ["Garchompite Z"], // Not yet released
+  garchomp: ["Garchompite Z"],
 };
 
 const alolanForms = [
