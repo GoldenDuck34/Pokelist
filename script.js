@@ -86,7 +86,7 @@ legendsStones = {
   scovillain: ["Scovillainite"],
   tatsugiri: ["Tatsugirinite"],
   chimecho: ["Chimechite"],
-  "raichu-x": ["Raichunite X", "Raichunite Y"],
+  raichu: ["Raichunite X", "Raichunite Y"],
   heatran: ["Heatranite"],
   darkrai: ["Darkranite"],
   baxcalibur: ["Baxcalibrite"],
@@ -881,7 +881,9 @@ const plzaImages = {};
           megaStones = megaMap[lowerName] || megaStoneMap[lowerName] || null;
           if (version === "plza") {
             megaStones = megaStones || legendsStones[lowerName] || null;
-            console.log(megaStones);
+            megaStones[garchomp] = megaStones[garchomp] || ["Garchompite Z"];
+            megaStones[lucario] = megaStones[lucario] || ["Lucarionite Z"];
+            megaStones[absol] = megaStones[absol] || ["Absolite Z"];
           }
         } else {
           megaStones = megaMap[lowerName] || null;
