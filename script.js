@@ -1068,6 +1068,34 @@ const variantMap = {
   front_shiny_female: "_h_s",
 };
 
+function getSpriteLookupKey(pokemonName, version, variant = "front_default") {
+  const normalizedName = pokemonName
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join("-");
+
+  if (
+    version === "plza" &&
+    ["pyroar", "pyroar-male", "pyroar-female"].includes(
+      pokemonName.toLowerCase(),
+    )
+  ) {
+    const formSuffix =
+      pokemonName.toLowerCase().endsWith("-female") ||
+      variant === "front_female" ||
+      variant === "front_shiny_female"
+        ? "-Female"
+        : "-Male";
+    const shinySuffix =
+      variant === "front_shiny" || variant === "front_shiny_female"
+        ? "_s"
+        : "";
+    return `Pyroar${formSuffix}${shinySuffix}`;
+  }
+
+  return normalizedName + variantMap[variant];
+}
+
 function getShiny(img, version) {
   ensureShinyStates(img);
   const states = JSON.parse(img.dataset.shinyStates);
@@ -1165,12 +1193,10 @@ async function fetchPokemonSprite(
         });
         const blankImg =
           "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-        const key = (
-          pokemonName
-            .split("-")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join("-") + variantMap[variant]
-        ).replace("-Gigantamax", "_g");
+        const key = getSpriteLookupKey(pokemonName, version, variant).replace(
+          "-Gigantamax",
+          "_g",
+        );
         if (pokemonName.includes("flabebe") && version === "gen9") {
           const flabebeKey =
             Object.keys(flabebeColorMap)
@@ -1634,11 +1660,10 @@ const observer = new IntersectionObserver(
       const pokemon = img.dataset.pokemon;
       const version = img.dataset.version;
       const shiny = getShiny(img, version);
-      let key = (
-        pokemon
-          .split("-")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join("-") + (shiny ? "_s" : "")
+      let key = getSpriteLookupKey(
+        pokemon,
+        version,
+        shiny ? "front_shiny" : "front_default",
       ).replace("-Gigantamax", "_g");
 
       if (entry.isIntersecting) {
@@ -2621,11 +2646,10 @@ async function rightClickImage(e, wrapper) {
   let key;
   if (img.dataset.mega === "true") key = baseName + (!isShiny ? "_s" : "");
   else
-    key = (
-      baseName
-        .split("-")
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join("-") + (!getShiny(img, version) ? "_s" : "")
+    key = getSpriteLookupKey(
+      baseName,
+      version,
+      isShiny ? "front_default" : "front_shiny",
     ).replace("-Gigantamax", "_g");
   if (version === "gen8") {
     if (swordShieldImages[key]) {
@@ -3697,13 +3721,9 @@ function rotateGenderedPokemon(pokemonName) {
               .join("-") + variantMap[variant]
           ];
       } else if (img.dataset.version === "plza") {
-        spriteUrl =
-          plzaImages[
-            pokemonName
-              .split("-")
-              .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-              .join("-") + variantMap[variant]
-          ];
+        spriteUrl = plzaImages[
+          getSpriteLookupKey(pokemonName, img.dataset.version, variant)
+        ];
       } else if (img.dataset.version === "letsgo") {
         spriteUrl =
           letsGoImages[
